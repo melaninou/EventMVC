@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.VisualBasic;
+﻿using Microsoft.VisualBasic;
 
 namespace Core
 {
