@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.VisualBasic;
+﻿using Core;
 
 namespace Data
 {
-    public class ProfileDbRecord
+    public class ProfileDbRecord : RootObject
     {
         private string id;
         private string name;
@@ -14,8 +11,10 @@ namespace Data
         private string gender;
 
         //TODO think override
+        
         public string ID
         {
+            //todo id -> protected in another class ? 
             get => getString(ref id, Name);
             set => id = value;
         }
@@ -44,17 +43,7 @@ namespace Data
             set => gender = value;
         }
 
-        //TODO move to rootobject
-        protected internal string getString(ref string field, string value = Constants.Unspecified) //checks that get is not null
-        {
-            if (string.IsNullOrWhiteSpace(field)) field = (value ?? string.Empty).Trim(); //if is: string.Empty
-            return field;
-        }
     }
 
-    //TODO create a new class
-    public static class Constants
-    {
-        public const string Unspecified = "Unspecified";
-    }
+    
 }

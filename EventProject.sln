@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventProject", "EventProject\EventProject.csproj", "{A7543873-D335-44FD-A822-8700B144D831}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventProject", "EventProject\EventProject.csproj", "{A7543873-D335-44FD-A822-8700B144D831}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{43AF6446-B4E7-4084-A326-6122D646F1D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{43AF6446-B4E7-4084-A326-6122D646F1D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra", "Infra\Infra.csproj", "{211BBCDC-53A1-46D1-8A99-FA5AA6A8D851}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra", "Infra\Infra.csproj", "{211BBCDC-53A1-46D1-8A99-FA5AA6A8D851}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{62DE1DE1-5F62-4C57-84B6-AAD620AE142F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{211BBCDC-53A1-46D1-8A99-FA5AA6A8D851}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{211BBCDC-53A1-46D1-8A99-FA5AA6A8D851}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{211BBCDC-53A1-46D1-8A99-FA5AA6A8D851}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62DE1DE1-5F62-4C57-84B6-AAD620AE142F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62DE1DE1-5F62-4C57-84B6-AAD620AE142F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62DE1DE1-5F62-4C57-84B6-AAD620AE142F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62DE1DE1-5F62-4C57-84B6-AAD620AE142F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
