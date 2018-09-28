@@ -6,29 +6,26 @@ using Data;
 
 namespace Infra
 {
-    public static class ProfileDbTableInitializer
+    public static class ProfileDbTableInitializer 
     {
         public static void Initialize(EventProjectDbContext c)
         {
-            c.Database.EnsureCreated();
-            if (c.Profiles.Any()) return;
+            c.Database.EnsureCreated(); //kas andmebaas on olemas
+            if (c.Profiles.Any()) return; //kui aadresside tabelis midagi, lõpetab tegevuse
             initProfiles(c);
-
-
             c.SaveChanges();
         }
-
         private static void initProfiles(EventProjectDbContext c)
         {
             add(c, new ProfileDbRecord
             {
-                ID = "123abc",
+
+                
                 Name = "Iris Nael",
                 Age = "20",
                 Location = "Tallinn",
                 Gender = "Female"
             });
-
         }
 
         private static string add(EventProjectDbContext c, ProfileDbRecord profile) //unikaalse ID genereerimine

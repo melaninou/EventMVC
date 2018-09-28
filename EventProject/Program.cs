@@ -22,8 +22,11 @@ namespace EventProject
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var profileDb = services.GetRequiredService<EventProjectDbContext>();
-                    ProfileDbTableInitializer.Initialize(profileDb);
+                    var dbContext = services.GetRequiredService<EventProjectDbContext>();
+
+                    ProfileDbTableInitializer.Initialize(dbContext);
+                    EventDbTableInitializer.Initialize(dbContext);
+
                 }
                 catch (Exception ex)
                 {
@@ -32,19 +35,14 @@ namespace EventProject
                 }
             }
             host.Run();
-            //todo varem oli ainult see:
-                //CreateWebHostBuilder(args).Build().Run();
+            
         }
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .Build();
 
-        //todo varem oli selline:
-        /*public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-        WebHost.CreateDefaultBuilder(args)
-        .UseStartup<Startup>();*/
-
+       
 
     }
 }

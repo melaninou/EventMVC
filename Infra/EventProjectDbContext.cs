@@ -13,10 +13,26 @@ namespace Infra
 
         public DbSet<ProfileDbRecord> Profiles { get; set; }
 
+        public DbSet<EventDbRecord> Events { get; set; }
         protected override void OnModelCreating(ModelBuilder b)
         {
             base.OnModelCreating(b);
             b.Entity<ProfileDbRecord>().ToTable("Profiles");
+            b.Entity<EventDbRecord>().ToTable("Events");
+            createProfilesTable(b);
+            createEventsTable(b);
+        }
+
+        internal static void createEventsTable(ModelBuilder b)
+        {
+            const string table = "Events";
+            b.Entity<EventDbRecord>().ToTable(table);
+        }
+
+        internal static void createProfilesTable(ModelBuilder b)
+        {
+            const string table = "Profiles";
+            b.Entity<ProfileDbRecord>().ToTable(table);
         }
 
         internal static void createPrimaryKey<TEntity>(ModelBuilder b, string tableName,

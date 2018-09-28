@@ -1,27 +1,24 @@
 ﻿using Core;
+using Data.Common;
 
 namespace Data
 {
-    public class ProfileDbRecord : RootObject
+    public class ProfileDbRecord : UniqueDbRecord
     {
-        private string id;
-        private string name;
+        
         private string age;
-        private string location;
         private string gender;
 
-        //TODO think override
         
-        public string ID
+        public override string ID
         {
-            //todo id -> protected in another class ? 
-            get => getString(ref id, Name);
+            get => getString(ref id, Constants.Unspecified);
             set => id = value;
         }
 
-        public string Name
+        public override string Name
         {
-            get => getString(ref name, Name);
+            get => getString(ref name, Constants.Unspecified);
             set => name = value;
         }
 
@@ -31,7 +28,7 @@ namespace Data
             set => age = value;
         }
 
-        public string Location
+        public override string Location
         {
             get => getString(ref location, Constants.Unspecified);
             set => location = value;
@@ -42,8 +39,6 @@ namespace Data
             get => getString(ref gender, Constants.Unspecified);
             set => gender = value;
         }
-
-    }
-
-    
+   
+    }  
 }

@@ -9,7 +9,7 @@ namespace Infra
         public static void Initialize(EventProjectDbContext dbContext)
         {
             ProfileDbTableInitializer.Initialize(dbContext);
-            
+            EventDbTableInitializer.Initialize(dbContext);
         }
     }
 }
