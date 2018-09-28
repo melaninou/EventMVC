@@ -26,6 +26,7 @@ namespace EventProject
 
                     ProfileDbTableInitializer.Initialize(dbContext);
                     EventDbTableInitializer.Initialize(dbContext);
+                    EventProfileDbTableInitializer.Initialize(dbContext);
 
                 }
                 catch (Exception ex)

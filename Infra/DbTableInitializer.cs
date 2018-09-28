@@ -10,6 +10,7 @@ namespace Infra
         {
             ProfileDbTableInitializer.Initialize(dbContext);
             EventDbTableInitializer.Initialize(dbContext);
+            EventProfileDbTableInitializer.Initialize(dbContext);
         }
     }
 }

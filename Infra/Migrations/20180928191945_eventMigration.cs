@@ -2,7 +2,7 @@
 
 namespace Infra.Migrations
 {
-    public partial class migrationE : Migration
+    public partial class eventMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,10 +37,45 @@ namespace Infra.Migrations
                 {
                     table.PrimaryKey("PK_Profiles", x => x.ID);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "EventProfile",
+                columns: table => new
+                {
+                    ID = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Location = table.Column<string>(nullable: true),
+                    ProfileID = table.Column<string>(nullable: false),
+                    EventID = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventProfile", x => new { x.EventID, x.ProfileID });
+                    table.ForeignKey(
+                        name: "FK_EventProfile_Events_EventID",
+                        column: x => x.EventID,
+                        principalTable: "Events",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_EventProfile_Profiles_ProfileID",
+                        column: x => x.ProfileID,
+                        principalTable: "Profiles",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EventProfile_ProfileID",
+                table: "EventProfile",
+                column: "ProfileID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "EventProfile");
+
             migrationBuilder.DropTable(
                 name: "Events");
 

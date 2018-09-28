@@ -40,6 +40,25 @@ namespace Infra.Migrations
                     b.ToTable("Events");
                 });
 
+            modelBuilder.Entity("Data.EventProfileDbRecord", b =>
+                {
+                    b.Property<string>("EventID");
+
+                    b.Property<string>("ProfileID");
+
+                    b.Property<string>("ID");
+
+                    b.Property<string>("Location");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("EventID", "ProfileID");
+
+                    b.HasIndex("ProfileID");
+
+                    b.ToTable("EventProfile");
+                });
+
             modelBuilder.Entity("Data.ProfileDbRecord", b =>
                 {
                     b.Property<string>("ID")
@@ -56,6 +75,19 @@ namespace Infra.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Profiles");
+                });
+
+            modelBuilder.Entity("Data.EventProfileDbRecord", b =>
+                {
+                    b.HasOne("Data.EventDbRecord", "Events")
+                        .WithMany()
+                        .HasForeignKey("EventID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Data.ProfileDbRecord", "Profiles")
+                        .WithMany()
+                        .HasForeignKey("ProfileID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }
