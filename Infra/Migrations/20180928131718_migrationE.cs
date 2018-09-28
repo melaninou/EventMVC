@@ -2,7 +2,7 @@
 
 namespace Infra.Migrations
 {
-    public partial class eventmig : Migration
+    public partial class migrationE : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

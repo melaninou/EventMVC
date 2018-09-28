@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(EventProjectDbContext))]
-    [Migration("20180928114552_eventmig")]
-    partial class eventmig
+    [Migration("20180928131718_migrationE")]
+    partial class migrationE
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
