@@ -33,7 +33,24 @@ namespace EventProject.Controllers
         {
             return View();
         }
+        public IActionResult CreateEvent()
+        {
+            ViewData["Message"] = "Your application description page.";
 
+            return View();
+        }
+        public IActionResult ViewEvents()
+        {
+            ViewData["Message"] = "Your application description page.";
+
+            return View();
+        }
+        public IActionResult ViewProfile()
+        {
+            ViewData["Message"] = "Your application description page.";
+
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
