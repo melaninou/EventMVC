@@ -2,7 +2,7 @@
 
 namespace Infra.Migrations
 {
-    public partial class eventMigration : Migration
+    public partial class app : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -42,9 +42,6 @@ namespace Infra.Migrations
                 name: "EventProfile",
                 columns: table => new
                 {
-                    ID = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Location = table.Column<string>(nullable: true),
                     ProfileID = table.Column<string>(nullable: false),
                     EventID = table.Column<string>(nullable: false)
                 },

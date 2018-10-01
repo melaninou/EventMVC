@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(EventProjectDbContext))]
-    [Migration("20180928191945_eventMigration")]
-    partial class eventMigration
+    [Migration("20181001112750_app")]
+    partial class app
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,12 +47,6 @@ namespace Infra.Migrations
                     b.Property<string>("EventID");
 
                     b.Property<string>("ProfileID");
-
-                    b.Property<string>("ID");
-
-                    b.Property<string>("Location");
-
-                    b.Property<string>("Name");
 
                     b.HasKey("EventID", "ProfileID");
 

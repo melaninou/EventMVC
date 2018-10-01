@@ -46,12 +46,6 @@ namespace Infra.Migrations
 
                     b.Property<string>("ProfileID");
 
-                    b.Property<string>("ID");
-
-                    b.Property<string>("Location");
-
-                    b.Property<string>("Name");
-
                     b.HasKey("EventID", "ProfileID");
 
                     b.HasIndex("ProfileID");
