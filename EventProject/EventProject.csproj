@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>aspnet-EventProject-E4CE8155-2FED-4F6D-8384-D899AFE5D5AC</UserSecretsId>
+    <UserSecretsId>aspnet-EventProject-A7FC5F1D-2CEA-4E22-80E2-292E3A9BD17B</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infra\Infra.csproj" />
+    <Folder Include="Areas\Identity\Services\" />
   </ItemGroup>
 
 </Project>
