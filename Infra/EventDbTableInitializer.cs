@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Core;
 using Data;
 
 namespace Infra
@@ -23,7 +24,7 @@ namespace Infra
                 Location = "Tallinn",
                 Date = DateTime.Parse("12.12.2018"),
                 //TODO  control datetime date!!!!
-                Type = "concert",
+                Type = EventType.Concert,
                 Organiser = "TTU",
                 Description = "bla bla bla"
             });

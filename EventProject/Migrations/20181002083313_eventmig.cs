@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EventProject.Migrations
 {
-    public partial class app : Migration
+    public partial class eventmig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

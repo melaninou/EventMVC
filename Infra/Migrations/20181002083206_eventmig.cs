@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infra.Migrations
 {
-    public partial class @event : Migration
+    public partial class eventmig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +14,8 @@ namespace Infra.Migrations
                     ID = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Location = table.Column<string>(nullable: true),
-                    Time = table.Column<string>(nullable: true),
-                    Type = table.Column<string>(nullable: true),
+                    Type = table.Column<int>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
                     Organiser = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true)
                 },
