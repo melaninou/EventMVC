@@ -21,7 +21,8 @@ namespace Infra
                 
                 Name = "Parklapidu",
                 Location = "Tallinn",
-                Time = "28.09.2018",
+                Date = DateTime.Parse("12.12.2018"),
+                //TODO  control datetime date!!!!
                 Type = "concert",
                 Organiser = "TTU",
                 Description = "bla bla bla"
