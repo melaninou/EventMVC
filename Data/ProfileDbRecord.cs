@@ -16,22 +16,10 @@ namespace Data
             set => id = value;
         }
 
-        public override string Name
-        {
-            get => getString(ref name, Constants.Unspecified);
-            set => name = value;
-        }
-
         public string Age
         {
             get => getString(ref age, Constants.Unspecified);
             set => age = value;
-        }
-
-        public override string Location
-        {
-            get => getString(ref location, Constants.Unspecified);
-            set => location = value;
         }
 
         public string Gender

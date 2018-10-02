@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace EventProject.Data.Migrations
+namespace EventProject.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class app : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
