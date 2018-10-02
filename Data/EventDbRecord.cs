@@ -8,23 +8,18 @@ namespace Data
 {
     public class EventDbRecord : UniqueDbRecord
     {
-        private string time;
-        private string type;
+        private DateTime date;
+        private DateTime dateToday = DateTime.Today;
+        public EventType Type { get; set; }
         private string organiser;
         private string description;
 
-        public string Time
+        public DateTime Date
         {
-            get => getString(ref time, Constants.Unspecified);
-            set => time = value;
+            get => getValue(ref dateToday, ref date);
+            set => setValue(ref date, value);
         }
-
-        public string Type
-        {
-            get => getString(ref type, Constants.Unspecified);
-            set => type = value;
-        }
-
+ 
         public string Organiser
         {
             get => getString(ref organiser, Constants.Unspecified);
