@@ -1,0 +1,22 @@
+﻿@using EventProject.Extensions
+@model Facade.Profile.ProfileViewModel
+
+@{
+    ViewBag.Title = "Create";
+    ViewBag.SubTitle = "Profile";
+    ViewBag.Button = "Save";
+    Layout = "_EditPartial";
+}
+
+<body>
+    @Html.EditingControlsFor(model => model.Name)
+    @Html.EditingControlsFor(model => model.Location)
+    @Html.EditingControlsFor(model => model.Age)
+    @Html.EditingControlsFor(model => model.Gender)
+</body>
+
+@section Actions
+    {
+    @Html.ActionLink("Back to List", "Index")
+}
+
