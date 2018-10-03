@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventProject", "EventProjec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aids", "Aids\Aids.csproj", "{5CFACF5D-A1B2-4250-8E10-D68C87C1C895}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{D41B38BD-14F4-43A0-9BEA-BBD62AE932D0}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facade", "Facade\Facade.csproj", "{5D4FAE6E-17D5-4FBB-A93F-627FC97FDD3E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{40AFCEDF-BADD-43C5-937F-E0A3A146E022}"
@@ -51,6 +53,10 @@ Global
 		{40AFCEDF-BADD-43C5-937F-E0A3A146E022}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40AFCEDF-BADD-43C5-937F-E0A3A146E022}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40AFCEDF-BADD-43C5-937F-E0A3A146E022}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D41B38BD-14F4-43A0-9BEA-BBD62AE932D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D41B38BD-14F4-43A0-9BEA-BBD62AE932D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D41B38BD-14F4-43A0-9BEA-BBD62AE932D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D41B38BD-14F4-43A0-9BEA-BBD62AE932D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
