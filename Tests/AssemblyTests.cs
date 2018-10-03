@@ -16,8 +16,8 @@ namespace Tests
         private static string noClassesInNamespace =>
             "No classes found in namespace {0}";
 
-        private static string testAssembly => "Open.Tests";
-        private static string assembly => "Open";
+        private static string testAssembly => "Tests";
+        private static string assembly => "EventProject";
         private static char genericsChar => '`';
         private static char internalClass => '+';
         private static string displayClass => "<>";
@@ -27,7 +27,7 @@ namespace Tests
 
         protected virtual string Namespace(string name)
         {
-            return $"{assembly}.{name}";
+            return $"{name}";
         }
 
         protected void isAllClassesTested(string assemblyName,
