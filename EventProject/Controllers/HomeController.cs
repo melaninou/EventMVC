@@ -45,7 +45,7 @@ namespace EventProject.Controllers
 
             return View();
         }
-        public IActionResult ViewProfile()
+        public IActionResult Profile()
         {
             ViewData["Message"] = "Your application description page.";
 

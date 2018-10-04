@@ -4,7 +4,7 @@ using Data.Common;
 
 namespace Data
 {
-    public class EventDbRecord : UniqueDbRecord
+    public class EventDbRecord : BasicDbRecord
     {
         private DateTime date;
         private DateTime dateToday = DateTime.Today;

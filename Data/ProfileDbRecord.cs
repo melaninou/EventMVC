@@ -3,7 +3,7 @@ using Data.Common;
 
 namespace Data
 {
-    public class ProfileDbRecord : UniqueDbRecord
+    public class ProfileDbRecord : BasicDbRecord
     {
         
         private string age;

@@ -6,11 +6,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Tests.Data.Common
 {
     [TestClass]
-    public class UniqueDbRecordTests :ObjectTests<UniqueDbRecord>
+    public class UniqueDbRecordTests :ObjectTests<BasicDbRecord>
     {
-        private class testClass : UniqueDbRecord { }
+        private class testClass : BasicDbRecord { }
 
-        protected override UniqueDbRecord getRandomTestObject()
+        protected override BasicDbRecord getRandomTestObject()
         {
             return GetRandom.Object<testClass>();
         }
@@ -18,7 +18,7 @@ namespace Tests.Data.Common
         [TestMethod]
         public void IsAbstract()
         {
-            Assert.IsTrue(typeof(UniqueDbRecord).IsAbstract);
+            Assert.IsTrue(typeof(BasicDbRecord).IsAbstract);
         }
 
         [TestMethod]
