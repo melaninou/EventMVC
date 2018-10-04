@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Tests.Data.Common
 {
     [TestClass]
-    public class UniqueDbRecordTests :ObjectTests<UniqueDbRecord>
+    public class UniqueDbRecordTests : ObjectTests<UniqueDbRecord>
     {
         private class testClass : UniqueDbRecord { }
 

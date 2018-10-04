@@ -27,7 +27,7 @@ namespace Tests
 
         protected virtual string Namespace(string name)
         {
-            return $"{name}";
+            return $"{assembly}.{name}";
         }
 
         protected void isAllClassesTested(string assemblyName,

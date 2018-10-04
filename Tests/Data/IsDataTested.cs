@@ -8,7 +8,7 @@ namespace Tests.Data
         private const string assembly = "Data";
         protected override string Namespace(string name)
         {
-            return $"{name}";
+            return $"{assembly}.{name}";
         }
 
         [TestMethod]
