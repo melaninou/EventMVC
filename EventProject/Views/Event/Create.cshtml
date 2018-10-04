@@ -1,0 +1,24 @@
+﻿@using EventProject.Extensions
+@model Facade.Event.EventViewModel
+@{
+    ViewBag.Title = "Create";
+    ViewBag.SubTitle = "Event";
+    ViewBag.Button = "Save";
+    Layout = "_EditPartial";
+}
+
+
+<body>
+
+    @Html.EditingControlsFor(model => model.Name)
+    @Html.EditingControlsFor(model => model.Date)
+    @Html.EditingControlsFor(model => model.Description)
+    @Html.EditingControlsFor(model => model.Location)
+    @Html.EditingControlsFor(model => model.Organiser)
+
+</body>
+
+@section Actions
+{
+    @Html.ActionLink("Back to List", "Index")
+}
