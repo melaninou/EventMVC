@@ -20,5 +20,19 @@ namespace Core
             Sort.Upwards(ref field, ref value);
             return field;
         }
+
+        public virtual bool Contains(string searchString)
+        {
+            if (string.IsNullOrEmpty(searchString)) return true;
+            searchString = searchString.ToLower();
+            var values = GetClass.ReadWritePropertyValues(this);
+            foreach (var value in values)
+            {
+                if (value is null) continue;
+                if (value.ToString().ToLower().Contains(searchString)) return true;
+            }
+
+            return GetType().Name.ToLower().Contains(searchString);
+        }
     }
 }

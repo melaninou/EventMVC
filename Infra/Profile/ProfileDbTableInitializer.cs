@@ -2,7 +2,7 @@
 using System.Linq;
 using Data;
 
-namespace Infra
+namespace Infra.Profile
 {
     public static class ProfileDbTableInitializer 
     {
@@ -16,9 +16,7 @@ namespace Infra
         private static void initProfiles(EventProjectDbContext c)
         {
             add(c, new ProfileDbRecord
-            {
-
-                
+            {  
                 Name = "Iris Nael",
                 Age = "20",
                 Location = "Tallinn",

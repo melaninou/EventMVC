@@ -1,4 +1,6 @@
-﻿namespace Infra
+﻿using Infra.Profile;
+
+namespace Infra
 {
     public static class DbTableInitializer
     {

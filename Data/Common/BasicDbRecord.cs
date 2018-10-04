@@ -2,7 +2,7 @@
 
 namespace Data.Common
 {
-    public abstract class UniqueDbRecord : RootObject
+    public abstract class BasicDbRecord : RootObject
     {
         protected string id;
         internal string name;
