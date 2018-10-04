@@ -31,7 +31,7 @@ namespace Data
             get => getString(ref description, Constants.Unspecified);
             set => description = value;
         }
-        //todo Type!
+        
 
     }
 }
