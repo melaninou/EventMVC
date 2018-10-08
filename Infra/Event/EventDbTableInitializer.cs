@@ -3,7 +3,7 @@ using System.Linq;
 using Core;
 using Data;
 
-namespace Infra
+namespace Infra.Event
 {
     public static class EventDbTableInitializer
     {
@@ -17,9 +17,7 @@ namespace Infra
         private static void initEvents(EventProjectDbContext c)
         {
             add(c, new EventDbRecord
-            {
-
-                
+            {                
                 Name = "Parklapidu",
                 Location = "Tallinn",
                 Date = DateTime.Parse("12.12.2018"),

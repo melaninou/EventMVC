@@ -1,6 +1,4 @@
-﻿
-using System;
-using Core;
+﻿using System;
 using Facade.Common;
 
 namespace Facade.Event
@@ -8,24 +6,25 @@ namespace Facade.Event
     public class EventViewModel : BasicViewModel
     {
         private DateTime date;
+        private DateTime dateToday = DateTime.Today;
         private string organiser;
         private string description;
 
         public DateTime Date
         {
-            get => getValue(ref date, ref date);
+            get => getValue(ref dateToday, ref date);
             set => setValue(ref date, value);
         }
 
         public string Organiser
         {
-            get => getString(ref organiser, Constants.Unspecified);
+            get => getString(ref organiser);
             set => organiser = value;
         }
 
         public string Description
         {
-            get => getString(ref description, Constants.Unspecified);
+            get => getString(ref description);
             set => description = value;
         }
     }

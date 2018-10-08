@@ -10,7 +10,7 @@ namespace Tests.Data
         {
             return $"{assembly}.{name}";
         }
-
+        
         [TestMethod]
         public void IsCommonTested()
         {

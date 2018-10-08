@@ -1,4 +1,5 @@
-﻿using Infra.Profile;
+﻿using Infra.Event;
+using Infra.Profile;
 
 namespace Infra
 {

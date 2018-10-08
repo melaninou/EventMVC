@@ -16,11 +16,16 @@ namespace Tests.Data
         }
 
         [TestMethod]
-        public void BaseTypeIsUniqueDbRecord()
+        public void BaseTypeIsBasicDbRecord()
         {
-            Assert.AreEqual(typeof(UniqueDbRecord), typeof(EventDbRecord).BaseType);
+            Assert.AreEqual(typeof(BasicDbRecord), typeof(EventDbRecord).BaseType);
         }
 
+        [TestMethod]
+        public void TypeTest()
+        {
+            testReadWriteProperty(() => obj.Type, x => obj.Type = x);
+        }
 
         [TestMethod]
         public void DateTest()

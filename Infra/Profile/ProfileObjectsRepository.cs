@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using Core;
 using Data;
-using Data.Common;
 using Domain.Profile;
-using Microsoft.EntityFrameworkCore;
 using Open.Infra;
 
 namespace Infra.Profile

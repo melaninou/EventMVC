@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Core;
 using Data;
 
 namespace Infra.Profile
@@ -20,7 +21,7 @@ namespace Infra.Profile
                 Name = "Iris Nael",
                 Age = "20",
                 Location = "Tallinn",
-                Gender = "Female"
+                Gender = ProfileGender.Female
             });
         }
 

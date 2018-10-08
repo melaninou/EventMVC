@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core;
+﻿using Core;
 
 namespace Facade.Common
 {
@@ -11,13 +8,13 @@ namespace Facade.Common
         private string location;
         public string Name
         {
-            get => getString(ref name, Constants.Unspecified);
+            get => getString(ref name);
             set => name = value;
         }
 
         public string Location
         {
-            get => getString(ref location, Constants.Unspecified);
+            get => getString(ref location);
             set => location = value;
         }
     }

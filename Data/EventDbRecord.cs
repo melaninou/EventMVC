@@ -22,16 +22,14 @@ namespace Data
  
         public string Organiser
         {
-            get => getString(ref organiser, Constants.Unspecified);
+            get => getString(ref organiser);
             set => organiser = value;
         }
 
         public string Description
         {
-            get => getString(ref description, Constants.Unspecified);
+            get => getString(ref description);
             set => description = value;
         }
-        
-
     }
 }

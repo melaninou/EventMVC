@@ -4,29 +4,20 @@ using Data.Common;
 namespace Data
 {
     public class ProfileDbRecord : BasicDbRecord
-    {
-        
+    {      
         private string age;
-        private string gender;
-
         
         public override string ID
         {
-            get => getString(ref id, Constants.Unspecified);
+            get => getString(ref id);
             set => id = value;
         }
 
         public string Age
         {
-            get => getString(ref age, Constants.Unspecified);
+            get => getString(ref age);
             set => age = value;
         }
-
-        public string Gender
-        {
-            get => getString(ref gender, Constants.Unspecified);
-            set => gender = value;
-        }
-   
+        public ProfileGender Gender { get; set; }
     }  
 }

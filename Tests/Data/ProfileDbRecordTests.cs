@@ -1,4 +1,5 @@
 ﻿using Aids;
+using Core;
 using Data;
 using Data.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,11 +13,31 @@ namespace Tests.Data
         {
             return GetRandom.Object<ProfileDbRecord>();
         }
+
         [TestMethod]
-        public void BaseTypeIsUniqueDbRecord()
+        public void BaseTypeIsBasicDbRecord()
         {
-            Assert.AreEqual(typeof(UniqueDbRecord), typeof(ProfileDbRecord).BaseType);
+            Assert.AreEqual(typeof(BasicDbRecord), typeof(ProfileDbRecord).BaseType);
         }
 
+        [TestMethod]
+        public void IDTest()
+        {
+            testReadWriteProperty(() => obj.ID, x => obj.ID = x);
+            testNullEmptyAndWhitespaceCases(() => obj.ID, x => obj.ID = x, () => Constants.Unspecified);
+        }
+
+        [TestMethod]
+        public void AgeTest()
+        {
+            testReadWriteProperty(() => obj.Age, x => obj.Age = x);
+            testNullEmptyAndWhitespaceCases(() => obj.Age, x => obj.Age = x, () => Constants.Unspecified);
+        }
+
+        [TestMethod]
+        public void GenderTest()
+        {
+            testReadWriteProperty(() => obj.Gender, x => obj.Gender = x);
+        }
     }
 }
