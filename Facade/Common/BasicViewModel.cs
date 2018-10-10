@@ -6,6 +6,13 @@ namespace Facade.Common
     {
         private string name;
         private string location;
+        private string id;
+
+        public string Id
+        {
+            get => getString(ref id);
+            set => id = value;
+        }
         public string Name
         {
             get => getString(ref name);
