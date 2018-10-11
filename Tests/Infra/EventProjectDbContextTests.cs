@@ -13,6 +13,8 @@ namespace Tests.Infra
     [TestClass]
     public class EventProjectDbContextTests :BaseTests
     {
+
+        protected readonly EventProjectDbContext db;
         private class testClass : EventProjectDbContext
         {
             public testClass(DbContextOptions<EventProjectDbContext> o) : base(o)
@@ -44,11 +46,28 @@ namespace Tests.Infra
             testHasEventProfileEntities(mb);
         }
 
+        [TestMethod]
+        public void EventsTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
+        public void ProfilesTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
+        public void EventsProfilesTest()
+        {
+            Assert.Inconclusive();
+        }
         private void testHasEventProfileEntities(ModelBuilder mb)
         {
             testEntity<EventDbRecord>(mb);
             testEntity<ProfileDbRecord>(mb);
-            var entity = testEntity<EventProfileDbRecord>(mb);
+            var entity = testEntity<EventProfileDbRecord>(mb, true, 2);
             var eventID = GetMember.Name<EventProfileDbRecord>(x => x.EventID);
             var profileID = GetMember.Name<EventProfileDbRecord>(x => x.ProfileID);
             testPrimaryKey(entity,eventID, profileID);
