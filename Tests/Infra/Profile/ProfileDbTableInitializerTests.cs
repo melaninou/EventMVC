@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.Infra.Profile
 {
+    [TestClass]
     public class ProfileDbTableInitializerTests :BaseTests
     {
         [TestInitialize]

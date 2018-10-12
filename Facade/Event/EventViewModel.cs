@@ -15,7 +15,7 @@ namespace Facade.Event
         [Required]
         public DateTime Date
         {
-            get => getValue(ref dateToday, ref date);
+            get => getValue(ref date, ref dateToday);
             set => setValue(ref date, value);
         }
 

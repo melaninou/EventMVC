@@ -2,6 +2,7 @@
 
 namespace Tests.Infra
 {
+    [TestClass]
     public class PaginatedRepositoryTests :BaseTests
     {
         [TestMethod]
