@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infra.Migrations
 {
-    public partial class eventmig : Migration
+    public partial class inframig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,7 +32,7 @@ namespace Infra.Migrations
                     Location = table.Column<string>(nullable: true),
                     ID = table.Column<string>(nullable: false),
                     Age = table.Column<string>(nullable: true),
-                    Gender = table.Column<string>(nullable: true)
+                    Gender = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Core;
 using Facade.Common;
 
 namespace Facade.Event
@@ -10,7 +11,7 @@ namespace Facade.Event
         private DateTime dateToday = DateTime.Today;
         private string organiser;
         private string description;
-
+        public EventType Type { get; set; }
         [Required]
         public DateTime Date
         {

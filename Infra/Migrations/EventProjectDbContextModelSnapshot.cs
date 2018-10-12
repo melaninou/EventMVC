@@ -61,7 +61,7 @@ namespace Infra.Migrations
 
                     b.Property<string>("Age");
 
-                    b.Property<string>("Gender");
+                    b.Property<int>("Gender");
 
                     b.Property<string>("Location");
 
