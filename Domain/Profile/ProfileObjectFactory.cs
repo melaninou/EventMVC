@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core;
+﻿using Core;
 using Data;
 
 namespace Domain.Profile
@@ -21,6 +18,5 @@ namespace Domain.Profile
             };
             return new ProfileObject(o);
         }
-
     }
 }
