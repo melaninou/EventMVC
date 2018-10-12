@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Facade.Common;
 
 namespace Facade.Event
@@ -10,6 +11,7 @@ namespace Facade.Event
         private string organiser;
         private string description;
 
+        [Required]
         public DateTime Date
         {
             get => getValue(ref dateToday, ref date);
