@@ -13,7 +13,7 @@ namespace EventProject.Controllers
     public class ProfileController : Controller
     {
         private IProfileObjectsRepository repository;
-        public const string properties = "Id, Name, Gender, Age, Location";
+        public const string properties = "ID, Name, Gender, Age, Location";
 
 
 
@@ -35,7 +35,7 @@ namespace EventProject.Controllers
         public async Task<IActionResult> Create([Bind(properties)] ProfileViewModel c)
         {
             if (!ModelState.IsValid) return View(c);         
-            var o = ProfileObjectFactory.Create(c.Id, c.Name, c.Location, c.Age, c.Gender);
+            var o = ProfileObjectFactory.Create(c.ID, c.Name, c.Location, c.Age, c.Gender);
             await repository.AddObject(o);
             return RedirectToAction("Index"); 
         }
