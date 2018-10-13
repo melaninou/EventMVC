@@ -1,4 +1,38 @@
-﻿@{
-    ViewData["Title"] = "Index";
-}]
-<h2>Index for event</h2>
+﻿@using EventProject.Extensions
+@model Core.IPaginatedList<Facade.Event.EventViewModel>
+@{
+    ViewData["Title"] = "Events";
+    Layout = "_IndexPartial";
+}
+@section Create
+    {
+    <a asp-action="Create">Create Event</a>
+}
+@*<body>
+    <table class="table">
+        @{ var dummy = Model.FirstOrDefault();}
+        <thead>
+            <tr>
+                @Html.SortColumnHeaderFor(ViewData["SortID"], model => dummy.ID)
+                @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
+                @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy.Date)
+                @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy.Location)
+                @Html.SortColumnHeaderFor(ViewData["SortOrganiser"], model => dummy.Organiser)
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Organiser)</td>
+                    @Html.EditDetailDeleteFor(modelItem => item.ID)
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>*@
