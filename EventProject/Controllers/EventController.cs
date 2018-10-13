@@ -21,9 +21,10 @@ namespace EventProject.Controllers
         {
             repository = r;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var l = await repository.GetObjectsList();
+            return View(new EventViewModelsList(l));
         }
        
 
@@ -57,10 +58,6 @@ namespace EventProject.Controllers
         {
             return View();
         }
-
-
-
-
 
         private Func<EventDbRecord, object> getSortFunction(string sortOrder)
         {
