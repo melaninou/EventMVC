@@ -8,7 +8,8 @@ namespace Domain.Event
 {
     public static class EventObjectFactory
     {
-        public static EventObject Create(string id, string name, string location, DateTime date, EventType type,
+        public static EventObject Create(string id, string name,
+            string location, DateTime date, EventType type,
             string organiser, string description)
         {
             var o = new EventDbRecord

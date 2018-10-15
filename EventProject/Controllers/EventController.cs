@@ -15,6 +15,7 @@ namespace EventProject.Controllers
     public class EventController : Controller
     {
         public const string properties = "ID, Name, Date, Type, Description, Location, Organiser";
+
         private IEventObjectsRepository repository;
         
         public EventController(IEventObjectsRepository r)
@@ -42,22 +43,44 @@ namespace EventProject.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit()
+        public async Task<IActionResult> Edit(string id)
         {
-            return View();
+            var c = await repository.GetObject(id);
+            return View(EventViewModelFactory.Create(c));
         }
-        public ActionResult Edit(string id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind(properties)] EventViewModel c)
         {
-            return View();
+            if (!ModelState.IsValid) return View(c);
+            var o = await repository.GetObject(c.ID);
+            o.DbRecord.Name = c.Name;
+            o.DbRecord.Location = c.Location;
+            o.DbRecord.Date = c.Date;
+            o.DbRecord.Type = c.Type;
+            o.DbRecord.Description = c.Description;
+            o.DbRecord.Organiser = c.Organiser;
+            await repository.UpdateObject(o);
+            return RedirectToAction("Index");
         }
-        public ActionResult Details(string id)
+        public async Task<IActionResult> Details(string id)
         {
-            return View();
+            var c = await repository.GetObject(id);
+            return View(EventViewModelFactory.Create(c));
         }
-        public ActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            return View();
+            var c = await repository.GetObject(id);
+            return View(EventViewModelFactory.Create(c));
         }
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            var c = await repository.GetObject(id);
+            await repository.DeleteObject(c);
+            return RedirectToAction("Index");
+        }
+
 
         private Func<EventDbRecord, object> getSortFunction(string sortOrder)
         {

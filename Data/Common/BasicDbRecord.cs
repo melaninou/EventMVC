@@ -14,7 +14,7 @@ namespace Data.Common
         }
         public virtual string Name
         {
-            get => getString(ref name, Constants.Unspecified);
+            get => getString(ref name, ID);
             set => name = value;
         }
         public virtual string Location

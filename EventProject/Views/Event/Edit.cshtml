@@ -1,7 +1,21 @@
-﻿
+﻿@using EventProject.Extensions
+@model Facade.Event.EventViewModel
 @{
-    ViewData["Title"] = "Edit Event";
+    ViewBag.Title = "Edit";
+    ViewBag.SubTitle = $"Events ({Model.ID})";
+    ViewBag.Button = "Save";
+    Layout = "_EditPartial";
 }
-
-<h2>Edit</h2>
-
+<body>
+    @Html.HiddenFor(model => model.ID)
+    @Html.EditingControlsFor(model => model.Name)
+    @Html.EditingControlsFor(model => model.Date)
+    @Html.EditingControlsFor(model => model.Location)
+    @Html.EditingControlsFor(model => model.Type)
+    @Html.EditingControlsFor(model => model.Description)
+    @Html.EditingControlsFor(model => model.Organiser)
+</body>
+@section Actions
+    {
+    @Html.ActionLink("Back to List", "Index")
+}

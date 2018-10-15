@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "_Layout";
-    ViewBag.ActionIndex = "Create";
+    ViewBag.ActionIndex = "Index";
     ViewBag.ActionCreate = "Create";
 }
 
@@ -20,4 +20,25 @@
     </div>
 </form>
 
+@RenderBody()
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action=@ViewBag.ActionIndex
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-page="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action=@ViewBag.ActionIndex
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-page="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
 

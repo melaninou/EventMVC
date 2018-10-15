@@ -7,7 +7,9 @@ namespace Infra
 {
     public class EventProjectDbContext : DbContext
     {
-        public EventProjectDbContext(DbContextOptions<EventProjectDbContext> o) : base(o) { }
+        public EventProjectDbContext
+            (DbContextOptions<EventProjectDbContext> o)
+            : base(o) { }
 
         public DbSet<ProfileDbRecord> Profiles { get; set; }
 
@@ -29,6 +31,7 @@ namespace Infra
         {
             const string table = "Events";
             b.Entity<EventDbRecord>().ToTable(table);
+           
         }
 
         internal static void createProfilesTable(ModelBuilder b)

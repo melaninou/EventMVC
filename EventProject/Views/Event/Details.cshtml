@@ -1,0 +1,24 @@
+﻿@using EventProject.Extensions
+@model Facade.Event.EventViewModel
+
+@{
+    ViewBag.Title = "Details";
+    ViewBag.SubTitle = "Events";
+    Layout = "_DetailsPartial";
+}
+<body>
+@Html.ViewingControlsFor(model => model.ID)
+@Html.ViewingControlsFor(model => model.Name)
+@Html.ViewingControlsFor(model => model.Date)
+@Html.ViewingControlsFor(model => model.Type)
+@Html.ViewingControlsFor(model => model.Location)
+@Html.ViewingControlsFor(model => model.Location)
+@Html.ViewingControlsFor(model => model.Description)
+@Html.ViewingControlsFor(model => model.Organiser)
+
+@section Actions
+{
+    @Html.ActionLink("Edit", "Edit", new {id=Model.ID})
+    @Html.ActionLink("Back to List", "Index")
+}
+</body>

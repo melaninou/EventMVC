@@ -39,12 +39,12 @@ namespace EventProject.Controllers
 
             return View();
         }
-        public IActionResult ViewEvents()
-        {
-            ViewData["Message"] = "Your application description page.";
+        //public IActionResult ViewEvents()
+        //{
+        //    ViewData["Message"] = "Your application description page.";
 
-            return View();
-        }
+        //    return View();
+        //}
         public IActionResult Profile()
         {
             ViewData["Message"] = "Your application description page.";
