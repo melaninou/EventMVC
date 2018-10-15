@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.Infra.Event
 {
+    [TestClass]
     public class EventDbTableInitializerTests :BaseTests
     {
         [TestInitialize]

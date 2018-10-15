@@ -52,7 +52,7 @@ namespace Tests.Domain.Profile
         [TestMethod]
         public void CreateWithNullArgumentsTest()
         {
-            o = ProfileObjectFactory.Create(null, null, null, null,ProfileGender.Female);
+            o = ProfileObjectFactory.Create(null, null, null, null,gender);
             validateResults();
         }
     }

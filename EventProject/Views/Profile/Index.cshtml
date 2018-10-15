@@ -1,4 +1,4 @@
-﻿
+﻿@model Facade.Profile.ProfileViewModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -24,9 +24,11 @@
 
                         <div class="space space-4"></div>
 
-                        <a href="#" class="btn btn-sm btn-block btn-primary">
+                        <a href="@Url.Action("Edit", "Profile")" class="btn btn-sm btn-block btn-primary">
                             <span class="bigger-110">Edit</span>
                         </a>
+
+
                     </div><!-- /.col -->
 
                     <div class="col-xs-12 col-sm-9">
@@ -57,22 +59,22 @@
                                     <span>Aug 4 1992 (26) </span>
                                 </div>
                             </div>
-                            
+
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Gender </div>
 
                                 <div class="profile-info-value">
                                     <span>Male</span>
                                 </div>
-                            </div> 
-                            
+                            </div>
+
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Occupation </div>
 
                                 <div class="profile-info-value">
                                     <span>engineer</span>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -95,12 +97,12 @@
                                         I'm a business IT student in TalTech.
                                     </p>
                                 </div>
-                            </div>                         
+                            </div>
                         </div>
                     </div>
                 </div>
             </div><!-- /#home -->
-            
+
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
                     <div class="widget-box transparent">
@@ -117,12 +119,12 @@
                                     programming, business, football
                                 </p>
                             </div>
-                        </div>                         
+                        </div>
                     </div>
                 </div>
             </div>
         </div><!-- /#home -->
-        </div>
+
     </div>
 </div>
 
