@@ -39,14 +39,26 @@ namespace EventProject.Controllers
             await repository.AddObject(o);
             return RedirectToAction("Index"); 
         }
+
         public ActionResult Edit()
         {
             return View();
         }
-        public ActionResult Edit(string id)
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind(properties)] ProfileViewModel c)
         {
-            return View();
+            if (!ModelState.IsValid) return View(c);
+            var o = await repository.GetObject(c.ID);
+            o.DbRecord.Name = c.Name;
+            o.DbRecord.Location = c.Location;
+            o.DbRecord.Age = c.Age;
+            o.DbRecord.Gender = c.Gender;
+            await repository.UpdateObject(o);
+            return RedirectToAction("Index");
         }
+
         public ActionResult Details(string id)
         {
             return View();
