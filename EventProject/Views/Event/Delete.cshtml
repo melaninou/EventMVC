@@ -3,7 +3,7 @@
 
 @{
     ViewBag.Title = "Delete";
-    ViewBag.SubTitle = "Events";
+    ViewBag.SubTitle = "Event";
     Layout = "_DeletePartial";
 }
 <body>
@@ -17,7 +17,8 @@
 </body>
 
 @section Actions
-    {
+{
+
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
     @Html.ActionLink("Back to List", "Index")
 }

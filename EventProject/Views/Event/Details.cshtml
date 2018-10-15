@@ -3,15 +3,13 @@
 
 @{
     ViewBag.Title = "Details";
-    ViewBag.SubTitle = "Events";
+    ViewBag.SubTitle = "Event";
     Layout = "_DetailsPartial";
 }
 <body>
-@Html.ViewingControlsFor(model => model.ID)
 @Html.ViewingControlsFor(model => model.Name)
 @Html.ViewingControlsFor(model => model.Date)
 @Html.ViewingControlsFor(model => model.Type)
-@Html.ViewingControlsFor(model => model.Location)
 @Html.ViewingControlsFor(model => model.Location)
 @Html.ViewingControlsFor(model => model.Description)
 @Html.ViewingControlsFor(model => model.Organiser)
