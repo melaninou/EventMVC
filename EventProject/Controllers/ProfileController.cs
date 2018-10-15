@@ -8,6 +8,8 @@ using Facade.Profile;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
+
+
 namespace EventProject.Controllers
 {
     public class ProfileController : Controller
@@ -15,12 +17,15 @@ namespace EventProject.Controllers
         private IProfileObjectsRepository repository;
         public const string properties = "ID, Name, Gender, Age, Location";
 
+        private readonly UserManager<IdentityUser> _userManager;
+ 
 
-
-        public ProfileController(IProfileObjectsRepository r)
+        public ProfileController(IProfileObjectsRepository r, UserManager<IdentityUser> userManager)
         {
+            _userManager = userManager;
             repository = r;
         }
+
 
         public IActionResult Index()
         {
@@ -31,10 +36,12 @@ namespace EventProject.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Create([Bind(properties)] ProfileViewModel c)
         {
-            if (!ModelState.IsValid) return View(c);         
+            if (!ModelState.IsValid) return View(c);
+            string userId = _userManager.GetUserId(HttpContext.User);
             var o = ProfileObjectFactory.Create(c.ID, c.Name, c.Location, c.Age, c.Gender);
             await repository.AddObject(o);
             return RedirectToAction("Index"); 
@@ -58,10 +65,11 @@ namespace EventProject.Controllers
             await repository.UpdateObject(o);
             return RedirectToAction("Index");
         }
-
-        public ActionResult Details(string id)
+        public async Task<IActionResult> Details()
         {
-            return View();
+            string id = "1";
+            var c = await repository.GetObject(id);
+            return View(ProfileViewModelFactory.Create(c));
         }
         public ActionResult Delete(string id)
         {
