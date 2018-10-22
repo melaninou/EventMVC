@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Domain.Profile;
 using Facade.Profile;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,32 +27,45 @@ namespace EventProject.Controllers
             repository = r;
         }
 
-
-        public IActionResult Index()
+        [Authorize]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            string userId = _userManager.GetUserId(HttpContext.User);
+            var currentUser = await repository.GetObject(userId);
+            if (currentUser.DbRecord.ID == "Unspecified")
+            {
+                return RedirectToAction("Create");
+            }
+            else
+            {
+                return RedirectToAction("Details");
+            }
         }
 
+        [Authorize]
         public ActionResult Create()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([Bind(properties)] ProfileViewModel c)
         {
             if (!ModelState.IsValid) return View(c);
             string userId = _userManager.GetUserId(HttpContext.User);
-            var o = ProfileObjectFactory.Create(c.ID, c.Name, c.Location, c.Age, c.Gender);
+            var o = ProfileObjectFactory.Create(userId, c.Name, c.Location, c.Age, c.Gender);
             await repository.AddObject(o);
-            return RedirectToAction("Index"); 
+            return RedirectToAction("Details"); 
         }
 
+        [Authorize]
         public ActionResult Edit()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind(properties)] ProfileViewModel c)
@@ -65,12 +79,16 @@ namespace EventProject.Controllers
             await repository.UpdateObject(o);
             return RedirectToAction("Index");
         }
+
+        [Authorize]
         public async Task<IActionResult> Details()
         {
-            string id = "1";
-            var c = await repository.GetObject(id);
-            return View(ProfileViewModelFactory.Create(c));
+            string userId = _userManager.GetUserId(HttpContext.User);
+            var currentUser = await repository.GetObject(userId);
+            return View(ProfileViewModelFactory.Create(currentUser));
         }
+
+        [Authorize]
         public ActionResult Delete(string id)
         {
             return View();
