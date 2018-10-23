@@ -9,10 +9,15 @@
 }
 
 <body>
-@Html.EditingControlsFor(model => model.Name)
-@Html.EditingControlsFor(model => model.Location)
-@Html.EditingControlsFor(model => model.Age)
-@Html.EditingControlsFor(model => model.Gender)
+    @Html.EditingControlsFor(model => model.Name)
+    @Html.EditingControlsFor(model => model.Location)
+    @Html.EditingControlsFor(model => model.Age)
+    @Html.EditingControlsFor(model => model.Gender)
+
+    <asp:FileUpload ID="FileUpload1" runat="server" />
+    <asp:Button ID="btnUpload" Text="Upload" runat="server" OnClick="UploadFile" />
+    <hr />
+    <asp:Image ID="Image1" runat="server" Height = "100" Width = "100" />
 </body>
 
 @section Actions

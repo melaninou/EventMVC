@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -8,7 +9,8 @@ using Facade.Profile;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Web;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 
 namespace EventProject.Controllers
@@ -17,9 +19,7 @@ namespace EventProject.Controllers
     {
         private IProfileObjectsRepository repository;
         public const string properties = "ID, Name, Gender, Age, Location";
-
         private readonly UserManager<IdentityUser> _userManager;
- 
 
         public ProfileController(IProfileObjectsRepository r, UserManager<IdentityUser> userManager)
         {
