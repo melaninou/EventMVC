@@ -12,14 +12,16 @@ namespace Facade.Event
     public class EventViewModel : BasicViewModel
     {
         private DateTime date;
-        private DateTime dateToday = DateTime.Today;
         private string organiser;
         private string description;
+
         public EventType Type { get; set; }
        
+
+
         public DateTime Date
         {
-            get => getValue(ref date, ref dateToday);
+            get => getValue(ref date, ref date);
             set => setValue(ref date, value);
         }
         

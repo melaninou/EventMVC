@@ -17,11 +17,7 @@ namespace Facade.Event
                 Organiser = o?.DbRecord.Organiser
             };
             if (o is null) return v;
-            //foreach (var c in o.ProfilesInUse)
-            //{
-            //    var profile = ProfileViewModelFactory.Create(c);
-            //    v.InProfiles.Add(profile);
-            //}
+            
             return v;
         }
     }
