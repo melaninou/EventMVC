@@ -17,15 +17,21 @@ namespace EventProject.Controllers
         public const string properties = "ID, Name, Date, Type, Description, Location, Organiser";
 
         private IEventObjectsRepository repository;
+      
         
         public EventController(IEventObjectsRepository r)
         {
             repository = r;
+         
         }
         public async Task<IActionResult> Index()
         {
-            var l = await repository.GetObjectsList();
-            return View(new EventViewModelsList(l));
+           
+           
+               var l = await repository.GetObjectsList();
+                return View(new EventViewModelsList(l));
+           
+           
         }
        
 
@@ -36,9 +42,9 @@ namespace EventProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([Bind(properties)] EventViewModel e)
         {
-            await validateId(e.ID, ModelState);
+            //await validateId(e.ID, ModelState);
             if (!ModelState.IsValid) return View(e);
-            var o = EventObjectFactory.Create(e.ID, e.Name, e.Location, e.Date, e.Type, e.Organiser, e.Description);
+            var o = EventObjectFactory.Create(GetUniqueID(), e.Name, e.Location, e.Date, e.Type, e.Organiser, e.Description);
             await repository.AddObject(o);
             return RedirectToAction("Index");
         }
@@ -106,6 +112,12 @@ namespace EventProject.Controllers
         {
             var name = GetMember.DisplayName<EventViewModel>(c => c.ID);
             return string.Format(Messages.ValueIsAlreadyInUse, id, name);
+        }
+        private static string GetUniqueID()
+        {
+            Guid guid = Guid.NewGuid();
+            string uniqueID = guid.ToString();
+            return uniqueID;
         }
     }
 }
