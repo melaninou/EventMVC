@@ -1,5 +1,6 @@
 ﻿using Facade.Common;
 using Core;
+using Microsoft.AspNetCore.Http;
 
 namespace Facade.Profile
 {
@@ -13,5 +14,9 @@ namespace Facade.Profile
         }
 
         public ProfileGender Gender { get; set; }
+
+        public IFormFile AvatarFile { get; set; }
+
+        public string AvatarPath { get; set; }
     }
 }

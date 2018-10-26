@@ -5,7 +5,8 @@
     ViewBag.Title = "Create";
     ViewBag.SubTitle = "Profile";
     ViewBag.Button = "Save";
-    Layout = "_EditPartial";
+  //  Layout = "_EditPartial";
+
 }
 
 <body>
@@ -14,14 +15,36 @@
     @Html.EditingControlsFor(model => model.Age)
     @Html.EditingControlsFor(model => model.Gender)
 
-    <asp:FileUpload ID="FileUpload1" runat="server" />
-    <asp:Button ID="btnUpload" Text="Upload" runat="server" OnClick="UploadFile" />
-    <hr />
-    <asp:Image ID="Image1" runat="server" Height = "100" Width = "100" />
+
+
+    <h1>Edit Profile</h1>
+    <div class="row">
+        <section>
+            <form asp-controller="Profile" asp-action="Create" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>
+            
+                <div class="form-group">
+                    <label asp-for="AvatarFile" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input type="file" name="AvatarFile" class="form-control" />
+                       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-default">Save</button>
+                    </div>
+                </div>
+
+                <p>
+                    <a asp-action="Index">Return to Profile</a>
+                </p>
+            </form>
+        </section>
+    </div>
+
 </body>
 
-@section Actions
-    {
-    @Html.ActionLink("Back to List", "Index")
-}
+
+
 

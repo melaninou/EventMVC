@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Web;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+
 
 
 namespace EventProject.Controllers
@@ -20,6 +22,7 @@ namespace EventProject.Controllers
         private IProfileObjectsRepository repository;
         public const string properties = "ID, Name, Gender, Age, Location";
         private readonly UserManager<IdentityUser> _userManager;
+        
 
         public ProfileController(IProfileObjectsRepository r, UserManager<IdentityUser> userManager)
         {
@@ -30,15 +33,18 @@ namespace EventProject.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
+            
+
             string userId = _userManager.GetUserId(HttpContext.User);
+
             var currentUser = await repository.GetObject(userId);
             if (currentUser.DbRecord.ID == "Unspecified")
             {
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", "Profile");
             }
             else
             {
-                return RedirectToAction("Details");
+                return RedirectToAction("Details", "Profile");
             }
         }
 
@@ -49,13 +55,23 @@ namespace EventProject.Controllers
         }
 
         [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> Create([Bind(properties)] ProfileViewModel c)
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create(IFormFile avatarFile, [Bind(properties)] ProfileViewModel c)
         {
-            if (!ModelState.IsValid) return View(c);
             string userId = _userManager.GetUserId(HttpContext.User);
-            var o = ProfileObjectFactory.Create(userId, c.Name, c.Location, c.Age, c.Gender);
-            await repository.AddObject(o);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", GetUniqueID()+".jpg");
+
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await avatarFile.CopyToAsync(stream);
+            }
+
+                if (!ModelState.IsValid) return View(c);
+               
+                var o = ProfileObjectFactory.Create(GetUniqueID(), c.Name, c.Location, c.Age, c.Gender);
+                await repository.AddObject(o);
+
             return RedirectToAction("Details"); 
         }
 
@@ -92,6 +108,15 @@ namespace EventProject.Controllers
         public ActionResult Delete(string id)
         {
             return View();
+        }
+
+
+
+        private static string GetUniqueID()
+        {
+            Guid guid = Guid.NewGuid();
+            string uniqueID = guid.ToString();
+            return uniqueID;
         }
     }
 }

@@ -26,12 +26,8 @@ namespace EventProject.Controllers
         }
         public async Task<IActionResult> Index()
         {
-           
-           
                var l = await repository.GetObjectsList();
                 return View(new EventViewModelsList(l));
-           
-           
         }
        
 
