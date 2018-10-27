@@ -12,11 +12,11 @@ namespace Tests.Facade.Profile
         {
             return GetRandom.Object<ProfileViewModel>();
         }
-        [TestMethod]
-        public void AgeTest()
-        {
-            testReadWriteProperty(() => obj.Age, x => obj.Age = x);
-        }
+        //[TestMethod]
+        //public void AgeTest()
+        //{
+        //    testReadWriteProperty(() => obj.Age, x => obj.Age = x);
+        //}
 
         [TestMethod]
         public void GenderTest()

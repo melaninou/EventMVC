@@ -59,13 +59,19 @@ namespace Infra.Migrations
                     b.Property<string>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Age");
+                    b.Property<string>("AboutText");
+
+                    b.Property<DateTime>("BirthDay");
 
                     b.Property<int>("Gender");
 
                     b.Property<string>("Location");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("Occupation");
+
+                    b.Property<string>("ProfileImage");
 
                     b.HasKey("ID");
 

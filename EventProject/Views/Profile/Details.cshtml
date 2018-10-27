@@ -2,6 +2,10 @@
 @model Facade.Profile.ProfileViewModel
 @{
     ViewData["Title"] = "Details on " +@Model.Name ;
+    ViewBag.FileEnding = ".jpg";
+    
+
+
 }
 
 <div id="user-profile-2" class="user-profile">
@@ -10,7 +14,7 @@
             <li class="active">
                 <a data-toggle="tab" href="#home">
                     <i class="green ace-icon fa fa-user bigger-120"></i>
-                    Profile
+                    Profile 
                 </a>
             </li>
         </ul>
@@ -20,11 +24,12 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-3 center">
                         <span class="profile-picture">
-                            <img class="editable img-responsive" alt=" Avatar" id="avatar2" src="http://bootdey.com/img/Content/avatar/avatar6.png">
+                            <img class="editable img-responsive" alt="Avatar" id="avatar2" src="~/images/@Model.ID/@Model.ProfileImage@ViewBag.FileEnding"/>
+
                         </span>
 
                         <div class="space space-4"></div>
-
+                    
                         <a href="@Url.Action("Edit", "Profile")" class="btn btn-sm btn-block btn-primary">
                             <span class="bigger-110">Edit</span>
                         </a>
@@ -53,10 +58,10 @@
                             </div>
 
                             <div class="profile-info-row">
-                                <div class="profile-info-name">Age:</div>
+                                <div class="profile-info-name">BirthDay:</div>
 
                                 <div class="profile-info-value">
-                                    <span>@Model.Age</span>
+                                    <span>@Model.BirthDay</span>
                                 </div>
                             </div>
 
@@ -72,7 +77,7 @@
                                 <div class="profile-info-name"> Occupation: </div>
 
                                 <div class="profile-info-value">
-                                    <span>engineer</span>
+                                    <span>@Model.Occupation</span>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +99,8 @@
                             <div class="widget-body">
                                 <div class="widget-main">
                                     <p>
-                                        I'm a business IT student in TalTech.
+                                        @Model.AboutText    
+ 
                                     </p>
                                 </div>
                             </div>

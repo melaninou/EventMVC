@@ -19,7 +19,6 @@ namespace Infra.Profile
             add(c, new ProfileDbRecord
             {  
                 Name = "Iris Nael",
-                Age = "20",
                 Location = "Tallinn",
                 Gender = ProfileGender.Female
             });

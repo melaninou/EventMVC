@@ -15,7 +15,13 @@ namespace Facade.Profile
                 ID = o?.DbRecord.ID,
                 Location = o?.DbRecord.Location,
                 Gender = o.DbRecord.Gender,
-                Age = o?.DbRecord.Age
+                BirthDay = o.DbRecord.BirthDay, 
+                AboutText = o?.DbRecord.AboutText,
+                Occupation = o?.DbRecord.Occupation,
+                ProfileImage = o?.DbRecord.ProfileImage
+                
+                
+
             };
             return v;
         }

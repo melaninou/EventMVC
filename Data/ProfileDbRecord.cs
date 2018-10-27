@@ -1,23 +1,43 @@
-﻿using Core;
+﻿using System;
+using Core;
 using Data.Common;
 
 namespace Data
 {
     public class ProfileDbRecord : BasicDbRecord
-    {      
-        private string age;
-        
-        public override string ID
+    {
+        private string profileImage;
+        private DateTime birthDay;
+        private string aboutText;
+        private string occupation;
+
+
+
+
+        public ProfileGender Gender { get; set; }
+
+        public DateTime BirthDay
         {
-            get => getString(ref id);
-            set => id = value;
+            get => getValue(ref birthDay, ref birthDay);
+            set => setValue(ref birthDay, value);
         }
 
-        public string Age
+        public string ProfileImage
         {
-            get => getString(ref age);
-            set => age = value;
+            get => getString(ref profileImage);
+            set => profileImage = value;
         }
-        public ProfileGender Gender { get; set; }
+
+        public string AboutText
+        {
+            get => getString(ref aboutText);
+            set => aboutText = value;
+        }
+
+        public string Occupation
+        {
+            get => getString(ref occupation);
+            set => occupation = value;
+        }
     }  
 }

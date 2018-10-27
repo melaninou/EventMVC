@@ -77,7 +77,7 @@ namespace Tests.Aids
             test(GetMember.Name<ProfileViewModel>(m => m.ID));
             test(GetMember.Name<ProfileViewModel>(m => m.Name));
             test(GetMember.Name<ProfileViewModel>(m => m.Location));
-            test(GetMember.Name<ProfileViewModel>(m => m.Age));
+          //  test(GetMember.Name<ProfileViewModel>(m => m.Age));
             test(GetMember.Name<ProfileViewModel>(m => m.Gender));
         }
 

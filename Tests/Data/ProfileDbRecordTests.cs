@@ -27,12 +27,7 @@ namespace Tests.Data
             testNullEmptyAndWhitespaceCases(() => obj.ID, x => obj.ID = x, () => Constants.Unspecified);
         }
 
-        [TestMethod]
-        public void AgeTest()
-        {
-            testReadWriteProperty(() => obj.Age, x => obj.Age = x);
-            testNullEmptyAndWhitespaceCases(() => obj.Age, x => obj.Age = x, () => Constants.Unspecified);
-        }
+
 
         [TestMethod]
         public void GenderTest()

@@ -20,7 +20,7 @@ namespace EventProject.Controllers
     public class ProfileController : Controller
     {
         private IProfileObjectsRepository repository;
-        public const string properties = "ID, Name, Gender, Age, Location";
+        public const string properties = "ID, Name, Location, Gender, Birthday, Location, Occupation, AboutText, ProfileImage";
         private readonly UserManager<IdentityUser> _userManager;
         
 
@@ -40,11 +40,11 @@ namespace EventProject.Controllers
             var currentUser = await repository.GetObject(userId);
             if (currentUser.DbRecord.ID == "Unspecified")
             {
-                return RedirectToAction("Create", "Profile");
+                return RedirectToAction("Create");
             }
             else
             {
-                return RedirectToAction("Details", "Profile");
+                return RedirectToAction("Details");
             }
         }
 
@@ -59,8 +59,10 @@ namespace EventProject.Controllers
         public async Task<IActionResult> Create(IFormFile avatarFile, [Bind(properties)] ProfileViewModel c)
         {
             string userId = _userManager.GetUserId(HttpContext.User);
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", GetUniqueID()+".jpg");
+            string profileImageFilename = GetUniqueID();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\" + userId, profileImageFilename + ".jpg");
 
+            EnsureFolderExists(filePath);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -69,10 +71,18 @@ namespace EventProject.Controllers
 
                 if (!ModelState.IsValid) return View(c);
                
-                var o = ProfileObjectFactory.Create(GetUniqueID(), c.Name, c.Location, c.Age, c.Gender);
-                await repository.AddObject(o);
+            var o = ProfileObjectFactory.Create(userId, c.Name, c.Location, c.Gender, c.BirthDay, c.Occupation, c.AboutText, profileImageFilename);                                                       
+            await repository.AddObject(o);
 
             return RedirectToAction("Details"); 
+        }
+
+        private static void EnsureFolderExists(string filePath)
+        {
+            if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            }
         }
 
         [Authorize]
@@ -90,7 +100,6 @@ namespace EventProject.Controllers
             var o = await repository.GetObject(c.ID);
             o.DbRecord.Name = c.Name;
             o.DbRecord.Location = c.Location;
-            o.DbRecord.Age = c.Age;
             o.DbRecord.Gender = c.Gender;
             await repository.UpdateObject(o);
             return RedirectToAction("Index");
@@ -100,7 +109,7 @@ namespace EventProject.Controllers
         public async Task<IActionResult> Details()
         {
             string userId = _userManager.GetUserId(HttpContext.User);
-            var currentUser = await repository.GetObject(userId);
+            var currentUser = await repository.GetObject(userId);     
             return View(ProfileViewModelFactory.Create(currentUser));
         }
 
