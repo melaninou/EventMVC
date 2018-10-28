@@ -19,8 +19,6 @@ namespace Facade.Profile
                 AboutText = o?.DbRecord.AboutText,
                 Occupation = o?.DbRecord.Occupation,
                 ProfileImage = o?.DbRecord.ProfileImage
-                
-                
 
             };
             return v;

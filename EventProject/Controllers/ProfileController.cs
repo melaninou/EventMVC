@@ -22,22 +22,22 @@ namespace EventProject.Controllers
         private IProfileObjectsRepository repository;
         public const string properties = "ID, Name, Location, Gender, Birthday, Location, Occupation, AboutText, ProfileImage";
         private readonly UserManager<IdentityUser> _userManager;
-        
+       
+
 
         public ProfileController(IProfileObjectsRepository r, UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
             repository = r;
+     
+
         }
 
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            
 
-            string userId = _userManager.GetUserId(HttpContext.User);
-
-            var currentUser = await repository.GetObject(userId);
+            var currentUser = await repository.GetObject(GetCurrentUserId());
             if (currentUser.DbRecord.ID == "Unspecified")
             {
                 return RedirectToAction("Create");
@@ -48,6 +48,8 @@ namespace EventProject.Controllers
             }
         }
 
+
+
         [Authorize]
         public ActionResult Create()
         {
@@ -57,59 +59,60 @@ namespace EventProject.Controllers
         [Authorize]
         [HttpPost("Create")]
         public async Task<IActionResult> Create(IFormFile avatarFile, [Bind(properties)] ProfileViewModel c)
-        {
-            string userId = _userManager.GetUserId(HttpContext.User);
+        {       
+
+            if (!ModelState.IsValid) return View(c);
+
             string profileImageFilename = GetUniqueID();
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\" + userId, profileImageFilename + ".jpg");
 
-            EnsureFolderExists(filePath);
+            await UploadProfileImage(avatarFile, GetCurrentUserId(), profileImageFilename);
 
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await avatarFile.CopyToAsync(stream);
-            }
-
-                if (!ModelState.IsValid) return View(c);
-               
-            var o = ProfileObjectFactory.Create(userId, c.Name, c.Location, c.Gender, c.BirthDay, c.Occupation, c.AboutText, profileImageFilename);                                                       
+            var o = ProfileObjectFactory.Create(GetCurrentUserId(), c.Name, c.Location, c.Gender, c.BirthDay, c.Occupation, c.AboutText, profileImageFilename);                                                       
             await repository.AddObject(o);
 
             return RedirectToAction("Details"); 
         }
 
-        private static void EnsureFolderExists(string filePath)
-        {
-            if (!Directory.Exists(Path.GetDirectoryName(filePath)))
-            {
-                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-            }
-        }
+
 
         [Authorize]
-        public ActionResult Edit()
+        public async Task<IActionResult> Edit(string id)
         {
-            return View();
+            var currentUser = await repository.GetObject(id);
+            return View(ProfileViewModelFactory.Create(currentUser));
+
         }
 
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind(properties)] ProfileViewModel c)
+        public async Task<IActionResult> Edit(IFormFile avatarFile, [Bind(properties)] ProfileViewModel c)
         {
             if (!ModelState.IsValid) return View(c);
             var o = await repository.GetObject(c.ID);
+
             o.DbRecord.Name = c.Name;
             o.DbRecord.Location = c.Location;
             o.DbRecord.Gender = c.Gender;
+            o.DbRecord.BirthDay = c.BirthDay;
+            o.DbRecord.Occupation = c.Occupation;
+            o.DbRecord.AboutText = c.AboutText;
+            o.DbRecord.ProfileImage = c.ProfileImage;
+
+            await UploadProfileImage(avatarFile, GetCurrentUserId(), c.ProfileImage);
+
             await repository.UpdateObject(o);
+
+
             return RedirectToAction("Index");
         }
+
+
 
         [Authorize]
         public async Task<IActionResult> Details()
         {
-            string userId = _userManager.GetUserId(HttpContext.User);
-            var currentUser = await repository.GetObject(userId);     
+            var currentUser = await repository.GetObject(GetCurrentUserId());     
             return View(ProfileViewModelFactory.Create(currentUser));
         }
 
@@ -124,8 +127,34 @@ namespace EventProject.Controllers
         private static string GetUniqueID()
         {
             Guid guid = Guid.NewGuid();
-            string uniqueID = guid.ToString();
-            return uniqueID;
+            return guid.ToString();
+            
+        }
+
+        private string GetCurrentUserId()
+        {
+            return _userManager.GetUserId(HttpContext.User);
+        }
+
+        private static void EnsureFolderExists(string filePath)
+        {
+            if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            }
+        }
+
+        private async Task UploadProfileImage(IFormFile avatarFile, string userIdForFolder, string fileName)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\" + userIdForFolder,
+                fileName + ".jpg");
+
+            EnsureFolderExists(filePath);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await avatarFile.CopyToAsync(stream);
+            }
         }
     }
 }
