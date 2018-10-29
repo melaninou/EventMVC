@@ -2,7 +2,7 @@
 @model Facade.Event.EventViewModel
 @{
     ViewBag.Title = "Edit";
-    ViewBag.SubTitle = $"Events ({Model.ID})";
+    ViewBag.SubTitle = $"Event ({Model.ID})"; //todo does we need that it show event id ?
     ViewBag.Button = "Save";
     Layout = "_EditPartial";
 }
@@ -13,7 +13,7 @@
     @Html.EditingControlsFor(model => model.Location)
     @Html.EditingControlsFor(model => model.Type)
     @Html.EditingControlsFor(model => model.Description)
-    @Html.EditingControlsFor(model => model.Organiser)
+    @Html.HiddenFor(model => model.Organiser) 
 </body>
 @section Actions
     {

@@ -4,10 +4,11 @@
 @{
     ViewBag.Title = "Delete";
     ViewBag.SubTitle = "Event";
+    ViewBag.Button = "Delete";
     Layout = "_DeletePartial";
 }
 <body>
-    @Html.ViewingControlsFor(model => model.ID)
+    @Html.HiddenFor(model => model.ID)
     @Html.ViewingControlsFor(model => model.Name)
     @Html.ViewingControlsFor(model => model.Date)
     @Html.ViewingControlsFor(model => model.Type)
