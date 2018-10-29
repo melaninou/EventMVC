@@ -1,11 +1,7 @@
 ﻿
 @model Facade.Profile.ProfileViewModel
 @{
-    ViewData["Title"] = "Details on " +@Model.Name ;
-    ViewBag.FileEnding = ".jpg";
-    
-
-
+    ViewData["Title"] = "Details on " +@Model.Name ;    
 }
 
 <div id="user-profile-2" class="user-profile">
@@ -24,7 +20,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-3 center">
                         <span class="profile-picture">
-                            <img class="editable img-responsive" alt="Avatar" id="avatar2" src="~/images/@Model.ID/@Model.ProfileImage@ViewBag.FileEnding"/>
+                            <img class="editable img-responsive" alt="Avatar" id="avatar2" src="~/images/@Model.ID/@Model.ProfileImage"/>
 
                         </span>
 
@@ -92,8 +88,8 @@
                             <div class="widget-header widget-header-small">
                                 <h4 class="widget-title smaller">
                                     <i class="ace-icon fa fa-check-square-o bigger-110"></i>
-                                    About
-                                </h4>
+                                    Little bit about Me:                                
+                                    </h4>
                             </div>
 
                             <div class="widget-body">

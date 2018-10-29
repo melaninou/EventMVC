@@ -1,4 +1,5 @@
-﻿using Domain.Event;
+﻿using Core;
+using Domain.Event;
 using Domain.Profile;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -47,6 +48,9 @@ namespace EventProject
 
             services.AddScoped<IProfileObjectsRepository, ProfileObjectsRepository>();
             services.AddScoped<IEventObjectsRepository, EventObjectsRepository>();
+
+            services.AddTransient<IImageHandler, ImageHandler>();
+            services.AddTransient<IImageWriter,ImageWriter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

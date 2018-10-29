@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using Facade.Common;
 using Core;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +30,7 @@ namespace Facade.Profile
             set => occupation = value;
         }
 
-
+        [DisplayName("Little bit about Me:")]
         public string AboutText
         {
             get => getString(ref aboutText);
