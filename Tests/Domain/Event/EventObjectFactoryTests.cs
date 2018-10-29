@@ -40,7 +40,7 @@ namespace Tests.Domain.Event
             Assert.AreEqual(l, o.DbRecord.Location);
             Assert.AreEqual(d, o.DbRecord.Date);
             Assert.AreEqual(t, o.DbRecord.Type);
-            Assert.AreEqual(org, o.DbRecord.Organiser);
+            Assert.AreEqual(org, o.DbRecord.Organizer);
             Assert.AreEqual(desc, o.DbRecord.Description);
         }
 

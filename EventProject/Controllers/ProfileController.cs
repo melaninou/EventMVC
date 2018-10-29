@@ -36,15 +36,16 @@ namespace EventProject.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var currentUser = await repository.GetObject(GetCurrentUserId());
-            if (currentUser.DbRecord.ID == "Unspecified")
-            {
-                return RedirectToAction("Create");
-            }
-            else
-            {
-                return RedirectToAction("Details");
-            }
+            //var currentUser = await repository.GetObject(GetCurrentUserId());
+            //if (currentUser.DbRecord.ID == "Unspecified")
+            //{
+            //    return RedirectToAction("Create");
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Details");
+            //}
+            return View();
         }
 
 

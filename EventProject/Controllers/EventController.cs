@@ -6,7 +6,10 @@ using Aids;
 using Core;
 using Data;
 using Domain.Event;
+using Domain.Profile;
 using Facade.Event;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -14,42 +17,48 @@ namespace EventProject.Controllers
 {
     public class EventController : Controller
     {
-        public const string properties = "ID, Name, Date, Type, Description, Location, Organiser";
+        public const string properties = "ID, Name, Date, Type, Description, Location, Organizer";
 
         private IEventObjectsRepository repository;
-      
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IProfileObjectsRepository _profile;
         
-        public EventController(IEventObjectsRepository r)
+        public EventController(IEventObjectsRepository r, UserManager<IdentityUser> userManager, IProfileObjectsRepository profile)
         {
+            _userManager = userManager;
+            _profile = profile;
             repository = r;
          
         }
         public async Task<IActionResult> Index()
         {
+            ViewData["userRealName"] = await _profile.GetObjectsList();
                var l = await repository.GetObjectsList();
                 return View(new EventViewModelsList(l));
         }
        
-
+        [Authorize]
         public ActionResult Create()
         {
             return View();
         }
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([Bind(properties)] EventViewModel e)
         {
-            //await validateId(e.ID, ModelState);
+          
             if (!ModelState.IsValid) return View(e);
-            var o = EventObjectFactory.Create(GetUniqueID(), e.Name, e.Location, e.Date, e.Type, e.Organiser, e.Description);
+            var o = EventObjectFactory.Create(GetUniqueID(), e.Name, e.Location, e.Date, e.Type, GetID(), e.Description);
             await repository.AddObject(o);
             return RedirectToAction("Index");
         }
-
+        [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
             var c = await repository.GetObject(id);
             return View(EventViewModelFactory.Create(c));
         }
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind(properties)] EventViewModel c)
@@ -61,7 +70,7 @@ namespace EventProject.Controllers
             o.DbRecord.Date = c.Date;
             o.DbRecord.Type = c.Type;
             o.DbRecord.Description = c.Description;
-            o.DbRecord.Organiser = c.Organiser;
+            o.DbRecord.Organizer = c.Organizer;
             await repository.UpdateObject(o);
             return RedirectToAction("Index");
         }
@@ -70,11 +79,13 @@ namespace EventProject.Controllers
             var c = await repository.GetObject(id);
             return View(EventViewModelFactory.Create(c));
         }
+        [Authorize]
         public async Task<IActionResult> Delete(string id)
         {
             var c = await repository.GetObject(id);
             return View(EventViewModelFactory.Create(c));
         }
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
@@ -90,7 +101,7 @@ namespace EventProject.Controllers
             if (sortOrder.StartsWith("date")) return x => x.Date;
             if (sortOrder.StartsWith("location")) return x => x.Location;
             if (sortOrder.StartsWith("id")) return x => x.ID;
-            if (sortOrder.StartsWith("organiser")) return x => x.Organiser;
+            if (sortOrder.StartsWith("organizer")) return x => x.Organizer;
             return x => x.Name;
         }
         private async Task validateId(string id, ModelStateDictionary d)
@@ -114,6 +125,11 @@ namespace EventProject.Controllers
             Guid guid = Guid.NewGuid();
             string uniqueID = guid.ToString();
             return uniqueID;
+        }
+
+        private string GetID()
+        {
+            return _userManager.GetUserId(HttpContext.User);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Domain.Event
                 Location = location,
                 Date = date,
                 Type = type,
-                Organiser = organiser,
+                Organizer = organiser,
                 Description = description
             };
             return new EventObject(o);

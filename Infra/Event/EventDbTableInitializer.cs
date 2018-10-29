@@ -23,7 +23,7 @@ namespace Infra.Event
                 Date = DateTime.Parse("12.12.2018"),
                 //TODO  control datetime date!!!!
                 Type = EventType.Concert,
-                Organiser = "TTU",
+                Organizer = "TTU",
                 Description = "bla bla bla"
             });
         }

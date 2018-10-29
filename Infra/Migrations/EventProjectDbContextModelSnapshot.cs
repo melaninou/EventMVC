@@ -32,7 +32,7 @@ namespace Infra.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("Organiser");
+                    b.Property<string>("Organizer");
 
                     b.Property<int>("Type");
 

@@ -30,7 +30,7 @@ namespace Tests.Facade.Event
         [TestMethod]
         public void OrganiserTest()
         {
-            testReadWriteProperty(() => obj.Organiser, x => obj.Organiser = x);
+            testReadWriteProperty(() => obj.Organizer, x => obj.Organizer = x);
         }
 
         [TestMethod]

@@ -22,7 +22,7 @@ namespace Data
             set => setValue(ref date, value);
         }
  
-        public string Organiser
+        public string Organizer
         {
             get => getString(ref organiser);
             set => organiser = value;

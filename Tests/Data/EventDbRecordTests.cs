@@ -37,8 +37,8 @@ namespace Tests.Data
         [TestMethod]
         public void OrganiserTest()
         {
-            testReadWriteProperty(() => obj.Organiser, x => obj.Organiser = x);
-            testNullEmptyAndWhitespaceCases(() => obj.Organiser, x => obj.Organiser = x, () => Constants.Unspecified);
+            testReadWriteProperty(() => obj.Organizer, x => obj.Organizer = x);
+            testNullEmptyAndWhitespaceCases(() => obj.Organizer, x => obj.Organizer = x, () => Constants.Unspecified);
         }
 
         [TestMethod]
