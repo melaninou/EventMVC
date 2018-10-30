@@ -10,10 +10,7 @@ namespace Data
         private DateTime birthDay;
         private string aboutText;
         private string occupation;
-
-
-
-
+        
         public ProfileGender Gender { get; set; }
 
         public DateTime BirthDay
