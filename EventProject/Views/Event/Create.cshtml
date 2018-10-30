@@ -1,10 +1,12 @@
-﻿@using EventProject.Extensions
+﻿@using Core
+@using EventProject.Extensions
 @model Facade.Event.EventViewModel
 @{
     ViewBag.Title = "Create";
     ViewBag.SubTitle = "Event";
     ViewBag.Button = "Create";
     Layout = "_EditPartial";
+   
 }
 
 
@@ -12,7 +14,16 @@
 
 @Html.EditingControlsFor(model => model.Name)
 @Html.EditingControlsFor(model => model.Date)
-@Html.EditingControlsFor(model => model.Type)
+
+<div class="form-group">
+    <label asp-for="Type" class="col-md-2 control-label"></label>
+    <div class="col-md-10">
+        <select asp-for="Type"
+                asp-items="Html.GetEnumSelectList<EventType>()">
+        </select>
+
+    </div>
+</div>
 @Html.EditingControlsFor(model => model.Description)
 @Html.EditingControlsFor(model => model.Location)
 @Html.HiddenFor(model => model.Organizer)

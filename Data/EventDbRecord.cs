@@ -7,7 +7,7 @@ namespace Data
     public class EventDbRecord : BasicDbRecord
     {
         private DateTime date;
-        private string organiser;
+        private string organizer;
         private string description;
         public override string ID
         {
@@ -24,8 +24,8 @@ namespace Data
  
         public string Organizer
         {
-            get => getString(ref organiser);
-            set => organiser = value;
+            get => getString(ref organizer);
+            set => organizer = value;
         }
 
         public string Description

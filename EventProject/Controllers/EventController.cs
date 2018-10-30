@@ -55,6 +55,7 @@ namespace EventProject.Controllers
         [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
+           
             var c = await repository.GetObject(id);
             return View(EventViewModelFactory.Create(c));
         }
