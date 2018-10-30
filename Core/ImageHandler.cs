@@ -15,9 +15,9 @@ namespace Core
             _imageWriter = imageWriter;
         }
 
-        public async Task<string> UploadImage(IFormFile file, string folderNameFromUserID)
+        public async Task<bool> UploadImage(IFormFile file, string filePath)
         {
-            var result = await _imageWriter.UploadImage(file, folderNameFromUserID);
+            var result = await _imageWriter.UploadImage(file, filePath);
             return result;
         }
     }

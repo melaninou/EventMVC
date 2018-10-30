@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Domain.Profile;
 using Facade.Profile;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Web;
 using Core;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
+
 
 
 
@@ -36,18 +32,17 @@ namespace EventProject.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            //var currentUser = await repository.GetObject(GetCurrentUserId());
-            //if (currentUser.DbRecord.ID == "Unspecified")
-            //{
-            //    return RedirectToAction("Create");
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Details");
-            //}
-            return View();
+            var currentUser = await repository.GetObject(GetCurrentUserId());
+            if (currentUser.DbRecord.ID == "Unspecified")
+            {
+                return RedirectToAction("Create", "Profile");
+            }
+            else
+            {
+                return RedirectToAction("Details", "Profile");
+            }
+           
         }
-
 
         [Authorize]
         public ActionResult Create()
@@ -60,9 +55,16 @@ namespace EventProject.Controllers
         public async Task<IActionResult> Create(IFormFile avatarFile, [Bind(properties)] ProfileViewModel c)
         {       
             if (!ModelState.IsValid) return View(c);
-            var fileName = await _imageHandler.UploadImage(avatarFile, GetCurrentUserId());
-            if (fileName == Constants.InvalidImageFile) return View(c);
 
+
+            var extension = "." + avatarFile.FileName.Split('.')[avatarFile.FileName.Split('.').Length - 1];
+            string fileName = GetUniqueID() + extension;
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\" + GetCurrentUserId(), fileName);
+
+            var isCorrectImage = await _imageHandler.UploadImage(avatarFile, path);
+
+            if (!isCorrectImage) return View(c);
 
             var o = ProfileObjectFactory.Create(GetCurrentUserId(), c.Name, c.Location, c.Gender, c.BirthDay, c.Occupation, c.AboutText, fileName);                                                       
             await repository.AddObject(o);
@@ -86,8 +88,11 @@ namespace EventProject.Controllers
             if (!ModelState.IsValid) return View(c);
             var o = await repository.GetObject(c.ID);
 
-            var fileName = await _imageHandler.UploadImage(avatarFile, GetCurrentUserId());
-            if (fileName == Constants.InvalidImageFile) return View(c);
+            string fileName = o.DbRecord.ProfileImage; 
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\" + GetCurrentUserId(), fileName);
+            var isCorrectImage = await _imageHandler.UploadImage(avatarFile, path);
+
+            if (!isCorrectImage) return View(c);
 
             o.DbRecord.Name = c.Name;
             o.DbRecord.Location = c.Location;

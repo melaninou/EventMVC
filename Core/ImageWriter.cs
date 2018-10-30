@@ -10,14 +10,14 @@ namespace Core
 {
     public class ImageWriter : IImageWriter
     {
-        public async Task<string> UploadImage(IFormFile file, string folderNameFromUserID)
+        public async Task<bool> UploadImage(IFormFile file, string filePath)
         {
             if (CheckIfImageFile(file))
             {
-                return await WriteFile(file, folderNameFromUserID);
+                return await WriteFile(file, filePath);
             }
 
-            return Constants.InvalidImageFile;
+            return false;
         }
 
         /// <summary>
@@ -42,27 +42,22 @@ namespace Core
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public async Task<string> WriteFile(IFormFile file, string folderNameFromUserID)
+        public async Task<bool> WriteFile(IFormFile file, string filePath)
         {
-            string fileName;
             try
             {
-                var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
-                fileName = Guid.NewGuid().ToString() + extension; //Create a new Name 
-                //for the file due to security reasons.
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\" + folderNameFromUserID, fileName);
-                EnsureFolderExists(path);
-                using (var bits = new FileStream(path, FileMode.Create))
+                EnsureFolderExists(filePath);
+                using (var bits = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(bits);
                 }
             }
             catch 
             {
-                return Constants.InvalidImageFile;
+                return false;
             }
 
-            return fileName;
+            return true;
         }
 
         private static void EnsureFolderExists(string filePath)

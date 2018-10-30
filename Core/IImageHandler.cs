@@ -6,6 +6,6 @@ namespace Core
 {
     public interface IImageHandler
     {
-        Task<string> UploadImage(IFormFile file, string folderNameFromUserID);
+        Task<bool> UploadImage(IFormFile file, string filePath);
     }
 }

@@ -76,8 +76,11 @@ namespace EventProject.Controllers
         }
         public async Task<IActionResult> Details(string id)
         {
-            var c = await repository.GetObject(id);
-            return View(EventViewModelFactory.Create(c));
+            var currentEventObject = await repository.GetObject(id);
+            var organizatorObject = await _profile.GetObject(currentEventObject.DbRecord.Organizer);
+            var organizatorName = organizatorObject.DbRecord.Name;
+            currentEventObject.DbRecord.Organizer = organizatorName;
+            return View(EventViewModelFactory.Create(currentEventObject));
         }
         [Authorize]
         public async Task<IActionResult> Delete(string id)
