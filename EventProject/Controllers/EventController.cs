@@ -30,10 +30,27 @@ namespace EventProject.Controllers
             repository = r;
          
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder = null,
+            string currentFilter = null,
+            string searchString = null,
+            int? page = null)
         {
             ViewData["userRealName"] = await _profile.GetObjectsList();
-               var l = await repository.GetObjectsList();
+            //ViewData["SortName"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            //ViewData["SortID"] = sortOrder == "id" ? "id_desc" : "id";
+            //ViewData["SortDate"] = sortOrder == "date" ? "date_desc" : "date";
+            //ViewData["SortLocation"] = sortOrder == "location" ? "location_desc" : "location";
+            //ViewData["SortOrganizer"] = sortOrder == "organizer" ? "organizer_desc" : "organizer";
+            //repository.SortOrder = sortOrder != null && sortOrder.EndsWith("_desc")
+            //    ? SortOrder.Descending
+            //    : SortOrder.Ascending;
+            //repository.SortFunction = getSortFunction(sortOrder);
+            //if (searchString != null) page = 1;
+            //else searchString = currentFilter;
+            //ViewData["CurrentFilter"] = searchString;
+            //repository.SearchString = searchString;
+            //repository.PageIndex = page ?? 1;
+            var l = await repository.GetObjectsList();
                 return View(new EventViewModelsList(l));
         }
        

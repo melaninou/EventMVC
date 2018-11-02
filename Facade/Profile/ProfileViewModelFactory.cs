@@ -23,6 +23,5 @@ namespace Facade.Profile
             };
             return v;
         }
-
     }
 }

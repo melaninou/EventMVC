@@ -37,6 +37,7 @@ namespace Facade.Event
             set => description = value;
         }
 
+        [DisplayName("Who else is going:")]
         public List<ProfileViewModel> InProfiles { get; } = new List<ProfileViewModel>();
 
        

@@ -2,6 +2,7 @@
 using Core;
 using Data;
 using Domain.Profile;
+using Microsoft.EntityFrameworkCore;
 using Open.Infra;
 
 namespace Infra.Profile
@@ -16,7 +17,8 @@ namespace Infra.Profile
             return new ProfileObject(r);
         }
 
-        protected internal override PaginatedList<ProfileObject> createList(List<ProfileDbRecord> l, RepositoryPage p)
+        protected internal override PaginatedList<ProfileObject> createList(
+            List<ProfileDbRecord> l, RepositoryPage p)
         {
             return new ProfileObjectsList(l, p);
         }
