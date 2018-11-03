@@ -1,16 +1,18 @@
 ﻿using Core;
+using Domain.Attending;
 using Domain.Event;
 using Domain.Profile;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using EventProject.Data;
 using Infra;
+using Infra.Attending;
 using Infra.Event;
 using Infra.Profile;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -48,6 +50,7 @@ namespace EventProject
 
             services.AddScoped<IProfileObjectsRepository, ProfileObjectsRepository>();
             services.AddScoped<IEventObjectsRepository, EventObjectsRepository>();
+            services.AddScoped<IAttendingObjectsRepository, AttendingRepository>();
 
             services.AddTransient<IImageHandler, ImageHandler>();
             services.AddTransient<IImageWriter,ImageWriter>();

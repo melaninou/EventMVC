@@ -67,9 +67,9 @@ namespace Tests.Infra
         {
             testEntity<EventDbRecord>(mb);
             testEntity<ProfileDbRecord>(mb);
-            var entity = testEntity<EventProfileDbRecord>(mb, true, 2);
-            var eventID = GetMember.Name<EventProfileDbRecord>(x => x.EventID);
-            var profileID = GetMember.Name<EventProfileDbRecord>(x => x.ProfileID);
+            var entity = testEntity<AttendingDbRecord>(mb, true, 2);
+            var eventID = GetMember.Name<AttendingDbRecord>(x => x.EventID);
+            var profileID = GetMember.Name<AttendingDbRecord>(x => x.ProfileID);
             testPrimaryKey(entity,eventID, profileID);
             testForeignKey(entity, eventID, typeof(EventDbRecord));
             testForeignKey(entity, profileID, typeof(ProfileDbRecord));

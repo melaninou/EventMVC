@@ -6,11 +6,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Tests.Data
 {
     [TestClass]
-    public class EventProfileDbRecordTests :ObjectTests<EventProfileDbRecord>
+    public class EventProfileDbRecordTests :ObjectTests<AttendingDbRecord>
     {
-        protected override EventProfileDbRecord getRandomTestObject()
+        protected override AttendingDbRecord getRandomTestObject()
         {
-            return GetRandom.Object<EventProfileDbRecord>();
+            return GetRandom.Object<AttendingDbRecord>();
         }
 
         [TestMethod]

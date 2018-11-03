@@ -1,8 +1,9 @@
 ﻿using Core;
+using Data.Common;
 
 namespace Data
 {
-    public class EventProfileDbRecord  : RootObject
+    public class AttendingDbRecord  : EmptyDbReord
     {
         private string profileID;
         private string eventID;

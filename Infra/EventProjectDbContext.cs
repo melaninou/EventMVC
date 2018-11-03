@@ -15,7 +15,7 @@ namespace Infra
 
         public DbSet<EventDbRecord> Events { get; set; }
 
-        public DbSet<EventProfileDbRecord> EventsProfiles { get; set; }
+        public DbSet<AttendingDbRecord> EventsProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder b)
         {
@@ -43,9 +43,9 @@ namespace Infra
         internal static void createEventProfileTable(ModelBuilder b)
         {
             const string table = "EventProfile";
-            createPrimaryKey<EventProfileDbRecord>(b, table, a => new {a.EventID, a.ProfileID});
-            createForeignKey<EventProfileDbRecord, EventDbRecord>(b, table, x => x.EventID, x => x.Events);
-            createForeignKey< EventProfileDbRecord, ProfileDbRecord>(b, table, x => x.ProfileID, x => x.Profiles);
+            createPrimaryKey<AttendingDbRecord>(b, table, a => new {a.EventID, a.ProfileID});
+            createForeignKey<AttendingDbRecord, EventDbRecord>(b, table, x => x.EventID, x => x.Events);
+            createForeignKey<AttendingDbRecord, ProfileDbRecord>(b, table, x => x.ProfileID, x => x.Profiles);
         }
         internal static void createPrimaryKey<TEntity>(ModelBuilder b, string tableName,
             Expression<Func<TEntity, object>> primaryKey) where TEntity : class

@@ -13,7 +13,7 @@ namespace Infra
         //    {
         //        foreach (var r in c.Events)
         //        {
-        //            var x = new EventProfileDbRecord();
+        //            var x = new AttendingDbRecord();
         //            x.EventID = r.ID;
         //            x.ProfileID = p.ID;
         //            c.EventsProfiles.Add(x);
@@ -29,7 +29,7 @@ namespace Infra
             {
                 foreach (var e in c.Events)
                 {
-                    var r = new EventProfileDbRecord
+                    var r = new AttendingDbRecord
                     {
                         ProfileID = p.ID,
                         EventID = e.ID

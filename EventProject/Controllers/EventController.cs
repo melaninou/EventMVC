@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Aids;
 using Core;
 using Data;
+using Domain.Attending;
 using Domain.Event;
 using Domain.Profile;
 using Facade.Event;
@@ -19,16 +18,18 @@ namespace EventProject.Controllers
     {
         public const string properties = "ID, Name, Date, Type, Description, Location, Organizer";
 
-        private IEventObjectsRepository repository;
+        private IEventObjectsRepository _eventRepository;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly IProfileObjectsRepository _profile;
-        
-        public EventController(IEventObjectsRepository r, UserManager<IdentityUser> userManager, IProfileObjectsRepository profile)
+        private readonly IProfileObjectsRepository _profileRepository;
+        private readonly IAttendingObjectsRepository _attendingRepository;
+        public EventController(IEventObjectsRepository repository, UserManager<IdentityUser> userManager, IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository)
         {
+
             _userManager = userManager;
-            _profile = profile;
-            repository = r;
-         
+            _profileRepository = profileRepository;
+            _eventRepository = repository;
+            _attendingRepository = attendingRepository;
+
         }
         public async Task<IActionResult> Index(string sortOrder = null,
             string currentFilter = null,
@@ -36,22 +37,22 @@ namespace EventProject.Controllers
             int? page = null)
         {
 
-            ViewData["userRealName"] = await _profile.GetObjectsList();
+            ViewData["userRealName"] = await _profileRepository.GetObjectsList();
             //ViewData["SortName"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             //ViewData["SortID"] = sortOrder == "id" ? "id_desc" : "id";
             //ViewData["SortDate"] = sortOrder == "date" ? "date_desc" : "date";
             //ViewData["SortLocation"] = sortOrder == "location" ? "location_desc" : "location";
             //ViewData["SortOrganizer"] = sortOrder == "organizer" ? "organizer_desc" : "organizer";
-            //repository.SortOrder = sortOrder != null && sortOrder.EndsWith("_desc")
+            //_eventRepository.SortOrder = sortOrder != null && sortOrder.EndsWith("_desc")
             //    ? SortOrder.Descending
             //    : SortOrder.Ascending;
-            //repository.SortFunction = getSortFunction(sortOrder);
+            //_eventRepository.SortFunction = getSortFunction(sortOrder);
             //if (searchString != null) page = 1;
             //else searchString = currentFilter;
             //ViewData["CurrentFilter"] = searchString;
-            //repository.SearchString = searchString;
-            //repository.PageIndex = page ?? 1;
-            var l = await repository.GetObjectsList();
+            //_eventRepository.SearchString = searchString;
+            //_eventRepository.PageIndex = page ?? 1;
+            var l = await _eventRepository.GetObjectsList();
                 return View(new EventViewModelsList(l));
         }
        
@@ -66,15 +67,15 @@ namespace EventProject.Controllers
         {
           
             if (!ModelState.IsValid) return View(e);
-            var o = EventObjectFactory.Create(GetUniqueID(), e.Name, e.Location, e.Date, e.Type, GetID(), e.Description);
-            await repository.AddObject(o);
+            var o = EventObjectFactory.Create(GetUniqueID(), e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description);
+            await _eventRepository.AddObject(o);
             return RedirectToAction("Index");
         }
         [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
            
-            var c = await repository.GetObject(id);
+            var c = await _eventRepository.GetObject(id);
             return View(EventViewModelFactory.Create(c));
         }
         [Authorize]
@@ -83,20 +84,20 @@ namespace EventProject.Controllers
         public async Task<IActionResult> Edit([Bind(properties)] EventViewModel c)
         {
             if (!ModelState.IsValid) return View(c);
-            var o = await repository.GetObject(c.ID);
+            var o = await _eventRepository.GetObject(c.ID);
             o.DbRecord.Name = c.Name;
             o.DbRecord.Location = c.Location;
             o.DbRecord.Date = c.Date;
             o.DbRecord.Type = c.Type;
             o.DbRecord.Description = c.Description;
             o.DbRecord.Organizer = c.Organizer;
-            await repository.UpdateObject(o);
+            await _eventRepository.UpdateObject(o);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> Details(string id)
         {
-            var currentEventObject = await repository.GetObject(id);
-            var organizatorObject = await _profile.GetObject(currentEventObject.DbRecord.Organizer);
+            var currentEventObject = await _eventRepository.GetObject(id);
+            var organizatorObject = await _profileRepository.GetObject(currentEventObject.DbRecord.Organizer);
             var organizatorName = organizatorObject.DbRecord.Name;
             currentEventObject.DbRecord.Organizer = organizatorName;
             return View(EventViewModelFactory.Create(currentEventObject));
@@ -104,19 +105,28 @@ namespace EventProject.Controllers
         [Authorize]
         public async Task<IActionResult> Delete(string id)
         {
-            var c = await repository.GetObject(id);
+            var c = await _eventRepository.GetObject(id);
             return View(EventViewModelFactory.Create(c));
         }
         [Authorize]
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var c = await repository.GetObject(id);
-            await repository.DeleteObject(c);
+            var c = await _eventRepository.GetObject(id);
+            await _eventRepository.DeleteObject(c);
             return RedirectToAction("Index");
         }
 
-
+        public async Task<IActionResult> Attending(string id)
+        {
+            string userID = GetCurrentUserID();
+            var eventObject = await _eventRepository.GetObject(id);
+            string eventID = eventObject.DbRecord.ID;
+            //var userObject = await _profileRepository.GetObject(userID);
+            //var o = AttendingObjectFactory.Create(eventObject, userObject, eventID, userID);
+            //await _attendingRepository.AddObject(o);
+            return RedirectToAction("Create", "Event");
+        }
         private Func<EventDbRecord, object> getSortFunction(string sortOrder)
         {
             if (string.IsNullOrWhiteSpace(sortOrder)) return x => x.Name;
@@ -134,7 +144,7 @@ namespace EventProject.Controllers
 
         private async Task<bool> isIdInUse(string id)
         {
-            return (await repository.GetObject(id))?.DbRecord?.ID == id;
+            return (await _eventRepository.GetObject(id))?.DbRecord?.ID == id;
         }
 
         private static string idIsInUseMessage(string id)
@@ -149,7 +159,7 @@ namespace EventProject.Controllers
             return uniqueID;
         }
 
-        private string GetID()
+        private string GetCurrentUserID()
         {
             return _userManager.GetUserId(HttpContext.User);
         }

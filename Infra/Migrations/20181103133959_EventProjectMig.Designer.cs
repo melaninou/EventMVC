@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(EventProjectDbContext))]
-    [Migration("20181030102848_event")]
-    partial class @event
+    [Migration("20181103133959_EventProjectMig")]
+    partial class EventProjectMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,19 @@ namespace Infra.Migrations
                 .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Data.AttendingDbRecord", b =>
+                {
+                    b.Property<string>("EventID");
+
+                    b.Property<string>("ProfileID");
+
+                    b.HasKey("EventID", "ProfileID");
+
+                    b.HasIndex("ProfileID");
+
+                    b.ToTable("EventProfile");
+                });
 
             modelBuilder.Entity("Data.EventDbRecord", b =>
                 {
@@ -41,19 +54,6 @@ namespace Infra.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("Data.EventProfileDbRecord", b =>
-                {
-                    b.Property<string>("EventID");
-
-                    b.Property<string>("ProfileID");
-
-                    b.HasKey("EventID", "ProfileID");
-
-                    b.HasIndex("ProfileID");
-
-                    b.ToTable("EventProfile");
                 });
 
             modelBuilder.Entity("Data.ProfileDbRecord", b =>
@@ -80,7 +80,7 @@ namespace Infra.Migrations
                     b.ToTable("Profiles");
                 });
 
-            modelBuilder.Entity("Data.EventProfileDbRecord", b =>
+            modelBuilder.Entity("Data.AttendingDbRecord", b =>
                 {
                     b.HasOne("Data.EventDbRecord", "Events")
                         .WithMany()
