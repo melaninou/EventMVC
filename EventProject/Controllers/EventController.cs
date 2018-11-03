@@ -35,6 +35,7 @@ namespace EventProject.Controllers
             string searchString = null,
             int? page = null)
         {
+
             ViewData["userRealName"] = await _profile.GetObjectsList();
             //ViewData["SortName"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             //ViewData["SortID"] = sortOrder == "id" ? "id_desc" : "id";

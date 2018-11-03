@@ -8,13 +8,14 @@
     Layout = "_DeletePartial";
 }
 <body>
-    @Html.HiddenFor(model => model.ID)
-    @Html.ViewingControlsFor(model => model.Name)
-    @Html.ViewingControlsFor(model => model.Date)
-    @Html.ViewingControlsFor(model => model.Type)
-    @Html.ViewingControlsFor(model => model.Location)
-    @Html.ViewingControlsFor(model => model.Description)
-    @Html.ViewingControlsFor(model => model.Organizer)
+
+@Html.HiddenFor(model => model.ID)
+@Html.ViewingControlsFor(model => model.Name)
+@Html.ViewingControlsFor(model => model.Date)
+@Html.ViewingControlsFor(model => model.Type)
+@Html.ViewingControlsFor(model => model.Location)
+@Html.ViewingControlsFor(model => model.Description)
+@Html.ViewingControlsFor(model => model.Organizer)
 </body>
 
 @section Actions
