@@ -76,18 +76,26 @@ namespace EventProject.Controllers
         [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
+            string ID = GetCurrentUserID();
+            var currentUserObject = await _profileRepository.GetObject(ID);
+            var currentUserName = currentUserObject.DbRecord.Name;
+
+            var currentEventObject = await _eventRepository.GetObject(id);
+            var organizatorObject = await _profileRepository.GetObject(currentEventObject.DbRecord.Organizer);
+            var organizatorName = organizatorObject.DbRecord.Name;
             //var currentUserName = GetCurrentUserName();
-            //var organizatorName = GetOrgName(id);
-            //if (currentUserName == organizatorName)
-            //{
+            //var organizatorName =GetOrgName(id);
+           
+            if (currentUserName == organizatorName)
+            {
                 var c = await _eventRepository.GetObject(id);
                 return View(EventViewModelFactory.Create(c));
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Details", "Profile");
-            //}
-           
+            }
+            else
+            {
+                return Content("You can't edit it, if you doesn't create it!");
+            }
+
         }
         [Authorize]
         [HttpPost]
@@ -120,8 +128,25 @@ namespace EventProject.Controllers
         [Authorize]
         public async Task<IActionResult> Delete(string id)
         {
-            var c = await _eventRepository.GetObject(id);
-            return View(EventViewModelFactory.Create(c));
+            string ID = GetCurrentUserID();
+            var currentUserObject = await _profileRepository.GetObject(ID);
+            var currentUserName = currentUserObject.DbRecord.Name;
+
+            var currentEventObject = await _eventRepository.GetObject(id);
+            var organizatorObject = await _profileRepository.GetObject(currentEventObject.DbRecord.Organizer);
+            var organizatorName = organizatorObject.DbRecord.Name;
+            //var currentUserName = GetCurrentUserName();
+            //var organizatorName =GetOrgName(id);
+            if (currentUserName == organizatorName)
+            {
+                var c = await _eventRepository.GetObject(id);
+                return View(EventViewModelFactory.Create(c));
+            }
+            else
+            {
+                return Content("You can't delete it, if you doesn't create it!");
+            }
+           
         }
         [Authorize]
         [HttpPost, ActionName("Delete")]
@@ -140,13 +165,6 @@ namespace EventProject.Controllers
             var userObject = await _profileRepository.GetObject(userID);
             var o = AttendingObjectFactory.Create(eventObject, userObject, eventID, userID);
             await _attendingRepository.AddObject(o);
-
-            //var r = new AttendingDbRecord
-            //{
-            //    EventID = newEvent,
-            //    ProfileID = GetCurrentUserID()
-            //};
-            //await _attendingRepository.AddObject(new AttendingObject(r));
             return RedirectToAction("Index", new {id = newEvent});
         }
 
@@ -201,10 +219,9 @@ namespace EventProject.Controllers
         {
 
             var currentEventObject = await _eventRepository.GetObject(id);
-            var orgObject = await _profileRepository.GetObject(currentEventObject.DbRecord.Organizer);
-            var orgName = orgObject.DbRecord.Name;
-            
-            return orgName;
+            var organizatorObject = await _profileRepository.GetObject(currentEventObject.DbRecord.Organizer);
+            var organizatorName = organizatorObject.DbRecord.Name;
+            return organizatorName;
         }
        
     }
