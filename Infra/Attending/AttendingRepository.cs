@@ -26,7 +26,10 @@ namespace Infra.Attending
         }
         public async Task AddObject(AttendingObject o)
         {
-            dbSet.Add(o.DbRecord);
+            var r = o.DbRecord;
+            r.Events = null;
+            r.Profiles = null;
+            dbSet.Add(r);
             await db.SaveChangesAsync();
         }
 
