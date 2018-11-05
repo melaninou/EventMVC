@@ -37,15 +37,15 @@ namespace EventProject.Controllers
         {
 
             ViewData["userRealName"] = await _profileRepository.GetObjectsList();
-            //ViewData["SortName"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            //ViewData["SortID"] = sortOrder == "id" ? "id_desc" : "id";
-            //ViewData["SortDate"] = sortOrder == "date" ? "date_desc" : "date";
-            //ViewData["SortLocation"] = sortOrder == "location" ? "location_desc" : "location";
-            //ViewData["SortOrganizer"] = sortOrder == "organizer" ? "organizer_desc" : "organizer";
-            //_eventRepository.SortOrder = sortOrder != null && sortOrder.EndsWith("_desc")
-            //    ? SortOrder.Descending
-            //    : SortOrder.Ascending;
-            //_eventRepository.SortFunction = getSortFunction(sortOrder);
+            ViewData["SortName"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["SortID"] = sortOrder == "id" ? "id_desc" : "id";
+            ViewData["SortDate"] = sortOrder == "date" ? "date_desc" : "date";
+            ViewData["SortLocation"] = sortOrder == "location" ? "location_desc" : "location";
+            ViewData["SortOrganizer"] = sortOrder == "organizer" ? "organizer_desc" : "organizer";
+            _eventRepository.SortOrder = sortOrder != null && sortOrder.EndsWith("_desc")
+                ? SortOrder.Descending
+                : SortOrder.Ascending;
+            _eventRepository.SortFunction = getSortFunction(sortOrder);
             if (searchString != null) page = 1;
             else searchString = currentFilter;
             ViewData["CurrentFilter"] = searchString;
