@@ -55,6 +55,7 @@ namespace EventProject.Controllers
                 return View(new EventViewModelsList(l));
         }
        
+
         [Authorize]
         public ActionResult Create()
         {
@@ -70,12 +71,23 @@ namespace EventProject.Controllers
             await _eventRepository.AddObject(o);
             return RedirectToAction("Index");
         }
+
+
         [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
+            //var currentUserName = GetCurrentUserName();
+            //var organizatorName = GetOrgName(id);
+            //if (currentUserName == organizatorName)
+            //{
+                var c = await _eventRepository.GetObject(id);
+                return View(EventViewModelFactory.Create(c));
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Details", "Profile");
+            //}
            
-            var c = await _eventRepository.GetObject(id);
-            return View(EventViewModelFactory.Create(c));
         }
         [Authorize]
         [HttpPost]
@@ -93,6 +105,8 @@ namespace EventProject.Controllers
             await _eventRepository.UpdateObject(o);
             return RedirectToAction("Index");
         }
+
+
         public async Task<IActionResult> Details(string id)
         {
             var currentEventObject = await _eventRepository.GetObject(id);
@@ -101,6 +115,8 @@ namespace EventProject.Controllers
             currentEventObject.DbRecord.Organizer = organizatorName;
             return View(EventViewModelFactory.Create(currentEventObject));
         }
+
+
         [Authorize]
         public async Task<IActionResult> Delete(string id)
         {
@@ -133,6 +149,9 @@ namespace EventProject.Controllers
             //await _attendingRepository.AddObject(new AttendingObject(r));
             return RedirectToAction("Index", new {id = newEvent});
         }
+
+
+
         private Func<EventDbRecord, object> getSortFunction(string sortOrder)
         {
             if (string.IsNullOrWhiteSpace(sortOrder)) return x => x.Name;
@@ -169,5 +188,24 @@ namespace EventProject.Controllers
         {
             return _userManager.GetUserId(HttpContext.User).ToString();
         }
+
+        private async Task<string> GetCurrentUserName()
+        {
+            string id = GetCurrentUserID();
+            var currentUserObject = await _profileRepository.GetObject(id);
+            var currentUserName = currentUserObject.DbRecord.Name;
+            return currentUserName;
+        }
+
+        private async Task<string> GetOrgName(string id)
+        {
+
+            var currentEventObject = await _eventRepository.GetObject(id);
+            var orgObject = await _profileRepository.GetObject(currentEventObject.DbRecord.Organizer);
+            var orgName = orgObject.DbRecord.Name;
+            
+            return orgName;
+        }
+       
     }
 }
