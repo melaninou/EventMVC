@@ -2,7 +2,7 @@
 
 namespace Data.Common
 {
-    public abstract class EmptyDbReord : RootObject
+    public abstract class EmptyDbRecord : RootObject
     {
 
     }

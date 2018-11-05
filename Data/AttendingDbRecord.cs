@@ -3,7 +3,7 @@ using Data.Common;
 
 namespace Data
 {
-    public class AttendingDbRecord  : EmptyDbReord
+    public class AttendingDbRecord  : EmptyDbRecord
     {
         private string profileID;
         private string eventID;

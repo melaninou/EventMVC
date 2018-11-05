@@ -22,7 +22,8 @@ namespace EventProject.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IProfileObjectsRepository _profileRepository;
         private readonly IAttendingObjectsRepository _attendingRepository;
-        public EventController(IEventObjectsRepository repository, UserManager<IdentityUser> userManager, IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository)
+        public EventController(IEventObjectsRepository repository, UserManager<IdentityUser> userManager,
+            IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository)
         {
 
             _userManager = userManager;
@@ -32,9 +33,7 @@ namespace EventProject.Controllers
 
         }
         public async Task<IActionResult> Index(string sortOrder = null,
-            string currentFilter = null,
-            string searchString = null,
-            int? page = null)
+            string searchString = null, int? page = null, string currentFilter = null)
         {
 
             ViewData["userRealName"] = await _profileRepository.GetObjectsList();
@@ -47,11 +46,11 @@ namespace EventProject.Controllers
             //    ? SortOrder.Descending
             //    : SortOrder.Ascending;
             //_eventRepository.SortFunction = getSortFunction(sortOrder);
-            //if (searchString != null) page = 1;
-            //else searchString = currentFilter;
-            //ViewData["CurrentFilter"] = searchString;
-            //_eventRepository.SearchString = searchString;
-            //_eventRepository.PageIndex = page ?? 1;
+            if (searchString != null) page = 1;
+            else searchString = currentFilter;
+            ViewData["CurrentFilter"] = searchString;
+            _eventRepository.SearchString = searchString;
+            _eventRepository.PageIndex = page ?? 1;
             var l = await _eventRepository.GetObjectsList();
                 return View(new EventViewModelsList(l));
         }
@@ -117,15 +116,22 @@ namespace EventProject.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Attending(string id)
+        public async Task<IActionResult> Attending(string newEvent)
         {
             string userID = GetCurrentUserID();
-            var eventObject = await _eventRepository.GetObject(id);
+            var eventObject = await _eventRepository.GetObject(newEvent);
             string eventID = eventObject.DbRecord.ID;
-            //var userObject = await _profileRepository.GetObject(userID);
-            //var o = AttendingObjectFactory.Create(eventObject, userObject, eventID, userID);
-            //await _attendingRepository.AddObject(o);
-            return RedirectToAction("Create", "Event");
+            var userObject = await _profileRepository.GetObject(userID);
+            var o = AttendingObjectFactory.Create(eventObject, userObject, eventID, userID);
+            await _attendingRepository.AddObject(o);
+
+            //var r = new AttendingDbRecord
+            //{
+            //    EventID = newEvent,
+            //    ProfileID = GetCurrentUserID()
+            //};
+            //await _attendingRepository.AddObject(new AttendingObject(r));
+            return RedirectToAction("Index", new {id = newEvent});
         }
         private Func<EventDbRecord, object> getSortFunction(string sortOrder)
         {
@@ -161,7 +167,7 @@ namespace EventProject.Controllers
 
         private string GetCurrentUserID()
         {
-            return _userManager.GetUserId(HttpContext.User);
+            return _userManager.GetUserId(HttpContext.User).ToString();
         }
     }
 }

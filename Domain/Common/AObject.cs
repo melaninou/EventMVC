@@ -6,7 +6,7 @@ using Data.Common;
 
 namespace Domain.Common
 {
-    public abstract class AObject<T> : RootObject where T : EmptyDbReord, new()
+    public abstract class AObject<T> : RootObject where T : EmptyDbRecord, new()
     {
         public readonly T DbRecord;
 

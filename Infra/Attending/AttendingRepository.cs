@@ -46,12 +46,12 @@ namespace Infra.Attending
         {
             if (eventObject is null) return;
             var eventID = eventObject.DbRecord.ID ?? string.Empty;
-            var events = await dbSet.Include(x => x.Events).
+            var profiles = await dbSet.Include(x => x.Profiles).
                 Where(x => x.EventID == eventID).AsNoTracking()
                 .ToListAsync();
-            foreach (var e in events)
+            foreach (var p in profiles)
             {
-                eventObject.ProfileInUse(new ProfileObject(e.Profiles));
+                eventObject.ProfileInUse(new ProfileObject(p.Profiles));
             }
         }
 
@@ -59,14 +59,13 @@ namespace Infra.Attending
         {
             if (profileObject is null) return;
             var userID = profileObject.DbRecord.ID ?? string.Empty;
-            var profiles = await dbSet.Include(x => x.Profiles).
+            var events = await dbSet.Include(x => x.Events).
                 Where(x => x.ProfileID == userID).AsNoTracking()
                 .ToListAsync();
-            foreach (var p in profiles)
+            foreach (var e in events)
             {
-                profileObject.UsedInEvent(new EventObject(p.Events));
+                profileObject.UsedInEvent(new EventObject(e.Events));
             }
         }
-
     }
 }

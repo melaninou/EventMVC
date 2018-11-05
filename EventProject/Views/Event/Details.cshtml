@@ -1,10 +1,15 @@
-﻿@using EventProject.Extensions
+﻿@using EventProject.Controllers
+@using EventProject.Extensions
+@using Facade.Profile
 @model Facade.Event.EventViewModel
 
 @{
     ViewBag.Title = "Details";
     ViewBag.SubTitle = "Event";
     Layout = "_DetailsPartial";
+    var profiles = ViewBag.Profiles as ProfileViewModelsList ?? new ProfileViewModelsList(null);
+    var profile = new ProfileViewModel();
+    
 }
 <body>
 @Html.ViewingControlsFor(model => model.Name)
@@ -14,7 +19,8 @@
 @Html.ViewingControlsFor(model => model.Description)
 @Html.ViewingControlsFor(model => model.Organizer)
     
-<input type="button" value="Register" onclick="window.location.href='@Url.Action("Details", "Event", new {id=@Model.ID} )'" />
+<input type="button" value="Register" onclick="window.location.href='@Url.Action("Attending", "Event", new {newEvent = Model.ID})'" />
+
 
 @section Actions
 {
