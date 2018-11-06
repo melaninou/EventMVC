@@ -34,46 +34,44 @@
                     </div><!-- /.col -->
 
                     <div class="col-xs-12 col-sm-9">
-                        <h4 class="blue">
-                            <span class="middle">@Model.Name</span>
-
-                            <span class="label label-purple arrowed-in-right">
-                                <i class="ace-icon fa fa-circle smaller-80 align-middle"></i>
-                                online
-                            </span>
-                        </h4>
-
-                        <div class="profile-user-info">
-                            <div class="profile-info-row">
-                                <div class="profile-info-name">Location:</div>
-
-                                <div class="profile-info-value">
-                                    <i class="fa fa-map-marker light-orange bigger-110"></i>
-                                    <span>@Model.Location</span>
-                                </div>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <h2 class="blue">@Model.Name</h2><br/><br/>
                             </div>
-
-                            <div class="profile-info-row">
-                                <div class="profile-info-name">BirthDay:</div>
-
-                                <div class="profile-info-value">
-                                    <span>@Model.BirthDay</span>
+                        </div>
+                        <div class="row" id="info">
+                            <div class="col-xs-10 col-sm-7">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <p>Location: </p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p>@Model.Location</p>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="profile-info-row">
-                                <div class="profile-info-name">Gender:</div>
-
-                                <div class="profile-info-value">
-                                    <span> @Model.Gender </span>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <p>Gender: </p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p>@Model.Gender</p>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="profile-info-row">
-                                <div class="profile-info-name"> Occupation: </div>
-
-                                <div class="profile-info-value">
-                                    <span>@Model.Occupation</span>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <p>Birthday: </p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p>@Model.BirthDay</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <p>Occupation: </p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p>@Model.Occupation</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
