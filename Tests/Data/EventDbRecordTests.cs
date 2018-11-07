@@ -20,7 +20,12 @@ namespace Tests.Data
         {
             Assert.AreEqual(typeof(BasicDbRecord), typeof(EventDbRecord).BaseType);
         }
-
+        [TestMethod]
+        public void IDTest()
+        {
+            testReadWriteProperty(() => obj.ID, x => obj.ID = x);
+            testNullEmptyAndWhitespaceCases(() => obj.ID, x => obj.ID = x, () => Constants.Unspecified);
+        }
         [TestMethod]
         public void TypeTest()
         {
@@ -35,7 +40,7 @@ namespace Tests.Data
         }
 
         [TestMethod]
-        public void OrganiserTest()
+        public void OrganizerTest()
         {
             testReadWriteProperty(() => obj.Organizer, x => obj.Organizer = x);
             testNullEmptyAndWhitespaceCases(() => obj.Organizer, x => obj.Organizer = x, () => Constants.Unspecified);

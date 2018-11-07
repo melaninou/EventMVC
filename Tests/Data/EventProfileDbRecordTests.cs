@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Tests.Data
 {
     [TestClass]
-    public class EventProfileDbRecordTests :ObjectTests<AttendingDbRecord>
+    public class AttendingDbRecordTests :ObjectTests<AttendingDbRecord>
     {
         protected override AttendingDbRecord getRandomTestObject()
         {

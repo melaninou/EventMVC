@@ -5,7 +5,7 @@ using Domain.Profile;
 
 namespace Domain.Attending
 {
-    public class AttendingObject : AObject<AttendingDbRecord>
+    public class AttendingObject : EmptyObject<AttendingDbRecord>
     {
         public readonly EventObject EventObject;
         public readonly ProfileObject ProfileObject;
