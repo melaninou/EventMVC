@@ -113,3 +113,10 @@
 
 
 
+<input type="hidden" value="Unregister"onclick="window.location.href='@Url.Action("NotAttending","Event", new {newEvent = Model.ID})'"/>
+@section Actions
+{
+    @Html.ActionLink("Edit", "Edit", new {id=Model.ID})
+    @Html.ActionLink("Back to List", "Index")
+}
+</body>

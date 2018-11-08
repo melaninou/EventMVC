@@ -17,5 +17,11 @@ namespace Tests.Domain.Event
             var l = GetRandom.Object<List<EventDbRecord>>();
             return new EventObjectsList(l, GetRandom.Object<RepositoryPage>());
         }
+
+        [TestMethod]
+        public void CanCreateWithNullArgumentTest()
+        {
+            Assert.IsNotNull(new EventObjectsList(null, null));
+        }
     }
 }

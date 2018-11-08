@@ -17,5 +17,10 @@ namespace Tests.Domain.Profile
             var l = GetRandom.Object<List<ProfileDbRecord>>();
             return new ProfileObjectsList(l, GetRandom.Object<RepositoryPage>());
         }
+        [TestMethod]
+        public void CanCreateWithNullArgumentTest()
+        {
+            Assert.IsNotNull(new ProfileObjectsList(null, null));
+        }
     }
 }
