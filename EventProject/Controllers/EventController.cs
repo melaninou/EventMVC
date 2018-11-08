@@ -168,8 +168,12 @@ namespace EventProject.Controllers
             return RedirectToAction("Index", new {id = newEvent});
         }
 
-
-
+        public async Task<IActionResult> NotAttending(string newEvent)
+        {
+            var o = await _attendingRepository.GetObject(newEvent);
+            await _attendingRepository.DeleteObject(o);
+            return RedirectToAction("Index", new {id = newEvent});
+        }
         private Func<EventDbRecord, object> getSortFunction(string sortOrder)
         {
             if (string.IsNullOrWhiteSpace(sortOrder)) return x => x.Name;

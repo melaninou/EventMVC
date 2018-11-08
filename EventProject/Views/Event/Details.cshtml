@@ -19,9 +19,11 @@
 @Html.ViewingControlsFor(model => model.Description)
 @Html.ViewingControlsFor(model => model.Organizer)
     
-<input type="button" value="Register" onclick="window.location.href='@Url.Action("Attending", "Event", new {newEvent = Model.ID})'" />
+<input type="button" value="Register" 
+       onclick="window.location.href='@Url.Action("Attending", "Event", new {newEvent = Model.ID})'"/>
 
 
+<input type="hidden" value="Unregister"onclick="window.location.href='@Url.Action("NotAttending","Event", new {newEvent = Model.ID})'"/>
 @section Actions
 {
     @Html.ActionLink("Edit", "Edit", new {id=Model.ID})
