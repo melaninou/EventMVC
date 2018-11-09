@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Aids;
 using Core;
@@ -8,6 +9,7 @@ using Domain.Event;
 using Domain.Profile;
 using Facade.Event;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -16,21 +18,27 @@ namespace EventProject.Controllers
 {
     public class EventController : Controller
     {
-        public const string properties = "ID, Name, Date, Type, Description, Location, Organizer";
+        public const string properties = "ID, Name, Date, Type, Description, Location, Organizer, EventImage";
 
         private IEventObjectsRepository _eventRepository;
+
         private readonly UserManager<IdentityUser> _userManager;
+
         private readonly IProfileObjectsRepository _profileRepository;
+
         private readonly IAttendingObjectsRepository _attendingRepository;
+
+        private readonly IImageHandler _imageHandler;
+
         public EventController(IEventObjectsRepository repository, UserManager<IdentityUser> userManager,
-            IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository)
+            IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository, IImageHandler imageHandler)
         {
 
             _userManager = userManager;
             _profileRepository = profileRepository;
             _eventRepository = repository;
             _attendingRepository = attendingRepository;
-
+            _imageHandler = imageHandler;
         }
         public async Task<IActionResult> Index(string sortOrder = null,
             string searchString = null, int? page = null, string currentFilter = null)
@@ -51,28 +59,38 @@ namespace EventProject.Controllers
             ViewData["CurrentFilter"] = searchString;
             _eventRepository.SearchString = searchString;
             _eventRepository.PageIndex = page ?? 1;
+
             var l = await _eventRepository.GetObjectsList();
                 return View(new EventViewModelsList(l));
         }
        
-
         [Authorize]
         public ActionResult Create()
         {
             return View();
         }
+
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Create([Bind(properties)] EventViewModel e)
+        public async Task<IActionResult> Create(IFormFile avatarFile, [Bind(properties)] EventViewModel e)
         {
           
             if (!ModelState.IsValid) return View(e);
-            var o = EventObjectFactory.Create(GetUniqueID(), e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description);
+
+            var extension = "." + avatarFile.FileName.Split('.')[avatarFile.FileName.Split('.').Length - 1]; //.jpg, . jne
+            string fileName = GetUniqueID() + extension;
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\"  + /*GetCurrentUserID(), */fileName); //kuhu pilt läheb
+
+            var isCorrectImage = await _imageHandler.UploadImage(avatarFile, path);
+
+            if (!isCorrectImage) return View(e);
+
+            var o = EventObjectFactory.Create(GetUniqueID(), e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description, fileName);
             await _eventRepository.AddObject(o);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index"); 
         }
-
-
+        
         [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
@@ -100,16 +118,24 @@ namespace EventProject.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind(properties)] EventViewModel c)
+        public async Task<IActionResult> Edit(IFormFile avatarFile, [Bind(properties)] EventViewModel c)
         {
             if (!ModelState.IsValid) return View(c);
             var o = await _eventRepository.GetObject(c.ID);
+
+            string fileName = o.DbRecord.EventImage;
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\" + /*GetCurrentUserID(),*/ fileName);
+            var isCorrectImage = await _imageHandler.UploadImage(avatarFile, path);
+
+            if (!isCorrectImage) return View(c);
+
             o.DbRecord.Name = c.Name;
             o.DbRecord.Location = c.Location;
             o.DbRecord.Date = c.Date;
             o.DbRecord.Type = c.Type;
             o.DbRecord.Description = c.Description;
             o.DbRecord.Organizer = c.Organizer;
+            o.DbRecord.EventImage = fileName;
             await _eventRepository.UpdateObject(o);
             return RedirectToAction("Index");
         }
@@ -122,7 +148,6 @@ namespace EventProject.Controllers
             currentEventObject.DbRecord.Organizer = organizatorName;
             return View(EventViewModelFactory.Create(currentEventObject));
         }
-
 
         [Authorize]
         public async Task<IActionResult> Delete(string id)
@@ -143,7 +168,7 @@ namespace EventProject.Controllers
             }
             else
             {
-                return Content("You can't delete it, if you don't create it!");
+                return Content("You can't delete it, if you don't create it!"); //selle asemel peaks üldse see, kes ei koostanud, et  ei näe neid nuppe
             }
            
         }
@@ -151,7 +176,12 @@ namespace EventProject.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
+
             var c = await _eventRepository.GetObject(id);
+            var currentEventObject = await _eventRepository.GetObject(id);
+            var organizatorObject = await _profileRepository.GetObject(currentEventObject.DbRecord.Organizer);
+            var organizatorName = organizatorObject.DbRecord.Name;
+            currentEventObject.DbRecord.Organizer = organizatorName;
             await _eventRepository.DeleteObject(c);
             return RedirectToAction("Index");
         }
@@ -183,6 +213,7 @@ namespace EventProject.Controllers
             if (sortOrder.StartsWith("organizer")) return x => x.Organizer;
             return x => x.Name;
         }
+
         private async Task validateId(string id, ModelStateDictionary d)
         {
             if (await isIdInUse(id))
@@ -199,6 +230,7 @@ namespace EventProject.Controllers
             var name = GetMember.DisplayName<EventViewModel>(c => c.ID);
             return string.Format(Messages.ValueIsAlreadyInUse, id, name);
         }
+
         private static string GetUniqueID()
         {
             Guid guid = Guid.NewGuid();

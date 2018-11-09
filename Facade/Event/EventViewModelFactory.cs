@@ -14,9 +14,10 @@ namespace Facade.Event
                 Type = o.DbRecord.Type,
                 Date = o.DbRecord.Date,
                 Description = o?.DbRecord.Description,
-                Organizer = o?.DbRecord.Organizer
+                Organizer = o?.DbRecord.Organizer,
+                EventImage = o?.DbRecord.EventImage
             };
-            if (o is null) return v;
+            //if (o is null) return v;
             
             return v;
         }

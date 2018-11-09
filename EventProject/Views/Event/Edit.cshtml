@@ -1,30 +1,89 @@
-﻿@using Core
-@using EventProject.Extensions
+﻿@using EventProject.Extensions
+@using Core
 @model Facade.Event.EventViewModel
+
 @{
     ViewBag.Title = "Edit";
-    ViewBag.SubTitle = $"Event ({Model.ID})"; //todo does we need that it show event id ?
+    ViewBag.SubTitle = "Edit Event";
     ViewBag.Button = "Save";
-    Layout = "_EditPartial";
 }
-<body>
-    @Html.HiddenFor(model => model.ID)
-    @Html.EditingControlsFor(model => model.Name)
-    @Html.EditingControlsFor(model => model.Date)
-    @Html.EditingControlsFor(model => model.Location)
-<div class="form-group">
-    <label asp-for="Type" class="col-md-2 control-label"></label>
-    <div class="col-md-10">
-        <select asp-for="Type"
-                asp-items="Html.GetEnumSelectList<EventType>()">
-        </select>
 
+
+<body>
+
+    <h1>Edit Event + @Model.EventImage</h1>
+    <div class="row">
+        <section>
+            <form asp-controller="Event" asp-action="Edit" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <input asp-for="EventImage" class="form-control" type="hidden" />
+
+
+                <div class="form-group">
+                    <label asp-for="Name" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Name" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Location" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Location" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Date" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Date" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Type" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <select asp-for="Type"
+                                asp-items="Html.GetEnumSelectList<EventType>()"></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Description" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-3 center">
+                    <span class="event-picture">
+                        <img class="editable img-responsive" alt="Avatar" id="avatar2" src="~/images/@Model.EventImage"/>
+                    </span>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Image</label>
+                    <div class="col-md-10">
+                        <input type="file" name="AvatarFile" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-default">@ViewBag.Button</button>
+                    </div>
+                </div>
+
+                <p>
+                    <a asp-action="Index">Return to Events</a>
+                </p>
+            </form>
+        </section>
     </div>
-</div>
-    @Html.EditingControlsFor(model => model.Description)
-    @Html.HiddenFor(model => model.Organizer) 
 </body>
-@section Actions
-    {
-    @Html.ActionLink("Back to List", "Index")
-}
+
+
+
+

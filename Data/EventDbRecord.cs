@@ -9,6 +9,7 @@ namespace Data
         private DateTime date;
         private string organizer;
         private string description;
+        private string eventImage;
         public override string ID
         {
             get => getString(ref id);
@@ -32,6 +33,12 @@ namespace Data
         {
             get => getString(ref description);
             set => description = value;
+        }
+
+        public string EventImage
+        {
+            get => getString(ref eventImage);
+            set => eventImage = value;
         }
     }
 }

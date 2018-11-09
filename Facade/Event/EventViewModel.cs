@@ -12,7 +12,7 @@ namespace Facade.Event
         private DateTime date;
         private string organiser;
         private string description;
-
+        private string eventImage;
         public EventType Type { get; set; }
        
         public DateTime Date
@@ -31,6 +31,12 @@ namespace Facade.Event
         {
             get => getString(ref description);
             set => description = value;
+        }
+
+        public string EventImage
+        {
+            get => getString(ref eventImage);
+            set => eventImage = value;
         }
 
         [DisplayName("Who else is going:")]

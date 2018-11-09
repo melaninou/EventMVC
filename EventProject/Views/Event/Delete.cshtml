@@ -16,11 +16,13 @@
 @Html.ViewingControlsFor(model => model.Location)
 @Html.ViewingControlsFor(model => model.Description)
 @Html.ViewingControlsFor(model => model.Organizer)
+
 </body>
 
 @section Actions
 {
 
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+    @Html.ActionLink("Edit", "Edit", new {id = Model.ID} )
+
     @Html.ActionLink("Back to List", "Index")
 }
