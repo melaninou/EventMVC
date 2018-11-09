@@ -93,7 +93,7 @@ namespace EventProject.Controllers
             }
             else
             {
-                return Content("You can't edit it, if you doesn't create it!");
+                return Content("You can't edit it, if you don't create it!");
             }
 
         }
@@ -113,7 +113,6 @@ namespace EventProject.Controllers
             await _eventRepository.UpdateObject(o);
             return RedirectToAction("Index");
         }
-
 
         public async Task<IActionResult> Details(string id)
         {
@@ -144,7 +143,7 @@ namespace EventProject.Controllers
             }
             else
             {
-                return Content("You can't delete it, if you doesn't create it!");
+                return Content("You can't delete it, if you don't create it!");
             }
            
         }
@@ -165,15 +164,16 @@ namespace EventProject.Controllers
             var userObject = await _profileRepository.GetObject(userID);
             var o = AttendingObjectFactory.Create(eventObject, userObject, eventID, userID);
             await _attendingRepository.AddObject(o);
-            return RedirectToAction("Index", new {id = newEvent});
+            return RedirectToAction("Details", new {id = newEvent});
         }
 
         public async Task<IActionResult> NotAttending(string newEvent)
         {
             var o = await _attendingRepository.GetObject(newEvent);
             await _attendingRepository.DeleteObject(o);
-            return RedirectToAction("Index", new {id = newEvent});
+            return RedirectToAction("Details", new {id = newEvent});
         }
+
         private Func<EventDbRecord, object> getSortFunction(string sortOrder)
         {
             if (string.IsNullOrWhiteSpace(sortOrder)) return x => x.Name;

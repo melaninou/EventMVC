@@ -1,4 +1,5 @@
-﻿@using EventProject.Controllers
+﻿@using Domain.Attending
+@using EventProject.Controllers
 @using EventProject.Extensions
 @using Facade.Profile
 @model Facade.Event.EventViewModel
@@ -12,21 +13,38 @@
     
 }
 <body>
-@Html.ViewingControlsFor(model => model.Name)
-@Html.ViewingControlsFor(model => model.Date)
-@Html.ViewingControlsFor(model => model.Type)
-@Html.ViewingControlsFor(model => model.Location)
-@Html.ViewingControlsFor(model => model.Description)
-@Html.ViewingControlsFor(model => model.Organizer)
+    @Html.ViewingControlsFor(model => model.Name)
+    @Html.ViewingControlsFor(model => model.Date)
+    @Html.ViewingControlsFor(model => model.Type)
+    @Html.ViewingControlsFor(model => model.Location)
+    @Html.ViewingControlsFor(model => model.Description)
+    @Html.ViewingControlsFor(model => model.Organizer)
+
+    @*<input type="button" value="Register"
+        onclick="window.location.href='@Url.Action("Attending", "Event", new {newEvent = Model.ID})'"/>*@
+
+<button type="button" id="toggle" onclick="myFunction()">Register</button>
     
-<input type="button" value="Register" 
-       onclick="window.location.href='@Url.Action("Attending", "Event", new {newEvent = Model.ID})'"/>
+
+<script>
+        function myFunction() {
+            var change = document.getElementById("toggle");
+            if (change.innerHTML == "Register") {
+                change.innerHTML = "Unregister";
+                return window.location.href = '@Url.Action("Attending", "Event", new { newEvent = Model.ID })';
+
+            }
+            else {
+                change.innerHTML = "Register";
+                return window.location.href ='@Url.Action("NotAttending", "Event", new {newEvent = Model.ID})';
+            }
+        }
+    </script>
 
 
-<input type="hidden" value="Unregister"onclick="window.location.href='@Url.Action("NotAttending","Event", new {newEvent = Model.ID})'"/>
-@section Actions
-{
-    @Html.ActionLink("Edit", "Edit", new {id=Model.ID})
-    @Html.ActionLink("Back to List", "Index")
-}
+    @section Actions
+        {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+        @Html.ActionLink("Back to List", "Index")
+    }
 </body>
