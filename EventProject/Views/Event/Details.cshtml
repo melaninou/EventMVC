@@ -27,22 +27,44 @@
                         </span>
 
                         <div class="space space-4"></div>
-                        <a href="@Url.Action("Attending", "Event", new {newEvent = Model.ID})" class="btn btn-sm btn-block btn-primary">
-                            <span class="bigger-110">Register</span>
-                        </a>
+
+                        @*<button type="button" id="Register" onclick="myFunction()">Register</button>
+                        @*<button type="button" id="Register" formaction="@Url.Action("Register", "Event")">Register</button>*@
+                        @* <button type="button" id="Unregister" display="hide" onclick="myFunction()">Unregister</button>*@
+                    
+
+                        <button type="button" id="toggle" onclick="myFunction()">Register</button>
+    
+                        <script>
+                            function myFunction() {
+                                var change = document.getElementById("toggle");
+                                if (change.innerHTML == "Register") {
+                                    change.innerHTML = "Unregister";
+
+                                }
+                                else {
+                                    change.innerHTML = "Register";
+                                }
+                                
+                                return window.location.href = '@Url.Action("Register", "Event", new { id = Model.ID })';
+                            }
+                        </script>
+                        
+            <span class="bigger-110">Register</span>
+        </a>
 
                         @* todo Unregister=> only after ypu register*@
 
                         @*<div></div>
-                            <a href="@Url.Action("NotAttending", "Event", new {newEvent = Model.ID})" class="btn btn-sm btn-block btn-primary">
-                                <span class="bigger-110">UnRegister</span>
-                            </a>*@
+        <a href="@Url.Action("NotAttending", "Event", new {newEvent = Model.ID})" class="btn btn-sm btn-block btn-primary">
+            <span class="bigger-110">UnRegister</span>
+        </a>*@
 
                         @*todo Edit -> only if ypu create event*@
                         @*<div></div>
-                            <a href="@Url.Action("Edit", "Event", new {id=Model.ID})" class="btn btn-sm btn-block btn-primary">
-                                <span class="bigger-110">Edit</span>
-                            </a>*@
+        <a href="@Url.Action("Edit", "Event", new {id=Model.ID})" class="btn btn-sm btn-block btn-primary">
+            <span class="bigger-110">Edit</span>
+        </a>*@
 
 
                     </div><!-- /.col -->
@@ -119,3 +141,23 @@
         </div>
     </div>
 </div>
+   
+
+
+@*<script>
+    function myFunction() {       
+        var change = document.getElementById("Register");
+        if (change.innerHTML == "Register") {
+            document.getElementById("Register").hide();
+            document.getElementById("Unregister").show();
+
+        }
+        else {
+
+            document.getElementById("Unregister").hide();
+            document.getElementById("Register").show();
+        }
+        
+        return window.location.href ='@Url.Action("Register", "Event", new {eventID = Model.ID})';
+    }
+</script>*@

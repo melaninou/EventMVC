@@ -10,6 +10,7 @@ namespace Domain.Attending
     {
         Task LoadEvents(ProfileObject profileObject);
         Task LoadProfiles(EventObject eventObject);
-
+        Task<object> FindObject(string eventID, string userID);
+        Task<AttendingObject> GetObject(string eventID, string userID);
     }
 }

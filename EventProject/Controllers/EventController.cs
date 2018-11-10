@@ -8,6 +8,8 @@ using Domain.Attending;
 using Domain.Event;
 using Domain.Profile;
 using Facade.Event;
+using Infra;
+using Infra.Attending;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -29,6 +31,7 @@ namespace EventProject.Controllers
         private readonly IAttendingObjectsRepository _attendingRepository;
 
         private readonly IImageHandler _imageHandler;
+        
 
         public EventController(IEventObjectsRepository repository, UserManager<IdentityUser> userManager,
             IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository, IImageHandler imageHandler)
@@ -186,22 +189,35 @@ namespace EventProject.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Attending(string newEvent)
+        public async Task<IActionResult> Attending(string id)
         {
             string userID = GetCurrentUserID();
-            var eventObject = await _eventRepository.GetObject(newEvent);
+            var eventObject = await _eventRepository.GetObject(id);
             string eventID = eventObject.DbRecord.ID;
             var userObject = await _profileRepository.GetObject(userID);
             var o = AttendingObjectFactory.Create(eventObject, userObject, eventID, userID);
             await _attendingRepository.AddObject(o);
-            return RedirectToAction("Details", new {id = newEvent});
+            return RedirectToAction("Details", new {id});
         }
 
-        public async Task<IActionResult> NotAttending(string newEvent)
+        public async Task<IActionResult> NotAttending(string id)
         {
-            var o = await _attendingRepository.GetObject(newEvent);
+            var o = await _attendingRepository.GetObject(id, GetCurrentUserID());
             await _attendingRepository.DeleteObject(o);
-            return RedirectToAction("Details", new {id = newEvent});
+            return RedirectToAction("Details", new {id});
+        }
+
+        public async Task<IActionResult> Register(string id)
+        {
+            //TODO figure out how to find out if an object exists already
+            if (_attendingRepository.FindObject(id, GetCurrentUserID()).Result == null)
+            {
+                return RedirectToAction("Attending", new {id});
+            }
+            else
+            {
+                return RedirectToAction("NotAttending", new {id});
+            }
         }
 
         private Func<EventDbRecord, object> getSortFunction(string sortOrder)
