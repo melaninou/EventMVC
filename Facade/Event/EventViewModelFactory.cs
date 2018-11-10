@@ -1,4 +1,5 @@
 ﻿using Domain.Event;
+using Facade.Profile;
 
 namespace Facade.Event
 {
@@ -17,8 +18,12 @@ namespace Facade.Event
                 Organizer = o?.DbRecord.Organizer,
                 EventImage = o?.DbRecord.EventImage
             };
-            //if (o is null) return v;
-            
+            if (o is null) return v;
+            foreach (var p in o.ProfilesInUse )
+            {
+                var profile = ProfileViewModelFactory.Create(p);
+                v.InProfiles.Add(profile);
+            }
             return v;
         }
     }
