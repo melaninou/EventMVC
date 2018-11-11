@@ -1,0 +1,60 @@
+﻿@model Core.IPaginatedList<Facade.Event.EventViewModel>
+
+@{
+    ViewData["Title"] = "Calendar";
+}
+
+<h2>Calendar</h2>
+
+
+<div class="container">
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">&nbsp;</div>
+        <div class="col-6">
+
+            Event...<input type="text" id="messageInput" />
+            <input type="button" id="createButton" value="New Event" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">&nbsp;</div>
+        <div class="col-6">
+            <table id="eventList" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Event Name</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>@item.Name</td>
+                            <td>@item.Location</td>
+                            <td>@item.Date</td>
+                            <td>
+                                <a href="@Url.Action("Details", "Event", new {id = item.ID})">
+                                    More
+                                </a>
+                            </td>
+                        </tr>
+                     }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/calendar.js"></script>
+
+
+

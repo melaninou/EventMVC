@@ -7,6 +7,7 @@ using Data;
 using Domain.Attending;
 using Domain.Event;
 using Domain.Profile;
+using EventProject.Hubs;
 using Facade.Event;
 using Infra;
 using Infra.Attending;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.SignalR;
 
 namespace EventProject.Controllers
 {
@@ -31,10 +33,11 @@ namespace EventProject.Controllers
         private readonly IAttendingObjectsRepository _attendingRepository;
 
         private readonly IImageHandler _imageHandler;
-        
+        private readonly IHubContext<CalendarHub> _hubContext;
+
 
         public EventController(IEventObjectsRepository repository, UserManager<IdentityUser> userManager,
-            IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository, IImageHandler imageHandler)
+            IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository, IImageHandler imageHandler, IHubContext<CalendarHub> hubContext)
         {
 
             _userManager = userManager;
@@ -42,6 +45,8 @@ namespace EventProject.Controllers
             _eventRepository = repository;
             _attendingRepository = attendingRepository;
             _imageHandler = imageHandler;
+            _hubContext = hubContext;
+
         }
         public async Task<IActionResult> Index(string sortOrder = null,
             string searchString = null, int? page = null, string currentFilter = null)
@@ -79,6 +84,7 @@ namespace EventProject.Controllers
         {
           
             if (!ModelState.IsValid) return View(e);
+            var eventId = GetUniqueID();
 
             var extension = "." + avatarFile.FileName.Split('.')[avatarFile.FileName.Split('.').Length - 1]; //.jpg, . jne
             string fileName = GetUniqueID() + extension;
@@ -91,7 +97,8 @@ namespace EventProject.Controllers
 
             var o = EventObjectFactory.Create(GetUniqueID(), e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description, fileName);
             await _eventRepository.AddObject(o);
-            return RedirectToAction("Index"); 
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", e.ID, e.Name, e.Location, e.Date);
+            return RedirectToAction("Index");
         }
         
         [Authorize]
@@ -278,6 +285,13 @@ namespace EventProject.Controllers
             var organizatorName = organizatorObject.DbRecord.Name;
             return organizatorName;
         }
-       
+
+        public async Task<IActionResult> Calendar()
+        {
+            var l = await _eventRepository.GetObjectsList();
+            return View(new EventViewModelsList(l));
+           // return View();
+        }
+
     }
 }
