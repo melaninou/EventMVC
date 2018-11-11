@@ -19,15 +19,33 @@ namespace Tests.Data
         {
             Assert.AreEqual(typeof(BasicDbRecord), typeof(ProfileDbRecord).BaseType);
         }
-
+        
         [TestMethod]
-        public void IDTest()
+        public void BirthDayTest()
         {
-            testReadWriteProperty(() => obj.ID, x => obj.ID = x);
-            testNullEmptyAndWhitespaceCases(() => obj.ID, x => obj.ID = x, () => Constants.Unspecified);
+            testReadWriteProperty(() => obj.BirthDay, x => obj.BirthDay = x);
         }
 
+        [TestMethod]
+        public void AboutTextTest()
+        {
+            testReadWriteProperty(() => obj.AboutText, x => obj.AboutText = x);
+            testNullEmptyAndWhitespaceCases(() => obj.AboutText, x => obj.AboutText = x, () => Constants.Unspecified);
+        }
 
+        [TestMethod]
+        public void OccupationTest()
+        {
+            testReadWriteProperty(() => obj.Occupation, x => obj.Occupation = x);
+            testNullEmptyAndWhitespaceCases(() => obj.Occupation, x => obj.Occupation = x, () => Constants.Unspecified);
+        }
+
+        [TestMethod]
+        public void ProfileImageTest()
+        {
+            testReadWriteProperty(() => obj.ProfileImage, x => obj.ProfileImage = x);
+            testNullEmptyAndWhitespaceCases(() => obj.ProfileImage, x => obj.ProfileImage = x, () => Constants.Unspecified);
+        }
 
         [TestMethod]
         public void GenderTest()

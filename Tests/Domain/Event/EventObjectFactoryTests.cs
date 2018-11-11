@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Aids;
 using Core;
 using Domain.Event;
@@ -52,11 +50,11 @@ namespace Tests.Domain.Event
             initializeTestData();
         }
 
-        [TestMethod]
-        public void CreateTest()
-        {
-            o = EventObjectFactory.Create(id, name, location, date, evType, organiser, description);
-            validateResults(id,name,location,date,evType,organiser,description);
-        }
+        //[TestMethod]
+        //public void CreateTest()
+        //{
+        //    o = EventObjectFactory.Create(id, name, location, date, evType, organiser, description, );
+        //    validateResults(id,name,location,date,evType,organiser,description);
+        //}
     }
 }

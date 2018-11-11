@@ -4,34 +4,77 @@
 @{
     ViewBag.Title = "Create";
     ViewBag.SubTitle = "Event";
-    ViewBag.Button = "Create";
-    Layout = "_EditPartial";
-
+    ViewBag.Button = "Create Event";
 }
 
 
 <body>
 
-    @Html.EditingControlsFor(model => model.Name)
-    @Html.EditingControlsFor(model => model.Date)
+    <h1>@ViewBag.Title Event</h1>
+    <div class="row">
+        <section>
+            <form asp-controller="Event" asp-action="Create" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>
 
-    <div class="form-group">
-        <label asp-for="Type" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <select asp-for="Type"
-                    asp-items="Html.GetEnumSelectList<EventType>()"></select>
+                <div class="form-group">
+                    <label asp-for="Name" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Name" class="form-control" />
 
-        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Location" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Location" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Date" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Date" class="form-control" />
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Type" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <select asp-for="Type"
+                                asp-items="Html.GetEnumSelectList<EventType>()"></select>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="Description" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Description" class="form-control" />
+                    </div>
+                </div>
+
+                
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Image</label>
+                    <div class="col-md-10">
+                        <input type="file" name="AvatarFile" class="form-control" />
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-default">@ViewBag.Button</button>
+                    </div>
+                </div>
+
+                <p>
+                    <a asp-action="Index">Return to Events</a>
+                </p>
+            </form>
+        </section>
     </div>
-    @Html.EditingControlsFor(model => model.Description)
-    @Html.EditingControlsFor(model => model.Location)
-    @Html.HiddenFor(model => model.Organizer)
-
-
 
 </body>
-
-@section Actions
-{
-    @Html.ActionLink("Back to List", "Index")
-}

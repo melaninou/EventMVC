@@ -28,5 +28,12 @@ namespace Tests.Domain
         {
             isAllClassesTested(assembly, Namespace("Profile"));
         }
+        
+
+        [TestMethod]
+        public void IsAttendingTested()
+        {
+            isAllClassesTested(assembly, Namespace("Attending"));
+        }
     }
 }
