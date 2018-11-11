@@ -17,7 +17,8 @@ namespace Infra.Migrations
                     Type = table.Column<int>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     Organizer = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true),
+                    EventImage = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

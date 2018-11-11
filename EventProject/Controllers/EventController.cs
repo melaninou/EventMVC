@@ -33,10 +33,11 @@ namespace EventProject.Controllers
         private readonly IAttendingObjectsRepository _attendingRepository;
 
         private readonly IImageHandler _imageHandler;
-        
+        private readonly IHubContext<CalendarHub> _hubContext;
+
 
         public EventController(IEventObjectsRepository repository, UserManager<IdentityUser> userManager,
-            IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository, IImageHandler imageHandler)
+            IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository, IImageHandler imageHandler, IHubContext<CalendarHub> hubContext)
         {
 
             _userManager = userManager;
@@ -84,7 +85,6 @@ namespace EventProject.Controllers
           
             if (!ModelState.IsValid) return View(e);
             var eventId = GetUniqueID();
-            var o = EventObjectFactory.Create(eventId, e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description);
 
             var extension = "." + avatarFile.FileName.Split('.')[avatarFile.FileName.Split('.').Length - 1]; //.jpg, . jne
             string fileName = GetUniqueID() + extension;
@@ -97,7 +97,6 @@ namespace EventProject.Controllers
 
             var o = EventObjectFactory.Create(GetUniqueID(), e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description, fileName);
             await _eventRepository.AddObject(o);
-            return RedirectToAction("Index"); 
             await _hubContext.Clients.All.SendAsync("ReceiveMessage", e.ID, e.Name, e.Location, e.Date);
             return RedirectToAction("Index");
         }
