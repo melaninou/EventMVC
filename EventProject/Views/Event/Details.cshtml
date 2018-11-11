@@ -1,10 +1,16 @@
 ﻿
 @using Facade.Profile
+@using Facade.Event
+@using Infra
+@using Infra.Attending
 @model Facade.Event.EventViewModel
 @{
     ViewData["Title"] = "Details on " + @Model.Name;
     var profiles = ViewBag.Profiles as ProfileViewModelsList ?? new ProfileViewModelsList(null);
-    var profile = new ProfileViewModel();
+    var eventID = Model.ID;
+    var profileID = Url.Action("GetCurrentUserID", "Event");
+    EventProjectDbContext c = null;
+    var isObjectPresent = new AttendingRepository(c).FindObject(eventID,profileID);
 }
 <div id="event-index" class="event">
     <div class="tabbable">
@@ -28,29 +34,33 @@
 
                         <div class="space space-4"></div>
 
-                        @*<button type="button" id="Register" onclick="myFunction()">Register</button>
-                        @*<button type="button" id="Register" formaction="@Url.Action("Register", "Event")">Register</button>*@
-                        @* <button type="button" id="Unregister" display="hide" onclick="myFunction()">Unregister</button>*@
-                    
+                        @* <button type="button" id="Unregister" display="hide" onclick="myFunction()">Unregister</button>*@              
 
-                        <button type="button" id="toggle" onclick="myFunction()">Register</button>
-    
+                        <input type="button" value="Register" id="toggle" onclick="myFunction()" ></>
+                        
+                        @*<script>                         
+                            var change = document.getElementById("toggle");
+                            change.addEventListener("beforeactivate", textChange());
+                        </script>*@
+
+                        @*<script>
+                            function textChange() {
+                                var text = document.getElementById("toggle");
+                                if (isObjectPresent == null) {
+                                    text.value = "REGISTER";
+                                } else {
+                                    text.value = "UNREGISTER";
+                                }
+                            }
+                        </script>*@
+
                         <script>
                             function myFunction() {
-                                var change = document.getElementById("toggle");
-                                if (change.innerHTML == "Register") {
-                                    change.innerHTML = "Unregister";
-
-                                }
-                                else {
-                                    change.innerHTML = "Register";
-                                }
-                                
                                 return window.location.href = '@Url.Action("Register", "Event", new { id = Model.ID })';
                             }
                         </script>
                         
-            <span class="bigger-110">Register</span>
+            @*<span class="bigger-110">Register</span>*@
         
 
                         @* todo Unregister=> only after ypu register*@

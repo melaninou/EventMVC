@@ -53,5 +53,13 @@ namespace Tests.Data
             testNullEmptyAndWhitespaceCases(() => obj.Description, x => obj.Description = x,
                 () => Constants.Unspecified);
         }
+
+        [TestMethod]
+        public void EventImageTest()
+        {
+            testReadWriteProperty(() => obj.EventImage, x => obj.EventImage = x);
+            testNullEmptyAndWhitespaceCases(() => obj.EventImage, x => obj.EventImage = x,
+                () => Constants.Unspecified);
+        }
     }
 }

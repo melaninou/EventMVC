@@ -257,7 +257,7 @@ namespace EventProject.Controllers
             return uniqueID;
         }
 
-        private string GetCurrentUserID()
+        public string GetCurrentUserID()
         {
             return _userManager.GetUserId(HttpContext.User).ToString();
         }

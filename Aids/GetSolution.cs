@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -10,10 +8,6 @@ namespace Aids
     public static class GetSolution
     {
         public static AppDomain Domain => AppDomain.CurrentDomain;
-
-        public static List<Assembly> Assemblies =>
-            Safe.Run(() => Domain.GetAssemblies().ToList(),
-                new List<Assembly>());
 
         public static Assembly AssemblyByName(string name)
         {
@@ -37,9 +31,5 @@ namespace Aids
                 return a.Select(t => t.FullName).ToList();
             }, new List<string>());
         }
-
-        public static string Name =>
-            GetString.Head(GetClass.Namespace(typeof(GetSolution)));
-    
-}
+    }
 }

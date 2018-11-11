@@ -42,6 +42,13 @@ namespace Tests.Facade.Event
         }
 
         [TestMethod]
+        public void EventImageTest()
+        {
+            testReadWriteProperty(() => obj.EventImage, x => obj.EventImage = x);
+
+        }
+
+        [TestMethod]
         public void InProfilesTest()
         {
             Assert.IsInstanceOfType(obj.InProfiles, typeof(List<ProfileViewModel>));
