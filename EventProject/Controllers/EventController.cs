@@ -6,11 +6,13 @@ using Data;
 using Domain.Attending;
 using Domain.Event;
 using Domain.Profile;
+using EventProject.Hubs;
 using Facade.Event;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.SignalR;
 
 namespace EventProject.Controllers
 {
@@ -22,14 +24,20 @@ namespace EventProject.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IProfileObjectsRepository _profileRepository;
         private readonly IAttendingObjectsRepository _attendingRepository;
-        public EventController(IEventObjectsRepository repository, UserManager<IdentityUser> userManager,
-            IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository)
+        private readonly IHubContext<CalendarHub> _hubContext;
+
+        public EventController(IEventObjectsRepository repository,
+            UserManager<IdentityUser> userManager,
+            IProfileObjectsRepository profileRepository,
+            IAttendingObjectsRepository attendingRepository,
+            IHubContext<CalendarHub> hubContext)
         {
 
             _userManager = userManager;
             _profileRepository = profileRepository;
             _eventRepository = repository;
             _attendingRepository = attendingRepository;
+            _hubContext = hubContext;
 
         }
         public async Task<IActionResult> Index(string sortOrder = null,
@@ -67,8 +75,10 @@ namespace EventProject.Controllers
         {
           
             if (!ModelState.IsValid) return View(e);
-            var o = EventObjectFactory.Create(GetUniqueID(), e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description);
+            var eventId = GetUniqueID();
+            var o = EventObjectFactory.Create(eventId, e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description);
             await _eventRepository.AddObject(o);
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", e.ID, e.Name, e.Location, e.Date);
             return RedirectToAction("Index");
         }
 
@@ -223,6 +233,13 @@ namespace EventProject.Controllers
             var organizatorName = organizatorObject.DbRecord.Name;
             return organizatorName;
         }
-       
+
+        public async Task<IActionResult> Calendar()
+        {
+            var l = await _eventRepository.GetObjectsList();
+            return View(new EventViewModelsList(l));
+           // return View();
+        }
+
     }
 }

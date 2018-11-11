@@ -6,27 +6,28 @@
     ViewBag.SubTitle = "Event";
     ViewBag.Button = "Create";
     Layout = "_EditPartial";
-   
+
 }
 
 
 <body>
 
-@Html.EditingControlsFor(model => model.Name)
-@Html.EditingControlsFor(model => model.Date)
+    @Html.EditingControlsFor(model => model.Name)
+    @Html.EditingControlsFor(model => model.Date)
 
-<div class="form-group">
-    <label asp-for="Type" class="col-md-2 control-label"></label>
-    <div class="col-md-10">
-        <select asp-for="Type"
-                asp-items="Html.GetEnumSelectList<EventType>()">
-        </select>
+    <div class="form-group">
+        <label asp-for="Type" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <select asp-for="Type"
+                    asp-items="Html.GetEnumSelectList<EventType>()"></select>
 
+        </div>
     </div>
-</div>
-@Html.EditingControlsFor(model => model.Description)
-@Html.EditingControlsFor(model => model.Location)
-@Html.HiddenFor(model => model.Organizer)
+    @Html.EditingControlsFor(model => model.Description)
+    @Html.EditingControlsFor(model => model.Location)
+    @Html.HiddenFor(model => model.Organizer)
+
+
 
 </body>
 
