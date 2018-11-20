@@ -38,12 +38,12 @@
 
                         <input type="button" value="Register" id="toggle" onclick="myFunction()" ></>
                         
-                        @*<script>                         
+                        <script>                         
                             var change = document.getElementById("toggle");
-                            change.addEventListener("beforeactivate", textChange());
-                        </script>*@
+                            change.addEventListener("load", textChange());
+                        </script>
 
-                        @*<script>
+                        <script>
                             function textChange() {
                                 var text = document.getElementById("toggle");
                                 if (isObjectPresent == null) {
@@ -52,7 +52,7 @@
                                     text.value = "UNREGISTER";
                                 }
                             }
-                        </script>*@
+                        </script>
 
                         <script>
                             function myFunction() {

@@ -17,7 +17,7 @@ namespace EventProject.Controllers
     public class ProfileController : Controller
     {
         private IProfileObjectsRepository repository;
-        public const string properties = "ID, Name, Location, Gender, Birthday, Location, Occupation, AboutText, ProfileImage";
+        public const string properties = "ID, Name, Location, Gender, BirthDay, Location, Occupation, AboutText, ProfileImage";
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IImageHandler _imageHandler;
 

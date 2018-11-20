@@ -290,7 +290,7 @@ namespace EventProject.Controllers
         {
             var l = await _eventRepository.GetObjectsList();
             return View(new EventViewModelsList(l));
-           // return View();
+
         }
 
     }
