@@ -124,13 +124,12 @@ namespace EventProject.Controllers
         }
 
 
-
         private static string GetUniqueID()
         {
             Guid guid = Guid.NewGuid();
-            return guid.ToString();
-            
+            return guid.ToString();          
         }
+
 
         private string GetCurrentUserId()
         {

@@ -10,6 +10,5 @@ namespace Domain.Attending
     {
         Task LoadEvents(ProfileObject profileObject);
         Task LoadProfiles(EventObject eventObject);
-
     }
 }

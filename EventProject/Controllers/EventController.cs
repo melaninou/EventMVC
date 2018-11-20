@@ -25,17 +25,16 @@ namespace EventProject.Controllers
         public EventController(IEventObjectsRepository repository, UserManager<IdentityUser> userManager,
             IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository)
         {
-
             _userManager = userManager;
             _profileRepository = profileRepository;
             _eventRepository = repository;
             _attendingRepository = attendingRepository;
-
         }
+
+
         public async Task<IActionResult> Index(string sortOrder = null,
             string searchString = null, int? page = null, string currentFilter = null)
         {
-
             ViewData["userRealName"] = await _profileRepository.GetObjectsList();
             ViewData["SortName"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["SortID"] = sortOrder == "id" ? "id_desc" : "id";
@@ -61,11 +60,12 @@ namespace EventProject.Controllers
         {
             return View();
         }
+
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([Bind(properties)] EventViewModel e)
-        {
-          
+        {   
             if (!ModelState.IsValid) return View(e);
             var o = EventObjectFactory.Create(GetUniqueID(), e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description);
             await _eventRepository.AddObject(o);
@@ -93,10 +93,11 @@ namespace EventProject.Controllers
             }
             else
             {
-                return Content("You can't edit it, if you doesn't create it!");
+                return Content("Unable to edit current event. The right only belongs to the organizer.");
             }
-
         }
+
+
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -144,9 +145,9 @@ namespace EventProject.Controllers
             }
             else
             {
-                return Content("You can't delete it, if you doesn't create it!");
+                return Content("Unable to delete current event. The right only belongs to the organizer.");
             }
-           
+
         }
         [Authorize]
         [HttpPost, ActionName("Delete")]
