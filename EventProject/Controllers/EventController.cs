@@ -100,7 +100,7 @@ namespace EventProject.Controllers
             await _hubContext.Clients.All.SendAsync("ReceiveMessage", e.ID, e.Name, e.Location, e.Date);
             return RedirectToAction("Index");
         }
-        
+
         [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
@@ -113,7 +113,7 @@ namespace EventProject.Controllers
             var organizatorName = organizatorObject.DbRecord.Name;
             //var currentUserName = GetCurrentUserName();
             //var organizatorName =GetOrgName(id);
-           
+
             if (currentUserName == organizatorName)
             {
                 var c = await _eventRepository.GetObject(id);
@@ -124,6 +124,7 @@ namespace EventProject.Controllers
                 return Content("You can't edit it, if you don't create it!");
             }
 
+        }
 
         [Authorize]
         [HttpPost]
