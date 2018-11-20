@@ -11,7 +11,7 @@ namespace Infra.Attending
 {
     public class AttendingRepository : IAttendingObjectsRepository
     {
-        private readonly DbSet<AttendingDbRecord> dbSet;
+        internal readonly DbSet<AttendingDbRecord> dbSet;
         private readonly DbContext db;
 
         public AttendingRepository(EventProjectDbContext c)
@@ -23,6 +23,13 @@ namespace Infra.Attending
         public Task<AttendingObject> GetObject(string id)
         {
             throw new NotImplementedException();
+        }
+        
+        public async Task<AttendingObject> GetObject(string eventID, string userID)
+        {
+            //if (eventID == null || userID == null) return null;
+            var o = await dbSet.FirstOrDefaultAsync(x => x.EventID == eventID && x.ProfileID == userID);
+            return new AttendingObject(o);
         }
         public async Task AddObject(AttendingObject o)
         {
@@ -41,7 +48,10 @@ namespace Infra.Attending
 
         public async Task DeleteObject(AttendingObject o)
         {
-            dbSet.Remove(o.DbRecord);
+            var r = o.DbRecord;
+            r.Profiles = null;
+            r.Events = null;
+            dbSet.Remove(r);
             await db.SaveChangesAsync();
         }
 
@@ -69,6 +79,13 @@ namespace Infra.Attending
             {
                 profileObject.UsedInEvent(new EventObject(e.Events));
             }
+        }
+
+        public async Task<object> FindObject(string id, string userID)
+        {
+            var item = dbSet.Find(id, userID);
+            if (item != null) return item;
+            else return null;
         }
     }
 }

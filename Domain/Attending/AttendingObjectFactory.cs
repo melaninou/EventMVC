@@ -8,7 +8,8 @@ namespace Domain.Attending
 {
     public static class AttendingObjectFactory
     {
-        public static AttendingObject Create(EventObject eventObject, ProfileObject profileObject, string eventID, string userID)
+        public static AttendingObject Create(EventObject eventObject, ProfileObject profileObject,
+            string eventID, string userID)
         {
             var o = new AttendingDbRecord
             {
@@ -18,7 +19,7 @@ namespace Domain.Attending
                 Profiles = profileObject?.DbRecord ?? new ProfileDbRecord()
             };
             o.EventID = o.Events.ID;
-            o.ProfileID = o.ProfileID;
+            o.ProfileID = o.Profiles.ID;
             return new AttendingObject(o);
         }
     }

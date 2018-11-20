@@ -5,13 +5,14 @@
 }
 
 <h2>@ViewBag.Title</h2>
-
-<p>
-    @RenderSection("Create")
-</p>
+<div class="text-center">
+    <p>
+        @RenderSection("Create")
+    </p>
+</div>
 
 <form asp-action=@ViewBag.ActionIndex method="get">
-    <div class="form-horizontal">
+    <div class="text-center">
         <p>
             Find by: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
             <input type="submit" value="Search" class="btn btn-default" />
@@ -26,19 +27,21 @@
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
+<div class="text-center">
 
-<a asp-action=@ViewBag.ActionIndex
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-page="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @prevDisabled">
-    Previous
-</a>
-<a asp-action=@ViewBag.ActionIndex
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-page="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @nextDisabled">
-    Next
-</a>
+    <a asp-action=@ViewBag.ActionIndex
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-page="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+    <a asp-action=@ViewBag.ActionIndex
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-page="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+</div>
 

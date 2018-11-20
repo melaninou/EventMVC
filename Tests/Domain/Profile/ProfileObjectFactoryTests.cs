@@ -15,6 +15,9 @@ namespace Tests.Domain.Profile
         private DateTime birthDay;
         private ProfileGender gender;
         private ProfileObject o;
+        private string occupation;
+        private string aboutText;
+        private string profileImage;
 
         private void initializeTestData()
         {
@@ -22,16 +25,10 @@ namespace Tests.Domain.Profile
             name = GetRandom.String();
             location = GetRandom.String();
             gender = ProfileGender.Female;
-        }
-
-        private void validateResults(string i = Constants.Unspecified,
-            string n = Constants.Unspecified, string l = Constants.Unspecified,
-            string a = Constants.Unspecified, ProfileGender g = ProfileGender.Female)
-        {
-            Assert.AreEqual(i, o.DbRecord.ID);
-            Assert.AreEqual(n, o.DbRecord.Name);
-            Assert.AreEqual(l, o.DbRecord.Location);
-            Assert.AreEqual(g, o.DbRecord.Gender);
+            birthDay = GetRandom.DateTime();
+            aboutText = GetRandom.String();
+            occupation = GetRandom.String();
+            profileImage = GetRandom.String();
         }
         [TestInitialize]
         public override void TestInitialize()
@@ -41,18 +38,29 @@ namespace Tests.Domain.Profile
             initializeTestData();
         }
 
-        //[TestMethod]
-        //public void CreateTest()
-        //{
-        //    o = ProfileObjectFactory.Create(id, name, location, age, gender);
-        //    validateResults(id,name,location,age,gender);
-        //}
+        private void validateResults(string i = Constants.Unspecified,
+            string n = Constants.Unspecified, string l = Constants.Unspecified,
+            ProfileGender g = ProfileGender.Female, DateTime? b = null,
+            string oc = Constants.Unspecified, string a = Constants.Unspecified,
+            string p = Constants.Unspecified)
+        {
+            Assert.AreEqual(i, o.DbRecord.ID);
+            Assert.AreEqual(n, o.DbRecord.Name);
+            Assert.AreEqual(l, o.DbRecord.Location);
+            Assert.AreEqual(g, o.DbRecord.Gender);
+            Assert.AreEqual(b, o.DbRecord.BirthDay);
+            Assert.AreEqual(oc, o.DbRecord.Occupation);
+            Assert.AreEqual(a, o.DbRecord.AboutText);
+            Assert.AreEqual(p, o.DbRecord.ProfileImage);
+        }
 
-        //[TestMethod]
-        //public void CreateWithNullArgumentsTest()
-        //{
-        //    o = ProfileObjectFactory.Create(null, null, null, null,gender);
-        //    validateResults();
-        //}
+        [TestMethod]
+        public void CreateTest()
+        {
+            o = ProfileObjectFactory.Create(id, name, location, gender,
+                birthDay, occupation, aboutText,profileImage);
+            validateResults(id, name, location, gender, birthDay,
+                occupation, aboutText, profileImage);
+        }
     }
 }

@@ -3,6 +3,7 @@ using Domain.Attending;
 using Domain.Event;
 using Domain.Profile;
 using EventProject.Data;
+using EventProject.Hubs;
 using Infra;
 using Infra.Attending;
 using Infra.Event;
@@ -54,6 +55,8 @@ namespace EventProject
 
             services.AddTransient<IImageHandler, ImageHandler>();
             services.AddTransient<IImageWriter,ImageWriter>();
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,6 +78,11 @@ namespace EventProject
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<CalendarHub>("/calendarHub");
+            });
 
             app.UseMvc(routes =>
             {

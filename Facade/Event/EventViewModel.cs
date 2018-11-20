@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using Core;
 using Facade.Common;
 using Facade.Profile;
@@ -14,11 +12,9 @@ namespace Facade.Event
         private DateTime date;
         private string organiser;
         private string description;
-
+        private string eventImage;
         public EventType Type { get; set; }
        
-
-
         public DateTime Date
         {
             get => getValue(ref date, ref date);
@@ -37,9 +33,13 @@ namespace Facade.Event
             set => description = value;
         }
 
-        [DisplayName("Who else is going:")]
-        public List<ProfileViewModel> InProfiles { get; } = new List<ProfileViewModel>();
+        public string EventImage
+        {
+            get => getString(ref eventImage);
+            set => eventImage = value;
+        }
 
-       
+        [DisplayName("Who else is going:")]
+        public List<ProfileViewModel> InProfiles { get; } = new List<ProfileViewModel>();     
     }
 }

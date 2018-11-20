@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core;
+﻿using Core;
 using Data.Common;
 
 namespace Domain.Common
@@ -12,7 +9,7 @@ namespace Domain.Common
 
         protected BasicObject(T dbRecord)
         {
-            DbRecord = dbRecord ?? new T(); //creates new object when dbRecord is null
+            DbRecord = dbRecord ?? new T(); 
         }
     }
 }

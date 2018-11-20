@@ -41,6 +41,8 @@ namespace Infra.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("EventImage");
+
                     b.Property<string>("Location");
 
                     b.Property<string>("Name");

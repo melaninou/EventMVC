@@ -5,7 +5,7 @@
 @model Core.IPaginatedList<Facade.Event.EventViewModel>
 
 @{
-    ViewData["Title"] = "Events";
+    @*ViewData["Title"] = "Events";*@
     Layout = "_IndexPartial";
     var userName = ViewData["userRealName"] as PaginatedList<ProfileObject>;
 }
@@ -14,34 +14,77 @@
 
     <a asp-action="Create">Create Event</a>
 }
+<head>
+    <link rel="stylesheet" href="css/table-events.css" type="text/css" MEDIA=screen />
+</head>
 
-<table class="table">
-    <body>
-        @{ var dummy = Model.FirstOrDefault();}
+<div class="table-events">
+    <div class="header">Events</div>
+
+    <table cellspacing="0">
+        <body>
+            @{ var dummy = Model.FirstOrDefault();}
             <thead>
-            <tr>
-                
-                @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
-                @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy.Date)
-                @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy.Location)
-                @Html.SortColumnHeaderFor(ViewData["SortOrganizer"], model => dummy.Organizer)
-                <th></th>
-            </tr>
+                <tr>
+                    <th>Picture</th>
+                    @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
+                    @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy.Date)
+                    @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy.Location)
+                    @Html.SortColumnHeaderFor(ViewData["SortOrganizer"], model => dummy.Organizer)
+                    <th></th>
+                </tr>
             </thead>
-        
-    <tbody>
-    @foreach (var item in Model)
-    {
-        <tr>
-           
-            <td>@Html.DisplayFor(modelItem => item.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.Date)</td>
-            <td>@Html.DisplayFor(modelItem => item.Location)</td>
-            <td>@userName.Where(x => x.DbRecord.ID == item.Organizer).FirstOrDefault().DbRecord.Name</td>
-            @Html.EditDetailDeleteFor(modelItem => item.ID)
-        </tr>
-    }
-    
-    </tbody>
-    </body>
-</table>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        <span class="event-picture">
+                            <img class="editable img-responsive" alt="Avatar" id="avatar-2"
+                                 src="~/images/@item.EventImage" />
+                        </span>
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                    <td>@userName.Where(x => x.DbRecord.ID == item.Organizer).FirstOrDefault().DbRecord.Name</td>
+                    @Html.EditDetailDeleteFor(modelItem => item.ID)
+                </tr>
+                }
+            </tbody>
+        </body>
+    </table>
+</div>
+
+
+@*<table class="table">
+        <body>
+            @{ var dummy = Model.FirstOrDefault();}
+                <thead>
+                <tr>
+
+                    @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
+                    @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy.Date)
+                    @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy.Location)
+                    @Html.SortColumnHeaderFor(ViewData["SortOrganizer"], model => dummy.Organizer)
+                    <th></th>
+                </tr>
+                </thead>
+
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                <td>@userName.Where(x => x.DbRecord.ID == item.Organizer).FirstOrDefault().DbRecord.Name</td>
+                @Html.EditDetailDeleteFor(modelItem => item.ID)
+            </tr>
+        }
+
+        </tbody>
+        </body>
+    </table>*@

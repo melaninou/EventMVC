@@ -9,7 +9,7 @@ namespace Data.Common
         internal string location;
         public virtual string ID
         {
-            get => getString(ref id, Constants.Unspecified);
+            get => getString(ref id);
             set => id = value;
         }
         public virtual string Name
@@ -19,7 +19,7 @@ namespace Data.Common
         }
         public virtual string Location
         {
-            get => getString(ref location, Constants.Unspecified);
+            get => getString(ref location);
             set => location = value;
         }
     }

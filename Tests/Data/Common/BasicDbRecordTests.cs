@@ -32,7 +32,7 @@ namespace Tests.Data.Common
         public void NameTest()
         {
             testReadWriteProperty(() => obj.Name, x => obj.Name = x);
-            testNullEmptyAndWhitespaceCases(() => obj.Name, x => obj.Name = x, () => Constants.Unspecified);
+            testNullEmptyAndWhitespaceCases(() => obj.Name, x => obj.Name = x, () => obj.ID);
         }
 
         [TestMethod]
