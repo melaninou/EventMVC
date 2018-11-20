@@ -6744,7 +6744,7 @@ button.close {
 .visible-print-inline-block {
   display: none !important;
 }
-@media print {
+@media print {logir
   .visible-print-inline-block {
     display: inline-block !important;
   }

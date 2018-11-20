@@ -39,7 +39,6 @@ namespace EventProject.Controllers
         public EventController(IEventObjectsRepository repository, UserManager<IdentityUser> userManager,
             IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository, IImageHandler imageHandler, IHubContext<CalendarHub> hubContext)
         {
-
             _userManager = userManager;
             _profileRepository = profileRepository;
             _eventRepository = repository;
@@ -48,10 +47,11 @@ namespace EventProject.Controllers
             _hubContext = hubContext;
 
         }
+
+
         public async Task<IActionResult> Index(string sortOrder = null,
             string searchString = null, int? page = null, string currentFilter = null)
         {
-
             ViewData["userRealName"] = await _profileRepository.GetObjectsList();
             ViewData["SortName"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["SortID"] = sortOrder == "id" ? "id_desc" : "id";
@@ -124,7 +124,7 @@ namespace EventProject.Controllers
                 return Content("You can't edit it, if you don't create it!");
             }
 
-        }
+
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -183,7 +183,7 @@ namespace EventProject.Controllers
             {
                 return Content("You can't delete it, if you don't create it!"); //selle asemel peaks üldse see, kes ei koostanud, et  ei näe neid nuppe
             }
-           
+
         }
         [Authorize]
         [HttpPost, ActionName("Delete")]
