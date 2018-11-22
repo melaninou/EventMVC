@@ -261,3 +261,7 @@ __pycache__/
 *.pyc
 /UnitTestProject1
 /EventProject/wwwroot/images
+/EventProject/Migrations/20181122092250_App.cs
+/EventProject/Migrations/20181122092250_App.Designer.cs
+/Infra/Migrations/20181122092434_EventProject.Designer.cs
+/Infra/Migrations/20181122092434_EventProject.cs

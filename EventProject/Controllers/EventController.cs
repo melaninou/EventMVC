@@ -196,6 +196,7 @@ namespace EventProject.Controllers
             var organizatorObject = await _profileRepository.GetObject(currentEventObject.DbRecord.Organizer);
             var organizatorName = organizatorObject.DbRecord.Name;
             currentEventObject.DbRecord.Organizer = organizatorName;
+            await _attendingRepository.RemoveListObjects(c);
             await _eventRepository.DeleteObject(c);
             return RedirectToAction("Index");
         }

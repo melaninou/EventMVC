@@ -68,6 +68,22 @@ namespace Infra.Attending
             }
         }
 
+        public async Task RemoveListObjects(EventObject eventObject)
+        {
+
+            if (eventObject is null) return;
+            var eventID = eventObject.DbRecord.ID ?? string.Empty;
+            var profiles = await dbSet.Include(x => x.Profiles).
+                Where(x => x.EventID == eventID).AsNoTracking()
+                .ToListAsync();
+            if (profiles.Count == 0) return;
+            foreach (var p in profiles)
+            {
+                dbSet.Remove(p);
+            }
+            profiles.Clear();
+            await db.SaveChangesAsync();
+        }
         public async Task LoadEvents(ProfileObject profileObject)
         {
             if (profileObject is null) return;
