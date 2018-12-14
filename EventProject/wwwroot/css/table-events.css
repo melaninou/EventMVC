@@ -1,5 +1,5 @@
 ﻿body {
-    background-color: #FAA14F;
+    background-color: #fc8a26;
 }
 
     body * {
@@ -7,8 +7,8 @@
     }
 
 .header {
-    background-color: #C46207;
-    color: white;
+    background-color: #2dd9fa;
+    color: black;
     font-size: 1.5em;
     padding: 1rem;
     text-align: center;
@@ -22,9 +22,9 @@ img {
 }
 
 .table-events {
-    border: 1px solid #D89C65;
+    border: 1.5px solid black;
     border-radius: 10px;
-    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0);
     max-width: calc(100% - 2em);
     margin: 1em auto;
     overflow: hidden;
@@ -36,7 +36,7 @@ table {
 }
 
     table td, table th {
-        color: #B06015;
+        color: black;
         padding: 10px;
     }
 
@@ -52,7 +52,7 @@ table {
         }
 
     table th {
-        background-color: #FFDFC1;
+        background-color: white;
         font-weight: 300;
     }
 
@@ -61,7 +61,7 @@ table {
     }
 
     table tr:nth-child(2n+1) {
-        background-color: #FEEAD6;
+        background-color: #fc8a26;
     }
 
 @media screen and (max-width: 700px) {
@@ -152,15 +152,13 @@ table {
         width: 100%;
     }
 
-        td:not(:first-child):before {
-            font-size: 0.8em;
-            padding-top: 0.3em;
-            position: relative;
-        }
-
-    td:last-child {
-        padding-bottom: 1rem !important;
+    td:not(:first-child):before {
+        font-size: 0.8em;
+        padding-top: 0.3em;
+        position: relative;
     }
+
+    td:last-child { padding-bottom: 1rem !important; }
 
     tr {
         background-color: white !important;
