@@ -12,45 +12,49 @@
 @section Create
     {
 
+    <a asp-action="Create">Create Event</a>
 }
 <head>
     <link rel="stylesheet" href="css/table-events.css" type="text/css" MEDIA=screen />
 </head>
 
-<div class="tab-content">
-    <div id="events" class="table-events">
-        <table cellspacing="0">
-            <body>
+<div class="table-events">
+    <div class="header">Events</div>
+
+    <table cellspacing="0">
+        <body>
             @{ var dummy = Model.FirstOrDefault();}
             <thead>
                 <tr>
-                <th>Picture</th>
-                @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
-                @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy.Date)
-                @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy.Location)
-                @Html.SortColumnHeaderFor(ViewData["SortOrganizer"], model => dummy.Organizer)
-                <th></th>
+                    <th>Picture</th>
+                    @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
+                    @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy.Date)
+                    @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy.Location)
+                    @Html.SortColumnHeaderFor(ViewData["SortOrganizer"], model => dummy.Organizer)
+                    <th></th>
                 </tr>
             </thead>
 
-            @foreach (var item in Model)
-            {
-
-                <td>
-                    <span class="event-picture">
-                        <img class="editable img-responsive" alt="Avatar" id="avatar-2"
-                             src="~/images/@item.EventImage"/>
-                    </span>
-                </td>
-                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                <td>@Html.DisplayFor(modelItem => item.Location)</td>
-                <td>@userName.Where(x => x.DbRecord.ID == item.Organizer).FirstOrDefault().DbRecord.Name</td>
-                @Html.EditDetailDeleteFor(modelItem => item.ID)
-            }
-            </body>
-        </table>
-    </div>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        <span class="event-picture">
+                            <img class="editable img-responsive" alt="Avatar" id="avatar-2"
+                                 src="~/images/@item.EventImage" />
+                        </span>
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                    <td>@userName.Where(x => x.DbRecord.ID == item.Organizer).FirstOrDefault().DbRecord.Name</td>
+                    @Html.EditDetailDeleteFor(modelItem => item.ID)
+                </tr>
+                }
+            </tbody>
+        </body>
+    </table>
 </div>
 
 
