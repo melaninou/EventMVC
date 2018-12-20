@@ -11,7 +11,7 @@
 
 <body>
 
-    <h1>Edit Profile + @Model.ProfileImage</h1>
+    <h1>Edit Profile</h1>
     <div class="row">
         <section>
             <form asp-controller="Profile" asp-action="Edit" method="POST" class="form-horizontal" enctype="multipart/form-data">
@@ -25,6 +25,22 @@
                     <div class="col-md-10">
                         <input asp-for="Name" class="form-control" />
 
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Image</label>
+                    <div class="col-md-10">
+                        <input type="file" name="AvatarFile" class="form-control" />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <span class="profile-picture">
+                            <img class="editable img-responsive" alt="Avatar" id="avatar2" src="~/images/@Model.ID/@Model.ProfileImage" />
+                        </span>                    
                     </div>
                 </div>
 
@@ -66,23 +82,8 @@
                     <div class="col-md-10">
                         <input asp-for="AboutText" class="form-control" />
                     </div>
-                </div>
+                </div>              
 
-                <div class="col-xs-12 col-sm-3 center">
-                    <span class="profile-picture">
-                        <img class="editable img-responsive" alt="Avatar" id="avatar2" src="~/images/@Model.ID/@Model.ProfileImage" />
-
-                    </span>
-
-                </div>
-
-
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Image</label>
-                    <div class="col-md-10">
-                        <input type="file" name="AvatarFile" class="form-control" />
-                    </div>
-                </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <button type="submit" class="btn btn-default">@ViewBag.Button</button>
@@ -90,7 +91,7 @@
                 </div>
 
                 <p>
-                    <a asp-action="Index">Return to Profile</a>
+                    <a asp-action="Index">Back to Profile</a>
                 </p>
             </form>
         </section>

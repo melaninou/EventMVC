@@ -4,128 +4,114 @@
     ViewData["Title"] = "Details on " + @Model.Name;
 }
 
-<ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#profile">Profile</a></li>
-    <li><a data-toggle="tab" href="#events">@Model.Name's events</a></li>
-</ul>
+<div style ="margin-top: 50px" id="Profile" class="tabcontent">
+    <div class="tab-content no-border padding-24">
+        <div id="home" class="tab-pane in active">
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 center">
+                    <span class="profile-picture">
+                        <img class="editable img-responsive" alt="Avatar" id="avatar2" src="~/images/@Model.ID/@Model.ProfileImage" />
 
-<div class="tab-content">
-    <div id="profile" class="tab-pane fade in active">
-        <div id="Profile" class="tabcontent">
-            <div class="tab-content no-border padding-24">
-                <div id="home" class="tab-pane in active">
+                    </span>
+
+                    <div class="space space-4"></div>
+
+                    <a href="@Url.Action("Edit", "Profile", new {id = Model.ID})" class="btn btn-sm btn-block btn-primary">
+                        <span class="bigger-110">Edit</span>
+                    </a>
+
+
+                </div><!-- /.col -->
+
+                <div class="col-xs-12 col-sm-9">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-3 center">
-                            <span class="profile-picture">
-                                <img class="editable img-responsive" alt="Avatar" id="avatar2" src="~/images/@Model.ID/@Model.ProfileImage" />
-
-                            </span>
-
-                            <div class="space space-4"></div>
-
-                            <a href="@Url.Action("Edit", "Profile", new {id = Model.ID})" class="btn btn-sm btn-block btn-primary">
-                                <span class="bigger-110">Edit</span>
-                            </a>
-
-
-                        </div><!-- /.col -->
-
-                        <div class="col-xs-12 col-sm-9">
+                        <div class="col-xs-2">
+                            <h2 class="blue">@Model.Name</h2><br /><br />
+                        </div>
+                    </div>
+                    <div class="row" id="info">
+                        <div class="col-xs-10 col-sm-7">
                             <div class="row">
-                                <div class="col-xs-2">
-                                    <h2 class="blue">@Model.Name</h2><br /><br />
+                                <div class="col-sm-2">
+                                    <p>Location: </p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p>@Model.Location</p>
                                 </div>
                             </div>
-                            <div class="row" id="info">
-                                <div class="col-xs-10 col-sm-7">
-                                    <div class="row">
-                                        <div class="col-sm-2">
-                                            <p>Location: </p>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <p>@Model.Location</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-2">
-                                            <p>Gender: </p>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <p>@Model.Gender</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-2">
-                                            <p>Birthday: </p>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <p>@Model.BirthDay</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-2">
-                                            <p>Occupation: </p>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <p>@Model.Occupation</p>
-                                        </div>
-                                    </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <p>Gender: </p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p>@Model.Gender</p>
                                 </div>
                             </div>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-
-                    <div class="space-20"></div>
-
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="widget-box transparent">
-                                <div class="widget-header widget-header-small">
-                                    <h4 class="widget-title smaller">
-                                        <i class="ace-icon fa fa-check-square-o bigger-110"></i>
-                                        Little bit about Me:
-                                    </h4>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <p>Birthday: </p>
                                 </div>
-
-                                <div class="widget-body">
-                                    <div class="widget-main">
-                                        <p>
-                                            @Model.AboutText
-
-                                        </p>
-                                    </div>
+                                <div class="col-sm-6">
+                                    <p>@Model.BirthDay</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <p>Occupation: </p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p>@Model.Occupation</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div><!-- /#home -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
 
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="widget-box transparent">
-                            <div class="widget-header widget-header-small">
-                                <h4 class="widget-title smaller">
-                                    <i class="ace-icon fa fa-check-square-o bigger-110"></i>
-                                    Interests
-                                </h4>
-                            </div>
+            <div class="space-20"></div>
 
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    <p>
-                                        programming, business, football
-                                    </p>
-                                </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="widget-box transparent">
+                        <div class="widget-header widget-header-small">
+                            <h4 class="widget-title smaller">
+                                <i class="ace-icon fa fa-check-square-o bigger-110"></i>
+                                Little bit about Me:
+                            </h4>
+                        </div>
+
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <p>
+                                    @Model.AboutText
+
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div><!-- /#home -->
+            </div>
+        </div><!-- /#home -->
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="widget-box transparent">
+                    <div class="widget-header widget-header-small">
+                        <h4 class="widget-title smaller">
+                            <i class="ace-icon fa fa-check-square-o bigger-110"></i>
+                            Interests
+                        </h4>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <p>
+                                My interests are displayed here.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    
-    <div id="events" class="tab-pane fade">
-        <h3>@Model.Name's events</h3>
-        <p>@Model.Name's events are displayed here.</p>
     </div>
 </div>

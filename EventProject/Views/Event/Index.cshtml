@@ -14,43 +14,62 @@
     <link rel="stylesheet" href="css/table-events.css" type="text/css" MEDIA=screen />
 </head>
 
-<div class="table-events">
-    <div class="header">Events</div>
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#events">Events</a></li>
+    <li><a data-toggle="tab" href="#myEvents">My events</a></li>
+</ul>
 
-    <table cellspacing="0">
-        <body>
-            @{ var dummy = Model.FirstOrDefault();}
-            <thead>
-                <tr>
-                    <th>Picture</th>
-                    @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
-                    @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy.Date)
-                    @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy.Location)
-                    @Html.SortColumnHeaderFor(ViewData["SortOrganizer"], model => dummy.Organizer)
-                    <th></th>
-                </tr>
-            </thead>
 
-            <tbody>
-                @foreach (var item in Model)
-                {
-                <tr>
-                    <td>
-                        <span class="event-picture">
-                            <img class="editable img-responsive" alt="Avatar" id="avatar-2"
-                                 src="~/images/@item.EventImage" />
-                        </span>
-                    </td>
-                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Location)</td>
-                    <td>@userName.Where(x => x.DbRecord.ID == item.Organizer).FirstOrDefault().DbRecord.Name</td>
-                    @Html.EditDetailDeleteFor(modelItem => item.ID)
-                </tr>
-                }
-            </tbody>
-        </body>
-    </table>
+<div class="tab-content">
+    <div id="events" class="tab-pane fade in active">
+        <div id="Events" class="tabcontent">
+            <div class="tab-content no-border padding-24">
+                <div id="home" class="tab-pane in active">
+                    <table cellspacing="0">
+                        <body>
+                        @{ var dummy = Model.FirstOrDefault();}
+                        <thead>
+                        <tr>
+                            <th>Picture</th>
+                            @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
+                            @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy.Date)
+                            @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy.Location)
+                            @Html.SortColumnHeaderFor(ViewData["SortType"], model => dummy.Type)
+                            @Html.SortColumnHeaderFor(ViewData["SortOrganizer"], model => dummy.Organizer)
+                            <th></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="event-picture">
+                                        <img class="editable img-responsive" alt="Avatar" id="avatar-2"
+                                             src="~/images/@item.EventImage" />
+                                    </span>
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Type)</td>
+                                <td>@userName.Where(x => x.DbRecord.ID == item.Organizer).FirstOrDefault().DbRecord.Name</td>
+                                @Html.EditDetailDeleteFor(modelItem => item.ID)
+                            </tr>
+                        }
+                        </tbody>
+                        </body>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="myEvents" class="tab-pane fade">
+        <h3>My events</h3>
+        <p>My events are displayed here.</p>
+    </div>
 </div>
 
 

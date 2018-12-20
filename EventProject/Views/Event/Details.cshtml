@@ -10,195 +10,176 @@
     var eventID = Model.ID;
     var profileID = Url.Action("GetCurrentUserID", "Event");
     EventProjectDbContext c = null;
-    var isObjectPresent = new AttendingRepository(c).FindObject(eventID,profileID);
+    var isObjectPresent = new AttendingRepository(c).FindObject(eventID, profileID);
 }
-<div id="event-index" class="event">
-    <div class="tabbable">
-        <ul class="nav nav-tabs padding-18">
-            <li class="active">
-                <a data-toggle="tab" href="#home">
-                    <i class="green ace-icon fa fa-user bigger-120"></i>
-                    Event
-                </a>
-            </li>
-        </ul>
 
-        <div class="tab-content no-border padding-24">
-            <div id="home" class="tab-pane in active">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-3 center">
-                        <span class="event-picture">
-                            <img class="editable img-responsive" alt="Avatar" id="avatar-2" src="~/images/@Model.EventImage" />
 
-                        </span>
+<div style ="margin-top: 50px" class="tab-content no-border padding-24">
+    <div id="home" class="tab-pane in active">
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 center">
+                <span class="event-picture">
+                    <img class="editable img-responsive" alt="Avatar" id="avatar-2" src="~/images/@Model.EventImage" />
 
-                        <div class="space space-4"></div>
+                </span>
 
-                        @* <button type="button" id="Unregister" display="hide" onclick="myFunction()">Unregister</button>*@              
+                <div class="space space-4"></div>
 
-                        <input type="button" value="Register" id="toggle" onclick="myFunction()" ></>
-                        
-                        <script>                         
-                            var change = document.getElementById("toggle");
-                            change.addEventListener("load", textChange());
-                        </script>
+                @* <button type="button" id="Unregister" display="hide" onclick="myFunction()">Unregister</button>*@
 
-                        <script>
-                            function textChange() {
-                                var text = document.getElementById("toggle");
-                                if (isObjectPresent == null) {
-                                    text.value = "REGISTER";
-                                } else {
-                                    text.value = "UNREGISTER";
-                                }
-                            }
-                        </script>
+                <input type="button" value="Register" id="toggle" onclick="myFunction()"></>
 
-                        <script>
+                <script>
+                    var change = document.getElementById("toggle");
+                    change.addEventListener("load", textChange());
+                </script>
+
+                <script>
+                    function textChange() {
+                        var text = document.getElementById("toggle");
+                        if (isObjectPresent == null) {
+                            text.value = "REGISTER";
+                        } else {
+                            text.value = "UNREGISTER";
+                        }
+                    }
+                </script>
+
+                <script>
                             function myFunction() {
                                 return window.location.href = '@Url.Action("Register", "Event", new { id = Model.ID })';
                             }
-                        </script>
-                        
-            @*<span class="bigger-110">Register</span>*@
-        
+                </script>
 
-                        @* todo Unregister=> only after ypu register*@
-
-                        @*<div></div>
-        <a href="@Url.Action("NotAttending", "Event", new {newEvent = Model.ID})" class="btn btn-sm btn-block btn-primary">
-            <span class="bigger-110">UnRegister</span>
-        </a>*@
-
-                        @*todo Edit -> only if ypu create event*@
-                        @*<div></div>
-        <a href="@Url.Action("Edit", "Event", new {id=Model.ID})" class="btn btn-sm btn-block btn-primary">
-            <span class="bigger-110">Edit</span>
-        </a>*@
+                @*<span class="bigger-110">Register</span>*@
 
 
-                    </div><!-- /.col -->
+                @* todo Unregister=> only after ypu register*@
 
-                    <div class="col-xs-12 col-sm-9">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <h2 class="orange">@Model.Name</h2><br /><br />
-                            </div>
-                        </div>
-                        <div class="row" id="info">
-                            <div class="col-xs-10 col-sm-7">
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <p>Location: </p>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <p>@Model.Location</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <p>Type: </p>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <p>@Model.Type</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <p>Date: </p>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <p>@Model.Date</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <p>Organizer: </p>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <p>@Model.Organizer</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
+                @*<div></div>
+                    <a href="@Url.Action("NotAttending", "Event", new {newEvent = Model.ID})" class="btn btn-sm btn-block btn-primary">
+                        <span class="bigger-110">UnRegister</span>
+                    </a>*@
 
-                <div class="space-20"></div>
+                @*todo Edit -> only if ypu create event*@
+                @*<div></div>
+                    <a href="@Url.Action("Edit", "Event", new {id=Model.ID})" class="btn btn-sm btn-block btn-primary">
+                        <span class="bigger-110">Edit</span>
+                    </a>*@
 
+
+            </div><!-- /.col -->
+
+            <div class="col-xs-12 col-sm-9">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="widget-box transparent">
-                            <div class="widget-header widget-header-small">
-                                <h4 class="widget-title smaller">
-                                    <i class="ace-icon fa fa-check-square-o bigger-110"></i>
-                                    Description
-                                </h4>
-                            </div>
-
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    <p>
-                                        @Model.Description
-
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        @if (Model.InProfiles.Count > 0)
-                        {
-                            <div class="widget-header widget-header-small">
-                                <h4 class="widget-title smaller">
-                                    <i class="ace-icon fa fa-check-square-o bigger-110"></i>
-                                    Who else is going:
-                                </h4>
-                            </div>
-
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    <p>
-                                        @foreach (var item in Model.InProfiles)
-                                        {
-                                            <tr>
-                                                <td>@Html.DisplayFor(modelItem=>item.Name)</td>
-                                            </tr>
-                                        }
-                                    </p>
-                                </div>
-                            </div>
-                        }
-
-
-
-
-
-
-
-
+                    <div class="col-xs-2">
+                        <h2 class="orange">@Model.Name</h2><br /><br />
                     </div>
                 </div>
-            </div><!-- /#home -->
+                <div class="row" id="info">
+                    <div class="col-xs-10 col-sm-7">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <p>Location: </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>@Model.Location</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <p>Type: </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>@Model.Type</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <p>Date: </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>@Model.Date</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <p>Organizer: </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>@Model.Organizer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+
+        <div class="space-20"></div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="widget-box transparent">
+                    <div class="widget-header widget-header-small">
+                        <h4 class="widget-title smaller">
+                            <i class="ace-icon fa fa-check-square-o bigger-110"></i>
+                            Description
+                        </h4>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <p>
+                                @Model.Description
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.InProfiles.Count > 0)
+                 {
+                    <div class="widget-header widget-header-small">
+                        <h4 class="widget-title smaller">
+                            <i class="ace-icon fa fa-check-square-o bigger-110"></i>
+                            Who else is going:
+                        </h4>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <p>
+                                @foreach (var item in Model.InProfiles)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    </tr>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                 }
+            </div>
         </div>
-    </div>
+    </div><!-- /#home -->
 </div>
-   
+
 
 
 @*<script>
-    function myFunction() {       
-        var change = document.getElementById("Register");
-        if (change.innerHTML == "Register") {
-            document.getElementById("Register").hide();
-            document.getElementById("Unregister").show();
+        function myFunction() {
+            var change = document.getElementById("Register");
+            if (change.innerHTML == "Register") {
+                document.getElementById("Register").hide();
+                document.getElementById("Unregister").show();
 
-        }
-        else {
+            }
+            else {
 
-            document.getElementById("Unregister").hide();
-            document.getElementById("Register").show();
+                document.getElementById("Unregister").hide();
+                document.getElementById("Register").show();
+            }
+
+            return window.location.href ='@Url.Action("Register", "Event", new {eventID = Model.ID})';
         }
-        
-        return window.location.href ='@Url.Action("Register", "Event", new {eventID = Model.ID})';
-    }
-</script>*@
+    </script>*@
