@@ -13,6 +13,7 @@ namespace Facade.Event
         private string organiser;
         private string description;
         private string eventImage;
+
         public EventType Type { get; set; }
        
         public DateTime Date
@@ -39,7 +40,7 @@ namespace Facade.Event
             set => eventImage = value;
         }
 
-        [DisplayName("Who else is going:")]
+        [DisplayName("Who is going:")]
         public List<ProfileViewModel> InProfiles { get; } = new List<ProfileViewModel>();     
     }
 }

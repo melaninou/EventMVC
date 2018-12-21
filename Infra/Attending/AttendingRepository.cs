@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Core;
 using Data;
 using Domain.Attending;
 using Domain.Event;
@@ -31,6 +32,13 @@ namespace Infra.Attending
             var o = await dbSet.FirstOrDefaultAsync(x => x.EventID == eventID && x.ProfileID == userID);
             return new AttendingObject(o);
         }
+
+        public async Task<IQueryable<AttendingDbRecord>> GetUserEventsList(string userID)
+        {
+            var userEvents = dbSet.Where(p => p.ProfileID == userID);
+            return userEvents;
+        }
+
         public async Task AddObject(AttendingObject o)
         {
             var r = o.DbRecord;

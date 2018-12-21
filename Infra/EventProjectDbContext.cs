@@ -8,8 +8,8 @@ namespace Infra
     public class EventProjectDbContext : DbContext
     {
         public EventProjectDbContext
-            (DbContextOptions<EventProjectDbContext> o)
-            : base(o) { }
+            (DbContextOptions<EventProjectDbContext> options)
+            : base(options) { }
 
         public DbSet<ProfileDbRecord> Profiles { get; set; }
 

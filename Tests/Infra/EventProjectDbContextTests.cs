@@ -17,7 +17,7 @@ namespace Tests.Infra
         protected readonly EventProjectDbContext db;
         private class testClass : EventProjectDbContext
         {
-            public testClass(DbContextOptions<EventProjectDbContext> o) : base(o)
+            public testClass(DbContextOptions<EventProjectDbContext> options) : base(options)
             {
             }
 

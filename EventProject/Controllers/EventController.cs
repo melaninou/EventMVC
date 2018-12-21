@@ -24,14 +24,11 @@ namespace EventProject.Controllers
     {
         public const string properties = "ID, Name, Date, Type, Description, Location, Organizer, EventImage";
 
-        private IEventObjectsRepository _eventRepository;
-
-        private readonly UserManager<IdentityUser> _userManager;
-
+        private readonly IEventObjectsRepository _eventRepository;
         private readonly IProfileObjectsRepository _profileRepository;
-
         private readonly IAttendingObjectsRepository _attendingRepository;
 
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly IImageHandler _imageHandler;
         private readonly IHubContext<CalendarHub> _hubContext;
 
@@ -45,7 +42,6 @@ namespace EventProject.Controllers
             _attendingRepository = attendingRepository;
             _imageHandler = imageHandler;
             _hubContext = hubContext;
-
         }
 
 
@@ -68,6 +64,8 @@ namespace EventProject.Controllers
             _eventRepository.SearchString = searchString;
             _eventRepository.PageIndex = page ?? 1;
 
+            var testimine = await _attendingRepository.GetUserEventsList(GetCurrentUserID());
+            
             var l = await _eventRepository.GetObjectsList();
                 return View(new EventViewModelsList(l));
         }
@@ -219,6 +217,8 @@ namespace EventProject.Controllers
             var o = AttendingObjectFactory.Create(eventObject, userObject, event_ID, userID);
             await _attendingRepository.AddObject(o);
         }
+
+    
 
         public async Task<IActionResult> NotAttending(string id)
         {
