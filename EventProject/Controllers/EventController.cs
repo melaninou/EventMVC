@@ -95,8 +95,11 @@ namespace EventProject.Controllers
 
             if (!isCorrectImage) return View(e);
 
-            var o = EventObjectFactory.Create(GetUniqueID(), e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description, fileName);
+            var eventID = GetUniqueID();
+
+            var o = EventObjectFactory.Create(eventID, e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description, fileName);
             await _eventRepository.AddObject(o);
+            await RegisterToEvent(eventID);
             await _hubContext.Clients.All.SendAsync("ReceiveMessage", e.ID, e.Name, e.Location, e.Date);
             return RedirectToAction("Index");
         }
@@ -203,13 +206,18 @@ namespace EventProject.Controllers
 
         public async Task<IActionResult> Attending(string id)
         {
+            await RegisterToEvent(id);
+            return RedirectToAction("Details", new {id});
+        }
+
+        private async Task RegisterToEvent(string id)
+        {
             string userID = GetCurrentUserID();
             var eventObject = await _eventRepository.GetObject(id);
-            string eventID = eventObject.DbRecord.ID;
+            string event_ID = eventObject.DbRecord.ID;
             var userObject = await _profileRepository.GetObject(userID);
-            var o = AttendingObjectFactory.Create(eventObject, userObject, eventID, userID);
+            var o = AttendingObjectFactory.Create(eventObject, userObject, event_ID, userID);
             await _attendingRepository.AddObject(o);
-            return RedirectToAction("Details", new {id});
         }
 
         public async Task<IActionResult> NotAttending(string id)
