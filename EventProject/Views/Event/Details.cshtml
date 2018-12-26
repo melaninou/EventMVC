@@ -23,13 +23,15 @@
 
                 </span>
 
+                <a onclick="myFunction()" class="btn btn-sm btn-block btn-primary">
+                    <span class="bigger-110">Register</span>
+                </a>
+
                 <div class="space space-4"></div>
 
                 @* <button type="button" id="Unregister" display="hide" onclick="myFunction()">Unregister</button>*@
 
-                <input type="button" value="Register" id="toggle" onclick="myFunction()"></>
-
-                <script>
+                @*<script>
                     var change = document.getElementById("toggle");
                     change.addEventListener("load", textChange());
                 </script>
@@ -43,10 +45,10 @@
                             text.value = "UNREGISTER";
                         }
                     }
-                </script>
+                </script>*@
 
                 <script>
-                            function myFunction() {
+                    function myFunction() {
                                 return window.location.href = '@Url.Action("Register", "Event", new { id = Model.ID })';
                             }
                 </script>
@@ -57,15 +59,15 @@
                 @* todo Unregister=> only after ypu register*@
 
                 @*<div></div>
-                    <a href="@Url.Action("NotAttending", "Event", new {newEvent = Model.ID})" class="btn btn-sm btn-block btn-primary">
-                        <span class="bigger-110">UnRegister</span>
-                    </a>*@
+        <a href="@Url.Action("NotAttending", "Event", new {newEvent = Model.ID})" class="btn btn-sm btn-block btn-primary">
+            <span class="bigger-110">UnRegister</span>
+        </a>*@
 
                 @*todo Edit -> only if ypu create event*@
                 @*<div></div>
-                    <a href="@Url.Action("Edit", "Event", new {id=Model.ID})" class="btn btn-sm btn-block btn-primary">
-                        <span class="bigger-110">Edit</span>
-                    </a>*@
+        <a href="@Url.Action("Edit", "Event", new {id=Model.ID})" class="btn btn-sm btn-block btn-primary">
+            <span class="bigger-110">Edit</span>
+        </a>*@
 
 
             </div><!-- /.col -->

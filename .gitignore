@@ -265,3 +265,5 @@ __pycache__/
 /EventProject/Migrations/20181122092250_App.Designer.cs
 /Infra/Migrations/20181122092434_EventProject.Designer.cs
 /Infra/Migrations/20181122092434_EventProject.cs
+/Infra/Migrations/20181226135323_EventProject.cs
+/Infra/Migrations/20181226135323_EventProject.Designer.cs
