@@ -35,13 +35,12 @@ namespace EventProject.Controllers
             var currentUser = await repository.GetObject(GetCurrentUserId());
             if (currentUser.DbRecord.ID == "Unspecified")
             {
-                return RedirectToAction("Create", "Profile");
+                return RedirectToAction(nameof(Create));
             }
             else
             {
-                return RedirectToAction("Details", "Profile");
+                return RedirectToAction(nameof(Details));
             }
-           
         }
 
         [Authorize]
@@ -56,7 +55,6 @@ namespace EventProject.Controllers
         {       
             if (!ModelState.IsValid) return View(c);
 
-
             var extension = "." + avatarFile.FileName.Split('.')[avatarFile.FileName.Split('.').Length - 1];
             string fileName = GetUniqueID() + extension;
 
@@ -69,7 +67,7 @@ namespace EventProject.Controllers
             var o = ProfileObjectFactory.Create(GetCurrentUserId(), c.Name, c.Location, c.Gender, c.BirthDay, c.Occupation, c.AboutText, fileName);                                                       
             await repository.AddObject(o);
 
-            return RedirectToAction("Details"); 
+            return RedirectToAction(nameof(Details)); 
         }
 
 
@@ -104,10 +102,8 @@ namespace EventProject.Controllers
 
             await repository.UpdateObject(o);
 
-
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
-
 
 
         [Authorize]

@@ -79,8 +79,7 @@ namespace EventProject.Controllers
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(IFormFile avatarFile, [Bind(properties)] EventViewModel e)
-        {
-          
+        {        
             if (!ModelState.IsValid) return View(e);
             var eventId = GetUniqueID();
 
@@ -99,7 +98,7 @@ namespace EventProject.Controllers
             await _eventRepository.AddObject(o);
             await RegisterToEvent(eventID);
             await _hubContext.Clients.All.SendAsync("ReceiveMessage", e.ID, e.Name, e.Location, e.Date);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize]
@@ -124,7 +123,6 @@ namespace EventProject.Controllers
             {
                 return Content("You can't edit it, if you don't create it!");
             }
-
         }
 
         [Authorize]
@@ -149,7 +147,7 @@ namespace EventProject.Controllers
             o.DbRecord.Organizer = c.Organizer;
             o.DbRecord.EventImage = fileName;
             await _eventRepository.UpdateObject(o);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Details(string id)
@@ -185,8 +183,8 @@ namespace EventProject.Controllers
             {
                 return Content("You can't delete it, if you don't create it!"); //selle asemel peaks üldse see, kes ei koostanud, et  ei näe neid nuppe
             }
-
         }
+
         [Authorize]
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -199,13 +197,13 @@ namespace EventProject.Controllers
             currentEventObject.DbRecord.Organizer = organizatorName;
             await _attendingRepository.RemoveListObjects(c);
             await _eventRepository.DeleteObject(c);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Attending(string id)
         {
             await RegisterToEvent(id);
-            return RedirectToAction("Details", new {id});
+            return RedirectToAction(nameof(Details), new {id});
         }
 
         private async Task RegisterToEvent(string id)
@@ -216,15 +214,13 @@ namespace EventProject.Controllers
             var userObject = await _profileRepository.GetObject(userID);
             var o = AttendingObjectFactory.Create(eventObject, userObject, event_ID, userID);
             await _attendingRepository.AddObject(o);
-        }
-
-    
+        }   
 
         public async Task<IActionResult> NotAttending(string id)
         {
             var o = await _attendingRepository.GetObject(id, GetCurrentUserID());
             await _attendingRepository.DeleteObject(o);
-            return RedirectToAction("Details", new {id});
+            return RedirectToAction(nameof(Details), new {id});
         }
 
         public async Task<IActionResult> Register(string id)
@@ -232,11 +228,11 @@ namespace EventProject.Controllers
             //TODO figure out how to find out if an object exists already
             if (_attendingRepository.FindObject(id, GetCurrentUserID()).Result == null)
             {
-                return RedirectToAction("Attending", new {id});
+                return RedirectToAction(nameof(Attending), new {id});
             }
             else
             {
-                return RedirectToAction("NotAttending", new {id});
+                return RedirectToAction(nameof(NotAttending), new {id});
             }
         }
 
@@ -289,7 +285,6 @@ namespace EventProject.Controllers
 
         private async Task<string> GetOrgName(string id)
         {
-
             var currentEventObject = await _eventRepository.GetObject(id);
             var organizatorObject = await _profileRepository.GetObject(currentEventObject.DbRecord.Organizer);
             var organizatorName = organizatorObject.DbRecord.Name;
@@ -300,8 +295,6 @@ namespace EventProject.Controllers
         {
             var l = await _eventRepository.GetObjectsList();
             return View(new EventViewModelsList(l));
-
         }
-
     }
 }
