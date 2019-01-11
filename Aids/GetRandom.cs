@@ -33,7 +33,7 @@ namespace Aids
         public static double Double(double min = double.MinValue, double max = double.MaxValue)
         {
             if (min.CompareTo(max) == 0) return min;
-            ToTheSequence.OfGrowing(ref min, ref max);
+            Sort.Upwards(ref min, ref max);
             var d = r.NextDouble();
             if (max > 0) return min + d * max - d * min;
             return min - d * min + d * max;
