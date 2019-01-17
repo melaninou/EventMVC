@@ -62,7 +62,7 @@ namespace Tests.Aids
         [TestMethod]
         public void Int64Test()
         {
-            var d = 1000000L;
+            var d = 100000000L;
             doGetRandomTests(GetRandom.Int64, (long)100, 200);
             doGetRandomTests(GetRandom.Int64, (long)-200, 100);
             doGetRandomTests(GetRandom.Int64, (long)-400, -200);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Aids;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -42,5 +43,12 @@ namespace Tests
                 members.RemoveAt(i - 1);
             }
         }
+        protected void validateDates(DateTime? expected, DateTime? actual)
+        {
+            var e = expected ?? DateTime.MinValue;
+            var a = actual ?? DateTime.MaxValue;
+            Assert.AreEqual(e.ToString(CultureInfo.InvariantCulture), a.ToString(CultureInfo.InvariantCulture));
+        }
+        protected static string toStr(DateTime d) => d.ToString(CultureInfo.InvariantCulture);
     }
 }
