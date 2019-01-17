@@ -64,10 +64,15 @@ namespace EventProject.Controllers
             _eventRepository.SearchString = searchString;
             _eventRepository.PageIndex = page ?? 1;
 
-            var testimine = await _attendingRepository.GetUserEventsList(GetCurrentUserID());
-            
-            var l = await _eventRepository.GetObjectsList();
-                return View(new EventViewModelsList(l));
+            //var testimine = await _attendingRepository.GetUserEventsList(GetCurrentUserID());
+
+            AllEventsViewModel allevents = new AllEventsViewModel();
+            allevents.AllEventViewModel = await _eventRepository.GetObjectsList();
+            allevents.MyEventsViewModel = await _attendingRepository.GetUserEventsList(GetCurrentUserID());
+
+
+            //var l = await _eventRepository.GetObjectsList();
+            return View(allevents);
         }
        
         [Authorize]

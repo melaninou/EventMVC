@@ -35,6 +35,7 @@ namespace Infra
             return createList(items, p);
         }
 
+
         private IQueryable<TDbRecord> getSorted()
         {
             if (SortFunction is null) return getSet();
