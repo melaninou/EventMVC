@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +32,8 @@ namespace EventProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            var s = Configuration.GetConnectionString("DefaultConnection");
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -39,11 +42,9 @@ namespace EventProject
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Event;Trusted_Connection=True;MultipleActiveResultSets=true"));
             services.AddDbContext<EventProjectDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Event;Trusted_Connection=True;MultipleActiveResultSets=true"));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -54,7 +55,7 @@ namespace EventProject
             services.AddScoped<IAttendingObjectsRepository, AttendingRepository>();
 
             services.AddTransient<IImageHandler, ImageHandler>();
-            services.AddTransient<IImageWriter,ImageWriter>();
+            services.AddTransient<IImageWriter, ImageWriter>();
 
             services.AddSignalR();
         }
