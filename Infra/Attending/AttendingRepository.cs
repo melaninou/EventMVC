@@ -56,11 +56,11 @@ namespace Infra.Attending
             var eventDbRecordsList = new List<EventDbRecord>();
             foreach (var value in list)
             {
-                string test = value.ToString();
-                int lastIndexOfTest = test.Length - 1;
-                string realTestString = test.Substring(12, lastIndexOfTest - 1 - 12);
+                string idLongVersion = value.ToString();
+                int lastIndexOfidLongVersion = idLongVersion.Length - 1;
+                string idRightVersion = idLongVersion.Substring(12, lastIndexOfidLongVersion - 1 - 12);
 
-                var oneEventObject = await eventDbSet.AsNoTracking().SingleOrDefaultAsync(x => x.ID == realTestString);
+                var oneEventObject = await eventDbSet.AsNoTracking().SingleOrDefaultAsync(x => x.ID == idRightVersion);
                 eventDbRecordsList.Add(oneEventObject);
             }
             var count = eventDbRecordsList.Count();
