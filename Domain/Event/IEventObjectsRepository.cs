@@ -9,7 +9,6 @@ namespace Domain.Event
     {
         //Task<PaginatedList<EventObject>> GetEventList();
         Task<List<EventObject>> GetOrganizerEventsList(string userID);
-        Task<PaginatedList<EventObject>> GetEventList();
         Task<PaginatedList<EventObject>> GetRecent5ObjectsList();
 
     }
