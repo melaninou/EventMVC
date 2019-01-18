@@ -28,7 +28,30 @@ namespace Infra.Event
             return new EventObjectsList(l, p);
         }
 
-        public async Task<PaginatedList<EventObject>> GetEventList()
+        public async Task<List<EventObject>> GetOrganizerEventsList(string userID)
+        {
+            var organizerEvents = dbSet.Where(p => p.Organizer == userID);
+
+            var list = organizerEvents.Select(s => new { s.ID }).ToList();
+            var eventDbRecordsList = new List<EventDbRecord>();
+            foreach (var value in list)
+            {
+                string eventIDLongVersion = value.ToString();
+                int lastIndexOfidLongVersion = eventIDLongVersion.Length - 1;
+                string idRightVersion = eventIDLongVersion.Substring(7, lastIndexOfidLongVersion - 1 - 7);
+
+
+                var oneEventObject = await dbSet.AsNoTracking().SingleOrDefaultAsync(x => x.ID == idRightVersion);
+                eventDbRecordsList.Add(oneEventObject);
+            }
+            var count = eventDbRecordsList.Count();
+            var pp = new RepositoryPage(count, PageIndex, PageSize);
+            var items = eventDbRecordsList.Skip(pp.FirstItemIndex).Take(pp.PageSize).ToList();
+            return createList(eventDbRecordsList, pp);
+        }
+
+
+        /*public async Task<PaginatedList<EventObject>> GetEventList()
         {
             var events = getSorted().Where(s => s is EventDbRecord && s.Contains(SearchString))
                 .AsNoTracking();
@@ -36,7 +59,7 @@ namespace Infra.Event
             var p = new RepositoryPage(count, PageIndex, PageSize);
             var items = await events.Skip(p.FirstItemIndex).Take(p.PageSize).ToListAsync();
             return createList(items, p);
-        }
+        }*/
 
         public async Task<PaginatedList<EventObject>> GetRecent5ObjectsList()
         {

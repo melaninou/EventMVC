@@ -13,5 +13,6 @@ namespace Facade.Event
     {
         public IPaginatedList<EventObject> AllEventViewModel { get; set; }
         public List<EventObject> MyEventsViewModel { get; set; }
+        public List<EventObject> MyOrganizedEventsViewModel { get; set; }
     }
 }
