@@ -86,7 +86,6 @@ namespace EventProject.Controllers
         public async Task<IActionResult> Create(IFormFile avatarFile, [Bind(properties)] EventViewModel e)
         {        
             if (!ModelState.IsValid) return View(e);
-            var eventId = GetUniqueID();
 
             var extension = "." + avatarFile.FileName.Split('.')[avatarFile.FileName.Split('.').Length - 1]; //.jpg, . jne
             string fileName = GetUniqueID() + extension;
@@ -99,10 +98,10 @@ namespace EventProject.Controllers
 
             var eventID = GetUniqueID();
 
-            var o = EventObjectFactory.Create(eventID, e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description, fileName);
+            var o = EventObjectFactory.Create(eventID, e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description, fileName, DateTime.Now);
             await _eventRepository.AddObject(o);
             await RegisterToEvent(eventID);
-            await _hubContext.Clients.All.SendAsync("ReceiveMessage", e.ID, e.Name, e.Location, e.Date);
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", eventID, e.Name, e.Location, e.Date, fileName);
             return RedirectToAction(nameof(Index));
         }
 

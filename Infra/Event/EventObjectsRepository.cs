@@ -38,6 +38,16 @@ namespace Infra.Event
             return createList(items, p);
         }
 
+        public async Task<PaginatedList<EventObject>> GetRecent5ObjectsList()
+        {
+            var objects = dbSet.OrderByDescending(n => n.DateCreated).Take(5);
+            //var objects = getSorted().Where(s => s.Contains(SearchString)).AsNoTracking();
+            var count = await objects.CountAsync(); //how many wanted
+            var p = new RepositoryPage(count, PageIndex, PageSize); //calculating next pages' parameters
+            var items = await objects.Skip(p.FirstItemIndex).Take(p.PageSize).ToListAsync(); //andmebaasist vajaliku hulga kirjete (PageSize) alates kirje vajalikust indexist (FirstItemIndex) küsimine
+            return createList(items, p);
+        }
+
         private IQueryable<EventDbRecord> getSorted()
         {
             if (SortFunction is null) return getSet();

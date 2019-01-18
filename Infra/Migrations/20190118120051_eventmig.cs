@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infra.Migrations
 {
-    public partial class EventProject : Migration
+    public partial class eventmig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,8 @@ namespace Infra.Migrations
                     Date = table.Column<DateTime>(nullable: false),
                     Organizer = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    EventImage = table.Column<string>(nullable: true)
+                    EventImage = table.Column<string>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

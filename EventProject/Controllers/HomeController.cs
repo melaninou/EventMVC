@@ -3,16 +3,33 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Event;
+using EventProject.Hubs;
 using Microsoft.AspNetCore.Mvc;
 using EventProject.Models;
+using Facade.Event;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 
 namespace EventProject.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+
+        private readonly IEventObjectsRepository _eventRepository;
+        private readonly IHubContext<CalendarHub> _hubContext;
+
+        public HomeController(IEventObjectsRepository repository,
+            IHubContext<CalendarHub> hubContext)
         {
-            return View();
+            _eventRepository = repository;
+            _hubContext = hubContext;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var l = await _eventRepository.GetRecent5ObjectsList();
+            return View(new EventViewModelsList(l));
         }
 
         public IActionResult About()

@@ -7,5 +7,7 @@ namespace Domain.Event
     public interface IEventObjectsRepository : IObjectsRepository<EventObject, EventDbRecord>
     {
         Task<PaginatedList<EventObject>> GetEventList();
+        Task<PaginatedList<EventObject>> GetRecent5ObjectsList();
+
     }
 }

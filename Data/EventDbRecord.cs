@@ -7,9 +7,11 @@ namespace Data
     public class EventDbRecord : BasicDbRecord
     {
         private DateTime date;
+        private DateTime dateCreated;
         private string organizer;
         private string description;
         private string eventImage;
+
         public override string ID
         {
             get => getString(ref id);
@@ -39,6 +41,12 @@ namespace Data
         {
             get => getString(ref eventImage);
             set => eventImage = value;
+        }
+
+        public DateTime DateCreated
+        {
+            get => getValue(ref dateCreated, ref dateCreated);
+            set => setValue(ref dateCreated, value);
         }
     }
 }
