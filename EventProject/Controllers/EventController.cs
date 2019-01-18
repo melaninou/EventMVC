@@ -99,7 +99,8 @@ namespace EventProject.Controllers
             var o = EventObjectFactory.Create(eventID, e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description, fileName, DateTime.Now);
             await _eventRepository.AddObject(o);
             await RegisterToEvent(eventID);
-            await _hubContext.Clients.All.SendAsync("ReceiveMessage", eventID, e.Name, e.Location, e.Date, fileName);
+            string eventTimeFormat = e.Date.ToString("MMMM dd, yyyy hh:mm");
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", eventID, e.Name, e.Location, eventTimeFormat, fileName);
             return RedirectToAction(nameof(Index));
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Core;
 using Facade.Common;
 using Facade.Profile;
@@ -15,7 +16,8 @@ namespace Facade.Event
         private string eventImage;
 
         public EventType Type { get; set; }
-       
+
+
         public DateTime Date
         {
             get => getValue(ref date, ref date);

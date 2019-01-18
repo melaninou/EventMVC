@@ -62,7 +62,7 @@
                         </span></td>
                         <td>@item.Name</td>
                         <td>@item.Location</td>
-                        <td>@item.Date</td>
+                        <td>@item.Date.ToString("MMMM dd, yyyy hh:mm")</td>
                         <td>
                             <a href="@Url.Action("Details", "Event", new {id = item.ID})">
                                 More

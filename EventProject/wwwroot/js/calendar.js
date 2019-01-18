@@ -5,10 +5,11 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/calendarHub").buil
 connection.on("ReceiveMessage", function (id, name, location, date, image) {
 
 
+
     var eventName = document.createTextNode(name);
     var eventLocation = document.createTextNode(location);
     var eventTime = document.createTextNode(date);
-    var eventImage = document.createTextNode(image);
+
 
     var newLink = document.createElement("a");
     var linkText = document.createTextNode("More");
