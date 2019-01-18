@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Core;
-using Data;
 using Domain.Event;
 using Domain.Profile;
 

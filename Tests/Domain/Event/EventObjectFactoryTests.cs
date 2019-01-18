@@ -18,6 +18,7 @@ namespace Tests.Domain.Event
         private string description;
         private EventObject o;
         private string eventImage;
+        private DateTime dateCreated;
 
         private void initializeTestData()
         {
@@ -29,12 +30,13 @@ namespace Tests.Domain.Event
             organiser = GetRandom.String();
             description = GetRandom.String();
             eventImage = GetRandom.String();
+            dateCreated = DateTime.Today;
         }
 
         private void validateResults(string i = Constants.Unspecified, string n = Constants.Unspecified,
             string l = Constants.Unspecified, DateTime? d = null, EventType t = EventType.Other,
             string org = Constants.Unspecified, string desc = Constants.Unspecified,
-            string img = Constants.Unspecified)
+            string img = Constants.Unspecified, DateTime? dc = null)
         {
             Assert.AreEqual(i, o.DbRecord.ID);
             Assert.AreEqual(n, o.DbRecord.Name);
@@ -44,6 +46,7 @@ namespace Tests.Domain.Event
             Assert.AreEqual(org, o.DbRecord.Organizer);
             Assert.AreEqual(desc, o.DbRecord.Description);
             Assert.AreEqual(img, o.DbRecord.EventImage);
+            Assert.AreEqual(dc, o.DbRecord.DateCreated);
         }
 
         [TestInitialize]
@@ -54,12 +57,13 @@ namespace Tests.Domain.Event
             initializeTestData();
         }
 
-        //todo
-        /*[TestMethod]
+        [TestMethod]
         public void CreateTest()
         {
-            o = EventObjectFactory.Create(id, name, location, date, evType, organiser, description,eventImage );
-            validateResults(id, name, location, date, evType, organiser, description, eventImage);
-        }*/
+            o = EventObjectFactory.Create(id, name, location, date, evType, organiser,
+            description, eventImage, dateCreated);
+            validateResults(id, name, location, date, evType, organiser,
+            description, eventImage, dateCreated);
+        }
     }
 }
