@@ -44,7 +44,7 @@ namespace EventProject.Controllers
             _hubContext = hubContext;
         }
 
-
+        [Authorize]
         public async Task<IActionResult> Index(string sortOrder = null,
             string searchString = null, int? page = null, string currentFilter = null)
         {
@@ -64,14 +64,12 @@ namespace EventProject.Controllers
             _eventRepository.SearchString = searchString;
             _eventRepository.PageIndex = page ?? 1;
 
-            //var testimine = await _attendingRepository.GetUserEventsList(GetCurrentUserID());
 
             AllEventsViewModel allevents = new AllEventsViewModel();
             allevents.AllEventViewModel = await _eventRepository.GetObjectsList();
             allevents.MyEventsViewModel = await _attendingRepository.GetUserEventsList(GetCurrentUserID());
+            allevents.MyOrganizedEventsViewModel = await _eventRepository.GetOrganizerEventsList(GetCurrentUserID());
 
-
-            //var l = await _eventRepository.GetObjectsList();
             return View(allevents);
         }
        
@@ -155,6 +153,7 @@ namespace EventProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         public async Task<IActionResult> Details(string id)
         {
             var currentEventObject = await _eventRepository.GetObject(id);
@@ -205,12 +204,14 @@ namespace EventProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         public async Task<IActionResult> Attending(string id)
         {
             await RegisterToEvent(id);
             return RedirectToAction(nameof(Details), new {id});
         }
 
+        [Authorize]
         private async Task RegisterToEvent(string id)
         {
             string userID = GetCurrentUserID();
@@ -219,8 +220,9 @@ namespace EventProject.Controllers
             var userObject = await _profileRepository.GetObject(userID);
             var o = AttendingObjectFactory.Create(eventObject, userObject, event_ID, userID);
             await _attendingRepository.AddObject(o);
-        }   
+        }
 
+        [Authorize]
         public async Task<IActionResult> NotAttending(string id)
         {
             var o = await _attendingRepository.GetObject(id, GetCurrentUserID());
@@ -228,6 +230,7 @@ namespace EventProject.Controllers
             return RedirectToAction(nameof(Details), new {id});
         }
 
+        [Authorize]
         public async Task<IActionResult> Register(string id)
         {
             //TODO figure out how to find out if an object exists already
