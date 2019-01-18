@@ -54,11 +54,12 @@ namespace Tests.Domain.Event
             initializeTestData();
         }
 
-        [TestMethod]
+        //todo
+        /*[TestMethod]
         public void CreateTest()
         {
             o = EventObjectFactory.Create(id, name, location, date, evType, organiser, description,eventImage );
             validateResults(id, name, location, date, evType, organiser, description, eventImage);
-        }
+        }*/
     }
 }
