@@ -4,6 +4,7 @@
 @using EventProject.Extensions
 @model Facade.Event.AllEventsViewModel
 
+
 @{
     @*ViewData["Title"] = "Events";*@
     Layout = "_IndexPartial";
@@ -64,7 +65,7 @@
                                             </span>
                                         </td>
                                         <td>@Html.DisplayFor(modelItem => item.DbRecord.Name)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Date)</td>
+                                        <td>@item.DbRecord.Date.ToString("MMMM dd, yyyy hh:mm")</td>
                                         <td>@Html.DisplayFor(modelItem => item.DbRecord.Location)</td>
                                         <td>@Html.DisplayFor(modelItem => item.DbRecord.Type)</td>
                                         <td>@userName.Where(x => x.DbRecord.ID == item.DbRecord.Organizer).FirstOrDefault().DbRecord.Name</td>
@@ -109,7 +110,7 @@
                                             </span>
                                         </td>
                                         <td>@Html.DisplayFor(modelItem => item.DbRecord.Name)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Date)</td>
+                                        <td>@item.DbRecord.Date.ToString("MMMM dd, yyyy hh:mm")</td>
                                         <td>@Html.DisplayFor(modelItem => item.DbRecord.Location)</td>
                                         <td>@Html.DisplayFor(modelItem => item.DbRecord.Type)</td>
                                         <td>@userName.Where(x => x.DbRecord.ID == item.DbRecord.Organizer).FirstOrDefault().DbRecord.Name</td>
@@ -153,7 +154,7 @@
                                             </span>
                                         </td>
                                         <td>@Html.DisplayFor(modelItem => item.DbRecord.Name)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Date)</td>
+                                        <td>@item.DbRecord.Date.ToString("MMMM dd, yyyy hh:mm")</td>
                                         <td>@Html.DisplayFor(modelItem => item.DbRecord.Location)</td>
                                         <td>@Html.DisplayFor(modelItem => item.DbRecord.Type)</td>
                                         <td>@userName.Where(x => x.DbRecord.ID == item.DbRecord.Organizer).FirstOrDefault().DbRecord.Name</td>
