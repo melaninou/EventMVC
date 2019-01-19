@@ -13,8 +13,18 @@
                         <img class="editable img-responsive" alt="Avatar" id="avatar2" src="~/images/@Model.ID/@Model.ProfileImage" />
 
                     </span>
+                
+                    <a onclick="followUser()" class="btn btn-sm btn-block btn-primary">
+                        <span class="bigger-110">Follow</span>
+                    </a>
 
                     <div class="space space-4"></div>
+
+                    <script>
+                        function followUser() {
+                            return window.location.href = '@Url.Action("Follow", "Profile", new { id = Model.ID })';
+                        }
+                    </script>  
 
                     <a href="@Url.Action("Edit", "Profile", new {id = Model.ID})" class="btn btn-sm btn-block btn-primary">
                         <span class="bigger-110">Edit</span>

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(EventProjectDbContext))]
-    [Migration("20190118191334_EventProjectMigration")]
-    partial class EventProjectMigration
+    [Migration("20190119111638_eventmig")]
+    partial class eventmig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,6 +81,8 @@ namespace Infra.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("Date");
+
+                    b.Property<DateTime>("DateCreated");
 
                     b.Property<string>("Description");
 

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190118191218_ApplicationMigration")]
-    partial class ApplicationMigration
+    [Migration("20190119111531_appmig")]
+    partial class appmig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
