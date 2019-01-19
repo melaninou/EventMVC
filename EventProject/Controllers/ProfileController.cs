@@ -115,14 +115,6 @@ namespace EventProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
-        /*[Authorize]
-        public async Task<IActionResult> Details()
-        {
-            var currentUser = await repository.GetObject(GetCurrentUserId());     
-            return View(ProfileViewModelFactory.Create(currentUser));
-        }*/
-
         [Authorize]
         public async Task<IActionResult> Details(string id)
         {

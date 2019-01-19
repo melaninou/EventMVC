@@ -2,6 +2,7 @@
 using Core;
 using Data;
 using Domain.Profile;
+using Microsoft.EntityFrameworkCore;
 using Open.Infra;
 
 namespace Infra.Profile
