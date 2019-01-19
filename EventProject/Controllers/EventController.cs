@@ -9,8 +9,6 @@ using Domain.Event;
 using Domain.Profile;
 using EventProject.Hubs;
 using Facade.Event;
-using Infra;
-using Infra.Attending;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Core;
-using Data;
-using Domain.Attending;
 using Domain.Event;
 
 namespace Facade.Event

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using Core;
+﻿using Core;
 
 namespace Facade.Common
 {

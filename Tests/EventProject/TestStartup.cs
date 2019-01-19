@@ -1,15 +1,8 @@
-﻿using Domain.Attending;
-using Domain.Event;
-using Domain.Profile;
-using EventProject;
+﻿using EventProject;
 using EventProject.Data;
 using Infra;
-using Infra.Attending;
-using Infra.Event;
-using Infra.Profile;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,5 +1,3 @@
-using System;
-
 namespace EventProject.Models
 {
     public class ErrorViewModel
