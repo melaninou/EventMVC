@@ -33,6 +33,8 @@ namespace EventProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            var s = Configuration.GetConnectionString("DefaultConnection");
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -41,11 +43,9 @@ namespace EventProject
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Event;Trusted_Connection=True;MultipleActiveResultSets=true"));
             services.AddDbContext<EventProjectDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Event;Trusted_Connection=True;MultipleActiveResultSets=true"));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -58,7 +58,7 @@ namespace EventProject
             services.AddScoped<ICommentObjectsRepository, CommentRepository>();
 
             services.AddTransient<IImageHandler, ImageHandler>();
-            services.AddTransient<IImageWriter,ImageWriter>();
+            services.AddTransient<IImageWriter, ImageWriter>();
 
             services.AddSignalR();
         }

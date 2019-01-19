@@ -1,7 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core;
-using Data;
 using Domain.Event;
 using Domain.Profile;
 
@@ -14,6 +13,6 @@ namespace Domain.Attending
         Task RemoveListObjects(EventObject eventObject);
         Task<object> FindObject(string eventID, string userID);
         Task<AttendingObject> GetObject(string eventID, string userID);
-        Task<IQueryable<AttendingDbRecord>> GetUserEventsList(string userID);
+        Task<List<EventObject>> GetUserEventsList(string userID);
     }
 }

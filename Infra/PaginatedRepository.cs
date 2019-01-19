@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Core;
 using Data.Common;
@@ -34,6 +33,7 @@ namespace Infra
             var items = await objects.Skip(p.FirstItemIndex).Take(p.PageSize).ToListAsync(); //andmebaasist vajaliku hulga kirjete (PageSize) alates kirje vajalikust indexist (FirstItemIndex) küsimine
             return createList(items, p);
         }
+
 
         private IQueryable<TDbRecord> getSorted()
         {

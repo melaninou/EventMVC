@@ -15,7 +15,8 @@ namespace Facade.Event
         private string eventImage;
 
         public EventType Type { get; set; }
-       
+
+
         public DateTime Date
         {
             get => getValue(ref date, ref date);

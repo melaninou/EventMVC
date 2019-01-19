@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core;
@@ -7,25 +8,39 @@ using Domain.Attending;
 using Domain.Event;
 using Domain.Profile;
 using Microsoft.EntityFrameworkCore;
+using Open.Infra;
 
 namespace Infra.Attending
 {
-    public class AttendingRepository : IAttendingObjectsRepository
+    public class AttendingRepository : ObjectsRepository<EventObject, EventDbRecord>, IAttendingObjectsRepository
     {
         internal readonly DbSet<AttendingDbRecord> dbSet;
+        internal readonly DbSet<EventDbRecord> eventDbSet;
         private readonly DbContext db;
+        private IEventObjectsRepository _eventObjectsRepository;
 
-        public AttendingRepository(EventProjectDbContext c)
+        public AttendingRepository(EventProjectDbContext c) : base(c?.Events, c)
         {
             db = c;
             dbSet = c?.EventsProfiles;
+            eventDbSet = c?.Events;
         }
 
         public Task<AttendingObject> GetObject(string id)
         {
             throw new NotImplementedException();
         }
-        
+
+        protected internal override EventObject createObject(EventDbRecord r)
+        {
+            return new EventObject(r);
+        }
+
+        protected internal override PaginatedList<EventObject> createList(List<EventDbRecord> l, RepositoryPage p)
+        {
+            return new EventObjectsList(l, p);
+        }
+
         public async Task<AttendingObject> GetObject(string eventID, string userID)
         {
             //if (eventID == null || userID == null) return null;
@@ -33,10 +48,25 @@ namespace Infra.Attending
             return new AttendingObject(o);
         }
 
-        public async Task<IQueryable<AttendingDbRecord>> GetUserEventsList(string userID)
+        public async Task<List<EventObject>> GetUserEventsList(string userID)
         {
             var userEvents = dbSet.Where(p => p.ProfileID == userID);
-            return userEvents;
+
+            var list = userEvents.Select(s=> new {s.EventID}).ToList();
+            var eventDbRecordsList = new List<EventDbRecord>();
+            foreach (var value in list)
+            {
+                string idLongVersion = value.ToString();
+                int lastIndexOfidLongVersion = idLongVersion.Length - 1;
+                string idRightVersion = idLongVersion.Substring(12, lastIndexOfidLongVersion - 1 - 12);
+
+                var oneEventObject = await eventDbSet.AsNoTracking().SingleOrDefaultAsync(x => x.ID == idRightVersion);
+                eventDbRecordsList.Add(oneEventObject);
+            }
+            var count = eventDbRecordsList.Count();
+            var pp = new RepositoryPage(count, PageIndex, PageSize);
+            var items = eventDbRecordsList.Skip(pp.FirstItemIndex).Take(pp.PageSize).ToList();
+            return createList(eventDbRecordsList, pp);
         }
 
         public async Task AddObject(AttendingObject o)

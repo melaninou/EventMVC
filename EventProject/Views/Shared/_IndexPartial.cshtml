@@ -17,25 +17,4 @@
 
 @RenderBody()
 
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
-<div class="text-center">
-
-    <a asp-action=@ViewBag.ActionIndex
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
-       asp-route-page="@(Model.PageIndex - 1)"
-       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-       class="btn btn-default @prevDisabled">
-        Previous
-    </a>
-    <a asp-action=@ViewBag.ActionIndex
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
-       asp-route-page="@(Model.PageIndex + 1)"
-       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-       class="btn btn-default @nextDisabled">
-        Next
-    </a>
-</div>
 

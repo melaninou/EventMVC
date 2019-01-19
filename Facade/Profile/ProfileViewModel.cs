@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Facade.Common;
 using Core;
 
@@ -13,6 +14,8 @@ namespace Facade.Profile
         private string occupation;
         private string profileImage;
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime BirthDay
         {
             get => getValue(ref birthDay, ref birthDay);

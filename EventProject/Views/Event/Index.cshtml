@@ -1,20 +1,21 @@
-﻿
-@using Core
+﻿@using Core
 @using Domain.Profile
 @using EventProject.Extensions
-@model IPaginatedList<Facade.Event.EventViewModel>
+@model Facade.Event.AllEventsViewModel
+
 
 @{
-    @*ViewData["Title"] = "Events";*@
     Layout = "_IndexPartial";
     var userName = ViewData["userRealName"] as PaginatedList<ProfileObject>;
 }
-<style type="text/css">.clickable-row {
-     /*display: block;*/
-     cursor: pointer;
- }
+<style type="text/css">
+    .clickable-row {
+        /*display: block;*/
+        cursor: pointer;
+    }
 </style>
-<style type="text/css">.clickable-row:hover {
+<style type="text/css">
+    .clickable-row:hover {
         background: #ffcea1 !important;
         background: transparent;
     }
@@ -27,57 +28,143 @@
 </head>
 
 <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#events">Events</a></li>
-    <li><a data-toggle="tab" href="#myEvents">My events</a></li>
+    <li class="active"><a data-toggle="tab" href="#events">Exploring</a></li>
+    <li><a data-toggle="tab" href="#myEvents">Attending</a></li>
+    <li><a data-toggle="tab" href="#myOrganizedEvents">Organizing</a></li>
 </ul>
 
 <div class="tab-content">
     <div id="events" class="tab-pane fade in active">
-        <div id="Events" class="tabcontent">
+        <div id="Events">
             <div class="tab-content no-border padding-24">
                 <div id="home" class="tab-pane in active">
                     <table cellspacing="0">
                         <body>
-                            @{ var dummy = Model.FirstOrDefault();}
+                            @{ var dummy = Model.AllEventViewModel.FirstOrDefault();}
                             <thead>
                                 <tr>
                                     <th>Picture</th>
-                                    @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
-                                    @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy.Date)
-                                    @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy.Location)
-                                    @Html.SortColumnHeaderFor(ViewData["SortType"], model => dummy.Type)
-                                    @Html.SortColumnHeaderFor(ViewData["SortOrganizer"], model => dummy.Organizer)
+                                    @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.DbRecord.Name)
+                                    @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy.DbRecord.Date)
+                                    @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy.DbRecord.Location)
+                                    @Html.SortColumnHeaderFor(ViewData["SortType"], model => dummy.DbRecord.Type)
+                                    @Html.SortColumnHeaderFor(ViewData["SortOrganizer"], model => dummy.DbRecord.Organizer)
                                     <th></th>
                                 </tr>
                             </thead>
-                        <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr class="clickable-row" data-href="@Url.Action("Details","Event", new {id = item.ID})">
-                                <td>
-                                    <span class="event-picture">
-                                        <img class="editable img-responsive" alt="Avatar" id="avatar-2"
-                                             src="~/images/@item.EventImage" />
-                                    </span>
-                                </td>
-                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Location)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Type)</td>
-                                <td>@userName.Where(x => x.DbRecord.ID == item.Organizer).FirstOrDefault().DbRecord.Name</td>
-                                @Html.EditDetailDeleteFor(modelItem => item.ID)
-                            </tr>
-                        }
-                        </tbody>
+                            <tbody>
+                                @foreach (var item in Model.AllEventViewModel)
+                                {
+                                    <tr class="clickable-row" data-href="@Url.Action("Details","Event", new {id = item.DbRecord.ID})">
+                                        <td>
+                                            <span class="event-picture">
+                                                <img class="editable img-responsive" alt="Avatar" id="avatar-2"
+                                                     src="~/images/@item.DbRecord.EventImage" />
+                                            </span>
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Name)</td>
+                                        <td>@item.DbRecord.Date.ToString("MMMM dd, yyyy hh:mm")</td>
+                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Location)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Type)</td>
+                                        <td>@userName.Where(x => x.DbRecord.ID == item.DbRecord.Organizer).FirstOrDefault().DbRecord.Name</td>
+                                        @Html.EditDetailDeleteFor(modelItem => item.DbRecord.ID)
+                                    </tr>
+                                }
+                            </tbody>
                         </body>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div id="myEvents" class="tab-pane fade">
-        <h3>My events</h3>
-        <p>My events are displayed here.</p>
+        <div id="myEvents">
+            <div class="tab-content no-border padding-24">
+                <div id="home" class="tab-pane in active">
+                    <table cellspacing="0">
+                        <body>
+                            @{ var dummy2 = Model.MyEventsViewModel.FirstOrDefault();}
+                            <thead>
+                                <tr>
+                                    <th>Picture</th>
+                                    @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy2.DbRecord.Name)
+                                    @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy2.DbRecord.Date)
+                                    @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy2.DbRecord.Location)
+                                    @Html.SortColumnHeaderFor(ViewData["SortType"], model => dummy2.DbRecord.Type)
+                                    @Html.SortColumnHeaderFor(ViewData["SortOrganizer"], model => dummy2.DbRecord.Organizer)
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.MyEventsViewModel)
+                                {
+                                    <tr class="clickable-row" data-href="@Url.Action("Details","Event", new {id = item.DbRecord.ID})">
+                                        <td>
+                                            <span class="event-picture">
+                                                <img class="editable img-responsive" alt="Avatar" id="avatar-2"
+                                                     src="~/images/@item.DbRecord.EventImage" />
+                                            </span>
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Name)</td>
+                                        <td>@item.DbRecord.Date.ToString("MMMM dd, yyyy hh:mm")</td>
+                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Location)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Type)</td>
+                                        <td>@userName.Where(x => x.DbRecord.ID == item.DbRecord.Organizer).FirstOrDefault().DbRecord.Name</td>
+                                        @Html.EditDetailDeleteFor(modelItem => item.DbRecord.ID)
+                                    </tr>
+                                }
+                            </tbody>
+                        </body>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="myOrganizedEvents" class="tab-pane fade">
+        <div id="myOrganizedEvents">
+            <div class="tab-content no-border padding-24">
+                <div id="home" class="tab-pane in active">
+                    <table cellspacing="0">
+                        <body>
+                            @{ var dummy3 = Model.MyOrganizedEventsViewModel.FirstOrDefault();}
+                            <thead>
+                                <tr>
+                                    <th>Picture</th>
+                                    @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy3.DbRecord.Name)
+                                    @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy3.DbRecord.Date)
+                                    @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy3.DbRecord.Location)
+                                    @Html.SortColumnHeaderFor(ViewData["SortType"], model => dummy3.DbRecord.Type)
+                                    @Html.SortColumnHeaderFor(ViewData["SortOrganizer"], model => dummy3.DbRecord.Organizer)
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.MyOrganizedEventsViewModel)
+                                {
+                                    <tr class="clickable-row" data-href="@Url.Action("Details","Event", new {id = item.DbRecord.ID})">
+                                        <td>
+                                            <span class="event-picture">
+                                                <img class="editable img-responsive" alt="Avatar" id="avatar-2"
+                                                     src="~/images/@item.DbRecord.EventImage" />
+                                            </span>
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Name)</td>
+                                        <td>@item.DbRecord.Date.ToString("MMMM dd, yyyy hh:mm")</td>
+                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Location)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Type)</td>
+                                        <td>@userName.Where(x => x.DbRecord.ID == item.DbRecord.Organizer).FirstOrDefault().DbRecord.Name</td>
+                                        @Html.EditDetailDeleteFor(modelItem => item.DbRecord.ID)
+                                    </tr>
+                                }
+                            </tbody>
+                        </body>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+

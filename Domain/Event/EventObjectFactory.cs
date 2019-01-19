@@ -8,7 +8,7 @@ namespace Domain.Event
     {
         public static EventObject Create(string id, string name,
             string location, DateTime date, EventType type,
-            string organiser, string description, string eventImage)
+            string organiser, string description, string eventImage, DateTime dateCreated)
         {
             var o = new EventDbRecord
             {
@@ -19,7 +19,8 @@ namespace Domain.Event
                 Type = type,
                 Organizer = organiser,
                 Description = description,
-                EventImage = eventImage
+                EventImage = eventImage,
+                DateCreated = dateCreated
             };
             return new EventObject(o);
         }

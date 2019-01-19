@@ -11,8 +11,6 @@ using Domain.Profile;
 using EventProject.Hubs;
 using Facade.Comment;
 using Facade.Event;
-using Infra;
-using Infra.Attending;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -52,8 +50,7 @@ namespace EventProject.Controllers
             _commentRepository = commentRepository;
         }
 
-        
-        
+        [Authorize]
         public async Task<IActionResult> Index(string sortOrder = null,
             string searchString = null, int? page = null, string currentFilter = null)
         {
@@ -73,10 +70,13 @@ namespace EventProject.Controllers
             _eventRepository.SearchString = searchString;
             _eventRepository.PageIndex = page ?? 1;
 
-            var testimine = await _attendingRepository.GetUserEventsList(GetCurrentUserID());
 
-            var l = await _eventRepository.GetObjectsList();
-                return View(new EventViewModelsList(l));
+            AllEventsViewModel allevents = new AllEventsViewModel();
+            allevents.AllEventViewModel = await _eventRepository.GetObjectsList();
+            allevents.MyEventsViewModel = await _attendingRepository.GetUserEventsList(GetCurrentUserID());
+            allevents.MyOrganizedEventsViewModel = await _eventRepository.GetOrganizerEventsList(GetCurrentUserID());
+
+            return View(allevents);
         }
        
         [Authorize]
@@ -90,7 +90,6 @@ namespace EventProject.Controllers
         public async Task<IActionResult> Create(IFormFile avatarFile, [Bind(properties)] EventViewModel e)
         {        
             if (!ModelState.IsValid) return View(e);
-            var eventId = GetUniqueID();
 
             var extension = "." + avatarFile.FileName.Split('.')[avatarFile.FileName.Split('.').Length - 1]; //.jpg, . jne
             string fileName = GetUniqueID() + extension;
@@ -103,10 +102,11 @@ namespace EventProject.Controllers
 
             var eventID = GetUniqueID();
 
-            var o = EventObjectFactory.Create(eventID, e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description, fileName);
+            var o = EventObjectFactory.Create(eventID, e.Name, e.Location, e.Date, e.Type, GetCurrentUserID(), e.Description, fileName, DateTime.Now);
             await _eventRepository.AddObject(o);
             await RegisterToEvent(eventID);
-            await _hubContext.Clients.All.SendAsync("ReceiveMessage", e.ID, e.Name, e.Location, e.Date);
+            string eventTimeFormat = e.Date.ToString("MMMM dd, yyyy hh:mm");
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", eventID, e.Name, e.Location, eventTimeFormat, fileName);
             return RedirectToAction(nameof(Index));
         }
 
@@ -156,6 +156,8 @@ namespace EventProject.Controllers
             await _eventRepository.UpdateObject(o);
             return RedirectToAction(nameof(Index));
         }
+
+        [Authorize]
         public async Task<IActionResult> Details(string id)
         {
             var currentEventObject = await _eventRepository.GetObject(id);
@@ -215,12 +217,14 @@ namespace EventProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         public async Task<IActionResult> Attending(string id)
         {
             await RegisterToEvent(id);
             return RedirectToAction(nameof(Details), new {id});
         }
 
+        [Authorize]
         private async Task RegisterToEvent(string id)
         {
             string userID = GetCurrentUserID();
@@ -229,8 +233,9 @@ namespace EventProject.Controllers
             var userObject = await _profileRepository.GetObject(userID);
             var o = AttendingObjectFactory.Create(eventObject, userObject, event_ID, userID);
             await _attendingRepository.AddObject(o);
-        }   
+        }
 
+        [Authorize]
         public async Task<IActionResult> NotAttending(string id)
         {
             var o = await _attendingRepository.GetObject(id, GetCurrentUserID());
@@ -238,6 +243,7 @@ namespace EventProject.Controllers
             return RedirectToAction(nameof(Details), new {id});
         }
 
+        [Authorize]
         public async Task<IActionResult> Register(string id)
         {
             //TODO figure out how to find out if an object exists already
@@ -343,15 +349,4 @@ namespace EventProject.Controllers
             return currentUserName;
         }
     }
-}     
-
-
-
-
-        //private async Task<string> GetOrgName(string id)
-        //{
-        //    var currentEventObject = await _eventRepository.GetObject(id);
-        //    var organizatorObject = await _profileRepository.GetObject(currentEventObject.DbRecord.Organizer);
-        //    var organizatorName = organizatorObject.DbRecord.Name;
-        //    return organizatorName;
-        //}
+}
