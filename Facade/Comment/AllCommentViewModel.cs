@@ -9,6 +9,8 @@ namespace Facade.Comment
     public class AllCommentViewModel : BasicViewModel
     {
         public EventViewModel EventViewModel { get; set; }
-        public List<CommentsProfileObject> CommentViewModel { get; set; }
+
+
+        public List<CommentProfileViewModel> CommentProfileViewModel { get; set; }
     }
 }

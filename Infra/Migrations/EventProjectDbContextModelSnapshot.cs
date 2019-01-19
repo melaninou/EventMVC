@@ -15,7 +15,7 @@ namespace Infra.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -34,19 +34,6 @@ namespace Infra.Migrations
 
             modelBuilder.Entity("Data.Comment.CommentDbRecord", b =>
                 {
-                    b.Property<string>("EventID");
-
-                    b.Property<string>("CommentID");
-
-                    b.HasKey("EventID", "CommentID");
-
-                    b.HasIndex("CommentID");
-
-                    b.ToTable("Comment");
-                });
-
-            modelBuilder.Entity("Data.Comment.CommentsProfileDbRecord", b =>
-                {
                     b.Property<string>("ID")
                         .ValueGeneratedOnAdd();
 
@@ -58,19 +45,35 @@ namespace Infra.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("ProfileID");
-
-                    b.Property<string>("ProfilesID");
-
-                    b.Property<string>("UserName");
-
-                    b.Property<string>("UserPicture");
-
                     b.HasKey("ID");
 
-                    b.HasIndex("ProfilesID");
+                    b.ToTable("Comments");
+                });
 
-                    b.ToTable("CommentsProfile");
+            modelBuilder.Entity("Data.Comment.CommentEventDbRecord", b =>
+                {
+                    b.Property<string>("EventID");
+
+                    b.Property<string>("CommentID");
+
+                    b.HasKey("EventID", "CommentID");
+
+                    b.HasIndex("CommentID");
+
+                    b.ToTable("CommentEvent");
+                });
+
+            modelBuilder.Entity("Data.Comment.CommentProfileDbRecord", b =>
+                {
+                    b.Property<string>("ProfileID");
+
+                    b.Property<string>("CommentID");
+
+                    b.HasKey("ProfileID", "CommentID");
+
+                    b.HasIndex("CommentID");
+
+                    b.ToTable("CommentProfile");
                 });
 
             modelBuilder.Entity("Data.EventDbRecord", b =>
@@ -136,9 +139,9 @@ namespace Infra.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Data.Comment.CommentDbRecord", b =>
+            modelBuilder.Entity("Data.Comment.CommentEventDbRecord", b =>
                 {
-                    b.HasOne("Data.Comment.CommentsProfileDbRecord", "CommentsProfile")
+                    b.HasOne("Data.Comment.CommentDbRecord", "Comments")
                         .WithMany()
                         .HasForeignKey("CommentID")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -149,11 +152,17 @@ namespace Infra.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Data.Comment.CommentsProfileDbRecord", b =>
+            modelBuilder.Entity("Data.Comment.CommentProfileDbRecord", b =>
                 {
+                    b.HasOne("Data.Comment.CommentDbRecord", "Comments")
+                        .WithMany()
+                        .HasForeignKey("CommentID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Data.ProfileDbRecord", "Profiles")
                         .WithMany()
-                        .HasForeignKey("ProfilesID");
+                        .HasForeignKey("ProfileID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

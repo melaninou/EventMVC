@@ -4,6 +4,8 @@
 @using Infra.Attending
 @using Infra.Comment
 @model Facade.Comment.AllCommentViewModel
+
+
 @{
     ViewData["Title"] = "Details on " + @Model.Name;
     var profiles = ViewBag.Profiles as ProfileViewModelsList ?? new ProfileViewModelsList(null);
@@ -11,12 +13,11 @@
     var profileID = Url.Action("GetCurrentUserID", "Event");
     EventProjectDbContext c = null;
     var isObjectPresent = new AttendingRepository(c).FindObject(eventID, profileID);
-    var list = new CommentRepository(c).GetCommentsList(eventID);
+   // var list = new CommentRepository(c).GetCommentsList(eventID);
 }
 
 @{ var dummy = Model.EventViewModel;}
-@{ var dummy2 = Model.CommentViewModel.FirstOrDefault();}
-@{ var dummy3 = Model.CommentViewModel.Count;}
+
 
 
 <div style="margin-top: 50px" class="tab-content no-border padding-24">
@@ -142,140 +143,96 @@
                         </div>
                     </div>
                 }
-               
+
                 @*<div class="widget-box transparent">
 
-                    <div class="widget-header widget-header-small">
+                        <div class="widget-header widget-header-small">
 
-                        <h4 class="widget-title smaller">
+                            <h4 class="widget-title smaller">
 
-                            <i class="ace-icon fa fa-check-square-o bigger-110"></i>
+                                <i class="ace-icon fa fa-check-square-o bigger-110"></i>
 
-                            Comment:
+                                Comments:
 
-                        </h4>
-
-                    </div>
-
-
-
-                    <div class="widget-body">
-
-                        <div class="widget-main">
-
-                            <p>
-                                <form id="commentTextArea">
-                                    <textarea rows="6" cols="50" name="comment" form ="commentTextArea"></textarea>
-                                </form>
-                               
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <h2></h2>
-
-                    <a href="@Url.Action("AddComment", "Event", new {id = Model.ID})" class="btn btn-sm btn-block btn-primary">
-                        <span class="bigger-110">Add Comment</span>
-                    </a>
-
-
-
-                    <h2></h2>
-
-                </div>*@
-               
-                @*@if (dummy3 > 0)*@
-               
-                
-                
-                <form asp-controller="Event" asp-action="Details" method="POST" class="form-horizontal">
-                    <div asp-validation-summary="All" class="text-danger"></div>
-                    <div class="textarea">
-                        <textarea id="commentTextArea" rows="6" cols="50"></textarea>
-                    </div>
-                </form>
-                
-                
-                
-                
-                
-
-                
-                
-                
-                
-
-
-                <div class="row">
-
-                        <div class="col-sm-2 text-center">
-                            <img src="~/images/kisspng-user-interface-design-computer-icons-default-stephen-salazar-photography-5b1462e1b19d70.1261504615280626897275.jpg" class="img-circle" height="65" width="65" alt="Avatar">
-
-                            @*<img class="editable img-responsive" alt="Avatar" id="avatar-2" src="~/images/@dummy2.DbRecord.UserPicture" />*@
-                        </div>
-
-                        <div class="col-sm-10">
-
-                            @*<h4>@dummy2.DbRecord.UserName*@ 
-                            @*<small>@dummy2.DbRecord.CommentAddTime </small></h4>*@
-
-                            @*<p> @dummy2.DbRecord.CommentText </p>*@
-
-                            <br>
+                            </h4>
 
                         </div>
 
 
 
+                        <div class="widget-body">
 
+                            <div class="widget-main">
 
+                                <p>
+                                    <form id="commentTextArea">
+                                        <textarea rows="6" cols="50" name="comment" form ="commentTextArea"></textarea>
+                                    </form>
 
-                        @*@*todo siin edasi on näide kuidas peab olema subcommentiga*@
-
-                        <div class="col-sm-2 text-center">
-
-                            <img src="~/images/64f66209-b7f4-41a4-afc8-dc8d8814064c/a170511b-45d6-4fc7-9b4a-0607ecf776b5.jpg" class="img-circle" height="65" width="65" alt="Avatar">
-
-                        </div>
-
-                        <div class="col-sm-10">
-
-                            <h4>Hermy G <small>Sep 25, 2018, 8:25 PM</small></h4>
-
-                            <p>I am so happy for....</p>
-
-                            <br>
-
-
-
-                            <div class="row">
-
-                                <div class="col-sm-2 text-center">
-
-                                    <img src="~/images/1e8ff29d-969f-4609-acc5-0c15124e0433/41d699bd-8fe0-45e3-970b-2bb5df557d53.jpg" class="img-circle" height="65" width="65" alt="Avatar">
-
-                                </div>
-
-                                <div class="col-xs-10">
-
-                                    <h4>Pansy Parkinson <small>Sep 25, 2018, 8:28 PM</small></h4>
-
-                                    <p>Me too! WOW!</p>
-
-                                    <br>
-
-                                </div>
+                                </p>
 
                             </div>
 
                         </div>
 
-                    </div>
-              
+                        <h2></h2>
+
+                        <a href="@Url.Action("AddComment", "Event", new {id = Model.ID})" class="btn btn-sm btn-block btn-primary">
+                            <span class="bigger-110">Add Comments</span>
+                        </a>
 
 
+
+                        <h2></h2>
+
+                    </div>*@
+
+                @*@if (dummy3 > 0)*@
+
+
+
+                    <form asp-controller="Event" asp-action="CreateNewComment" asp-route-id="@dummy.ID" method="POST" class="form-horizontal">
+                        <label>Comments</label>
+                        <br/>
+                        <label>Subject:</label>
+                        <input type="text" name="subject" />
+                        <br/>
+                        <label>Email:</label>
+                        <input type="text" name="email" />
+                        <br />
+                        <textarea name="commentText" rows="6" cols="50"></textarea>
+                        <br />
+                        <input type="submit" value="Add Comment" />
+                </form> 
+                
+                
+
+                <div id="home" class="tab-pane in active">
+
+                        <table cellspacing="0">
+                            <body>                
+                            <tbody>    
+                            @foreach (var item in Model.CommentProfileViewModel)
+                            {
+                                <tr class="clickable-row">
+                                    <td>                                            <span class="event-picture">
+                                        <img class="editable img-responsive" alt="Avatar" id="avatar-2"
+                                             src="~/images/@item.ID/@item.Image" />
+                                    </span>
+                                        </td>
+                                    <td> @Html.DisplayFor(modelItem => item.Name) </td>
+                                    <td> @Html.DisplayFor(modelItem => item.Subject) </td>
+                                    <td> @Html.DisplayFor(modelItem => item.CommentAddTime) </td>
+                                    <td> @Html.DisplayFor(modelItem => item.CommentText) </td>
+                                    <td> @Html.DisplayFor(modelItem => item.Email) </td>
+                                </tr>
+                                
+                            }
+                                
+                                </tbody>
+                            </body>
+                        </table>
+                </div>
 
             </div>
         </div>
@@ -284,39 +241,3 @@
     </div><!-- /#home -->
 </div>
 
-@*<script>
-        function myFunction() {
-            var change = document.getElementById("Register");
-            if (change.innerHTML == "Register") {
-                document.getElementById("Register").hide();
-                document.getElementById("Unregister").show();
-
-            }
-            else {
-
-                document.getElementById("Unregister").hide();
-                document.getElementById("Register").show();
-            }
-
-            return window.location.href ='@Url.Action("Register", "Event", new {id = Model.ID})';
-        }
-    </script>*@
-
-@* <button type="button" id="Unregister" display="hide" onclick="myFunction()">Unregister</button>*@
-
-@*<script>
-        var change = document.getElementById("toggle");
-
-        change.addEventListener("load", textChange());
-    </script>
-
-    <script>
-    function textChange() {
-            var text = document.getElementById("toggle");
-            if (isObjectPresent == null) {
-                text.value = "REGISTER";
-            } else {
-                text.value = "UNREGISTER";
-            }
-        }
-    </script>*@
