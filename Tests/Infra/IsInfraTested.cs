@@ -28,5 +28,12 @@ namespace Tests.Infra
         {
             isAllClassesTested(assembly, Namespace("Attending"));
         }
+
+
+        [TestMethod]
+        public void IsCommentTested()
+        {
+            isAllClassesTested(assembly, Namespace("Comment"));
+        }
     }
 }

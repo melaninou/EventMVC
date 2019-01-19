@@ -29,11 +29,24 @@ namespace Tests.Domain
             isAllClassesTested(assembly, Namespace("Profile"));
         }
         
-
         [TestMethod]
         public void IsAttendingTested()
         {
             isAllClassesTested(assembly, Namespace("Attending"));
+        }
+
+
+        [TestMethod]
+        public void IsCommentTested()
+        {
+            isAllClassesTested(assembly, Namespace("Comment"));
+        }
+
+
+        [TestMethod]
+        public void IsCommentsProfilesTested()
+        {
+            isAllClassesTested(assembly, Namespace("CommentsProfiles"));
         }
     }
 }

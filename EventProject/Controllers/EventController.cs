@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace EventProject.Controllers
 {
-    public class EventController : Controller
+    public class EventController : Controller, IEventProjectController
     {
         public const string properties = "ID, Name, Date, Type, Description, Location, Organizer, EventImage";
         public const string propertie = "CommentText";
@@ -354,7 +354,7 @@ namespace EventProject.Controllers
             return uniqueID;
         }
 
-        public string GetCurrentUserID()
+        private string GetCurrentUserID()
         {
             return _userManager.GetUserId(HttpContext.User).ToString();
         }

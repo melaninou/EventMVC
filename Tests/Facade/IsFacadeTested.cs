@@ -28,5 +28,11 @@ namespace Tests.Facade
         {
             isAllClassesTested(assembly, Namespace("Profile"));
         }
+
+        [TestMethod]
+        public void IsCommentTested()
+        {
+            isAllClassesTested(assembly, Namespace("Comment"));
+        }
     }
 }
