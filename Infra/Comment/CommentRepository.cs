@@ -7,6 +7,7 @@ using Domain.Profile;
 using System.Threading.Tasks;
 using Core;
 using Data.Comment;
+using Domain.CommentsProfiles;
 using Microsoft.EntityFrameworkCore;
 using Open.Infra;
 
@@ -30,7 +31,7 @@ namespace Infra.Comment
         }
         protected internal override PaginatedList<CommentsProfileObject> createList(List<CommentsProfileDbRecord> l, RepositoryPage p)
         {
-            return new CommentProfilesObjectsList(l, p);
+            return new CommentsProfileObjectsList(l, p);
         }
         public Task<CommentObject> GetObject(string id)
         {

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using Core;
-using Domain.Comment;
+using Domain.CommentsProfiles;
 using Facade.Common;
 using Facade.Event;
 

@@ -6,6 +6,7 @@ using Core;
 using Data;
 using Domain.Attending;
 using Domain.Comment;
+using Domain.CommentsProfiles;
 using Domain.Event;
 using Domain.Profile;
 using EventProject.Hubs;
@@ -28,7 +29,7 @@ namespace EventProject.Controllers
         private readonly IProfileObjectsRepository _profileRepository;
         private readonly IAttendingObjectsRepository _attendingRepository;
 
-        private readonly ICommentProfilesObjectsRepository _commentProfileRepository;
+        private readonly ICommentsProfileObjectsRepository _commentProfileRepository;
         private readonly ICommentObjectsRepository _commentRepository;
 
         private readonly UserManager<IdentityUser> _userManager;
@@ -38,7 +39,7 @@ namespace EventProject.Controllers
        
         public EventController(IEventObjectsRepository repository, UserManager<IdentityUser> userManager,
             IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository, IImageHandler imageHandler, 
-            IHubContext<CalendarHub> hubContext, ICommentProfilesObjectsRepository commentProfilesRepository, ICommentObjectsRepository commentRepository)
+            IHubContext<CalendarHub> hubContext, ICommentsProfileObjectsRepository commentProfilesRepository, ICommentObjectsRepository commentRepository)
         {
             _userManager = userManager;
             _profileRepository = profileRepository;
@@ -295,8 +296,6 @@ namespace EventProject.Controllers
         {
             return _userManager.GetUserId(HttpContext.User).ToString();
         }
-
-
 
         public async Task<IActionResult> Calendar()
         {

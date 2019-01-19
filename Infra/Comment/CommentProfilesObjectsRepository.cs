@@ -6,11 +6,12 @@ using Data;
 using Data.Comment;
 using Domain.Attending;
 using Domain.Comment;
+using Domain.CommentsProfiles;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Comment
 {
-   public class CommentProfilesObjectsRepository : ICommentProfilesObjectsRepository
+   public class CommentProfilesObjectsRepository : ICommentsProfileObjectsRepository
    {
        internal readonly DbSet<CommentsProfileDbRecord> dbSet;
        private readonly DbContext db;

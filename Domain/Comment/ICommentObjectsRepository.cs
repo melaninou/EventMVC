@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Core;
+﻿using Core;
+using Domain.CommentsProfiles;
 using Domain.Profile;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Domain.Comment
 {

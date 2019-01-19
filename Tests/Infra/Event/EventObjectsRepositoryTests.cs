@@ -43,13 +43,16 @@ namespace Tests.Infra.Event
             Assert.IsNotNull(new EventObjectsRepository(null));
         }
 
-        //todo
-        /*[TestMethod]
-        public async Task GetEventListTest()
+        [TestMethod]
+        public void GetOrganizerEventsListTest()
         {
-            var l = await repository.GetEventList();
-            Assert.AreEqual(count, l.Count);
-        }*/
-        
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
+        public void GetRecent5ObjectsListTest()
+        {
+            Assert.Inconclusive();
+        }
     }
 }

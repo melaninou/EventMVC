@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Data;
 using Data.Comment;
 
-namespace Domain.Comment
+namespace Domain.CommentsProfiles
 {
     public static class CommentsProfileObjectFactory
     {

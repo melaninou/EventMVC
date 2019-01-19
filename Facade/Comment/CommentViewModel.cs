@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core;
 using Facade.Common;
-using Facade.Event;
 
 namespace Facade.Comment
 {

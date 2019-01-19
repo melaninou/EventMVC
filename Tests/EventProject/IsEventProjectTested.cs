@@ -16,11 +16,6 @@ namespace Tests.EventProject
         {
             isAllClassesTested(assembly, Namespace("Controllers"));
         }
-        [TestMethod]
-        public void IsExtensionsTested()
-        {
-            isAllClassesTested(assembly, Namespace("Extensions"));
-        }
 
         [TestMethod]
         public void IsModelsTested()

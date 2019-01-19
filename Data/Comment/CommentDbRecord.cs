@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Data.Common;
+﻿using Data.Common;
 
 namespace Data.Comment
 {

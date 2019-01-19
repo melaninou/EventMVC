@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Data;
+﻿using Data;
 using Data.Comment;
+using Domain.CommentsProfiles;
 using Domain.Event;
 
 namespace Domain.Comment
