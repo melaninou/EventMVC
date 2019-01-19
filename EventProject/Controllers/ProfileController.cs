@@ -44,6 +44,16 @@ namespace EventProject.Controllers
         }
 
         [Authorize]
+        public async Task<IActionResult> FindFriends()
+        {
+            var l = await repository.GetObjectsList();
+            //ProfileViewModel allProfiles = new ProfileViewModel();
+            //allProfiles = await repository.GetObjectsList();
+
+            return View(new ProfileViewModelsList(l));
+        }
+
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -106,11 +116,22 @@ namespace EventProject.Controllers
         }
 
 
-        [Authorize]
+        /*[Authorize]
         public async Task<IActionResult> Details()
         {
             var currentUser = await repository.GetObject(GetCurrentUserId());     
             return View(ProfileViewModelFactory.Create(currentUser));
+        }*/
+
+        [Authorize]
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                id = GetCurrentUserId();
+            }
+            var otherUser = await repository.GetObject(id);
+            return View(ProfileViewModelFactory.Create(otherUser));
         }
 
         [Authorize]

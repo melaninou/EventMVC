@@ -10,7 +10,11 @@ namespace Infra.Profile
     public class ProfileObjectsRepository : ObjectsRepository<ProfileObject, ProfileDbRecord>,
         IProfileObjectsRepository
     {
-        public ProfileObjectsRepository(EventProjectDbContext c) : base(c?.Profiles, c) { }
+        private readonly DbSet<ProfileDbRecord> dbSet;
+        public ProfileObjectsRepository(EventProjectDbContext c) : base(c?.Profiles, c)
+        {
+            dbSet = c?.Profiles;
+        }
 
         protected internal override ProfileObject createObject(ProfileDbRecord r)
         {

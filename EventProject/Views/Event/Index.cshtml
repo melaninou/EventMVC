@@ -1,12 +1,10 @@
-﻿
-@using Core
+﻿@using Core
 @using Domain.Profile
 @using EventProject.Extensions
 @model Facade.Event.AllEventsViewModel
 
 
 @{
-    @*ViewData["Title"] = "Events";*@
     Layout = "_IndexPartial";
     var userName = ViewData["userRealName"] as PaginatedList<ProfileObject>;
 }
@@ -37,7 +35,7 @@
 
 <div class="tab-content">
     <div id="events" class="tab-pane fade in active">
-        <div id="Events" class="tabcontent">
+        <div id="Events">
             <div class="tab-content no-border padding-24">
                 <div id="home" class="tab-pane in active">
                     <table cellspacing="0">
@@ -81,8 +79,7 @@
     </div>
 
     <div id="myEvents" class="tab-pane fade">
-        <h3>My events</h3>
-        <div id="myEvents" class="tabcontent">
+        <div id="myEvents">
             <div class="tab-content no-border padding-24">
                 <div id="home" class="tab-pane in active">
                     <table cellspacing="0">
@@ -126,7 +123,7 @@
     </div>
 
     <div id="myOrganizedEvents" class="tab-pane fade">
-        <div id="myOrganizedEvents" class="tabcontent">
+        <div id="myOrganizedEvents">
             <div class="tab-content no-border padding-24">
                 <div id="home" class="tab-pane in active">
                     <table cellspacing="0">

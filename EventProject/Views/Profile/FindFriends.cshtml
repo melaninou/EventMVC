@@ -1,0 +1,58 @@
+﻿@using Core
+@using Domain.Profile
+@using EventProject.Extensions
+@model Core.IPaginatedList<Facade.Profile.ProfileViewModel>
+
+@{
+    Layout = "_IndexPartial";
+}
+
+<style type="text/css">
+    .clickable-row {
+        /*display: block;*/
+        cursor: pointer;
+    }
+</style>
+<style type="text/css">
+    .clickable-row:hover {
+        background: #ffcea1 !important;
+        background: transparent;
+    }
+</style>
+
+<head>
+    <link rel="stylesheet" href="css/table-events.css" type="text/css" MEDIA=screen />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="\js\clickable-row.js"></script>
+</head>
+
+<table class="table">
+    <body>
+        @{ var dummy = Model.FirstOrDefault();}
+        <thead>
+            <tr>
+                @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.ProfileImage)
+                @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
+                @Html.SortColumnHeaderFor(ViewData["SortType"], model => dummy.Occupation)
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="clickable-row" data-href="@Url.Action("Details", "Profile", new {@id = item.ID})">
+                    <td>
+                        <span class="event-picture">
+                            <img class="editable img-responsive" alt="Avatar" id="avatar-2"
+                                 src="~/images/@item.ID/@item.ProfileImage" />
+                        </span>
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Occupation)</td>
+                </tr>
+            }
+        </tbody>
+    </body>
+</table>
+
+
