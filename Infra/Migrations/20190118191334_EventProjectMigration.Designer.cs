@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(EventProjectDbContext))]
-    [Migration("20190109143024_EventProject")]
-    partial class EventProject
+    [Migration("20190118191334_EventProjectMigration")]
+    partial class EventProjectMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,47 @@ namespace Infra.Migrations
                     b.HasIndex("ProfileID");
 
                     b.ToTable("EventProfile");
+                });
+
+            modelBuilder.Entity("Data.Comment.CommentDbRecord", b =>
+                {
+                    b.Property<string>("EventID");
+
+                    b.Property<string>("CommentID");
+
+                    b.HasKey("EventID", "CommentID");
+
+                    b.HasIndex("CommentID");
+
+                    b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("Data.Comment.CommentsProfileDbRecord", b =>
+                {
+                    b.Property<string>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CommentAddTime");
+
+                    b.Property<string>("CommentText");
+
+                    b.Property<string>("Location");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("ProfileID");
+
+                    b.Property<string>("ProfilesID");
+
+                    b.Property<string>("UserName");
+
+                    b.Property<string>("UserPicture");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ProfilesID");
+
+                    b.ToTable("CommentsProfile");
                 });
 
             modelBuilder.Entity("Data.EventDbRecord", b =>
@@ -93,6 +134,26 @@ namespace Infra.Migrations
                         .WithMany()
                         .HasForeignKey("ProfileID")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Data.Comment.CommentDbRecord", b =>
+                {
+                    b.HasOne("Data.Comment.CommentsProfileDbRecord", "CommentsProfile")
+                        .WithMany()
+                        .HasForeignKey("CommentID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Data.EventDbRecord", "Events")
+                        .WithMany()
+                        .HasForeignKey("EventID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Data.Comment.CommentsProfileDbRecord", b =>
+                {
+                    b.HasOne("Data.ProfileDbRecord", "Profiles")
+                        .WithMany()
+                        .HasForeignKey("ProfilesID");
                 });
 #pragma warning restore 612, 618
         }

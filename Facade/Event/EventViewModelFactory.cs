@@ -1,4 +1,6 @@
-﻿using Domain.Event;
+﻿using Domain.Comment;
+using Domain.Event;
+using Facade.Comment;
 using Facade.Profile;
 
 namespace Facade.Event
@@ -26,5 +28,7 @@ namespace Facade.Event
             }
             return v;
         }
+        
+
     }
 }

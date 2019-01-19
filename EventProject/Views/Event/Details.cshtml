@@ -1,9 +1,9 @@
-﻿
-@using Facade.Profile
+﻿@using Facade.Profile
 @using Facade.Event
 @using Infra
 @using Infra.Attending
-@model Facade.Event.EventViewModel
+@using Infra.Comment
+@model Facade.Comment.AllCommentViewModel
 @{
     ViewData["Title"] = "Details on " + @Model.Name;
     var profiles = ViewBag.Profiles as ProfileViewModelsList ?? new ProfileViewModelsList(null);
@@ -11,15 +11,20 @@
     var profileID = Url.Action("GetCurrentUserID", "Event");
     EventProjectDbContext c = null;
     var isObjectPresent = new AttendingRepository(c).FindObject(eventID, profileID);
+    var list = new CommentRepository(c).GetCommentsList(eventID);
 }
 
+@{ var dummy = Model.EventViewModel;}
+@{ var dummy2 = Model.CommentViewModel.FirstOrDefault();}
+@{ var dummy3 = Model.CommentViewModel.Count;}
 
-<div style ="margin-top: 50px" class="tab-content no-border padding-24">
+
+<div style="margin-top: 50px" class="tab-content no-border padding-24">
     <div id="home" class="tab-pane in active">
         <div class="row">
             <div class="col-xs-12 col-sm-3 center">
                 <span class="event-picture">
-                    <img class="editable img-responsive" alt="Avatar" id="avatar-2" src="~/images/@Model.EventImage" />
+                    <img class="editable img-responsive" alt="Avatar" id="avatar-2" src="~/images/@dummy.EventImage" />
 
                 </span>
 
@@ -29,53 +34,29 @@
 
                 <div class="space space-4"></div>
 
-                @* <button type="button" id="Unregister" display="hide" onclick="myFunction()">Unregister</button>*@
 
-                @*<script>
-                    var change = document.getElementById("toggle");
-                    change.addEventListener("load", textChange());
-                </script>
-
-                <script>
-                    function textChange() {
-                        var text = document.getElementById("toggle");
-                        if (isObjectPresent == null) {
-                            text.value = "REGISTER";
-                        } else {
-                            text.value = "UNREGISTER";
-                        }
-                    }
-                </script>*@
 
                 <script>
                     function myFunction() {
-                                return window.location.href = '@Url.Action("Register", "Event", new { id = Model.ID })';
+                                return window.location.href = '@Url.Action("Register", "Event", new { id = dummy.ID })';
                             }
                 </script>
+                <h2></h2>
 
-                @*<span class="bigger-110">Register</span>*@
 
-
-                @* todo Unregister=> only after ypu register*@
-
-                @*<div></div>
-        <a href="@Url.Action("NotAttending", "Event", new {newEvent = Model.ID})" class="btn btn-sm btn-block btn-primary">
-            <span class="bigger-110">UnRegister</span>
-        </a>*@
-
-                @*todo Edit -> only if ypu create event*@
-                @*<div></div>
-        <a href="@Url.Action("Edit", "Event", new {id=Model.ID})" class="btn btn-sm btn-block btn-primary">
-            <span class="bigger-110">Edit</span>
-        </a>*@
-
+                <a href="@Url.Action("Edit", "Event", new {id = dummy.ID})" class="btn btn-sm btn-block btn-primary">
+                    <span class="bigger-110">Edit Event</span>
+                </a>
+                <a href="@Url.Action("Delete", "Event", new {id = Model.ID})" class="btn btn-sm btn-block btn-primary">
+                    <span class="bigger-110">Delete Event</span>
+                </a>
 
             </div><!-- /.col -->
 
             <div class="col-xs-12 col-sm-9">
                 <div class="row">
                     <div class="col-xs-2">
-                        <h2 class="orange">@Model.Name</h2><br /><br />
+                        <h2 class="orange">@dummy.Name</h2><br /><br />
                     </div>
                 </div>
                 <div class="row" id="info">
@@ -85,7 +66,7 @@
                                 <p>Location: </p>
                             </div>
                             <div class="col-sm-6">
-                                <p>@Model.Location</p>
+                                <p>@dummy.Location</p>
                             </div>
                         </div>
                         <div class="row">
@@ -93,7 +74,7 @@
                                 <p>Type: </p>
                             </div>
                             <div class="col-sm-6">
-                                <p>@Model.Type</p>
+                                <p>@dummy.Type</p>
                             </div>
                         </div>
                         <div class="row">
@@ -101,7 +82,7 @@
                                 <p>Date: </p>
                             </div>
                             <div class="col-sm-6">
-                                <p>@Model.Date</p>
+                                <p>@dummy.Date.ToString("dd/MM/yyyy HH:mm")</p>
                             </div>
                         </div>
                         <div class="row">
@@ -109,7 +90,7 @@
                                 <p>Organizer: </p>
                             </div>
                             <div class="col-sm-6">
-                                <p>@Model.Organizer</p>
+                                <p>@dummy.Organizer</p>
                             </div>
                         </div>
                     </div>
@@ -132,15 +113,15 @@
                     <div class="widget-body">
                         <div class="widget-main">
                             <p>
-                                @Model.Description
+                                @dummy.Description
 
                             </p>
                         </div>
                     </div>
                 </div>
-
-                @if (Model.InProfiles.Count > 0)
-                 {
+                @*todo WHO ELSE IS GOING as dropdown*@
+                @if (dummy.InProfiles.Count > 0)
+                {
                     <div class="widget-header widget-header-small">
                         <h4 class="widget-title smaller">
                             <i class="ace-icon fa fa-check-square-o bigger-110"></i>
@@ -151,7 +132,7 @@
                     <div class="widget-body">
                         <div class="widget-main">
                             <p>
-                                @foreach (var item in Model.InProfiles)
+                                @foreach (var item in dummy.InProfiles)
                                 {
                                     <tr>
                                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
@@ -160,13 +141,148 @@
                             </p>
                         </div>
                     </div>
-                 }
+                }
+               
+                @*<div class="widget-box transparent">
+
+                    <div class="widget-header widget-header-small">
+
+                        <h4 class="widget-title smaller">
+
+                            <i class="ace-icon fa fa-check-square-o bigger-110"></i>
+
+                            Comment:
+
+                        </h4>
+
+                    </div>
+
+
+
+                    <div class="widget-body">
+
+                        <div class="widget-main">
+
+                            <p>
+                                <form id="commentTextArea">
+                                    <textarea rows="6" cols="50" name="comment" form ="commentTextArea"></textarea>
+                                </form>
+                               
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <h2></h2>
+
+                    <a href="@Url.Action("AddComment", "Event", new {id = Model.ID})" class="btn btn-sm btn-block btn-primary">
+                        <span class="bigger-110">Add Comment</span>
+                    </a>
+
+
+
+                    <h2></h2>
+
+                </div>*@
+               
+                @*@if (dummy3 > 0)*@
+               
+                
+                
+                <form asp-controller="Event" asp-action="Details" method="POST" class="form-horizontal">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="textarea">
+                        <textarea id="commentTextArea" rows="6" cols="50"></textarea>
+                    </div>
+                </form>
+                
+                
+                
+                
+                
+
+                
+                
+                
+                
+
+
+                <div class="row">
+
+                        <div class="col-sm-2 text-center">
+                            <img src="~/images/kisspng-user-interface-design-computer-icons-default-stephen-salazar-photography-5b1462e1b19d70.1261504615280626897275.jpg" class="img-circle" height="65" width="65" alt="Avatar">
+
+                            @*<img class="editable img-responsive" alt="Avatar" id="avatar-2" src="~/images/@dummy2.DbRecord.UserPicture" />*@
+                        </div>
+
+                        <div class="col-sm-10">
+
+                            @*<h4>@dummy2.DbRecord.UserName*@ 
+                            @*<small>@dummy2.DbRecord.CommentAddTime </small></h4>*@
+
+                            @*<p> @dummy2.DbRecord.CommentText </p>*@
+
+                            <br>
+
+                        </div>
+
+
+
+
+
+
+                        @*@*todo siin edasi on näide kuidas peab olema subcommentiga*@
+
+                        <div class="col-sm-2 text-center">
+
+                            <img src="~/images/64f66209-b7f4-41a4-afc8-dc8d8814064c/a170511b-45d6-4fc7-9b4a-0607ecf776b5.jpg" class="img-circle" height="65" width="65" alt="Avatar">
+
+                        </div>
+
+                        <div class="col-sm-10">
+
+                            <h4>Hermy G <small>Sep 25, 2018, 8:25 PM</small></h4>
+
+                            <p>I am so happy for....</p>
+
+                            <br>
+
+
+
+                            <div class="row">
+
+                                <div class="col-sm-2 text-center">
+
+                                    <img src="~/images/1e8ff29d-969f-4609-acc5-0c15124e0433/41d699bd-8fe0-45e3-970b-2bb5df557d53.jpg" class="img-circle" height="65" width="65" alt="Avatar">
+
+                                </div>
+
+                                <div class="col-xs-10">
+
+                                    <h4>Pansy Parkinson <small>Sep 25, 2018, 8:28 PM</small></h4>
+
+                                    <p>Me too! WOW!</p>
+
+                                    <br>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+              
+
+
+
             </div>
         </div>
+
+
     </div><!-- /#home -->
 </div>
-
-
 
 @*<script>
         function myFunction() {
@@ -183,5 +299,24 @@
             }
 
             return window.location.href ='@Url.Action("Register", "Event", new {id = Model.ID})';
+        }
+    </script>*@
+
+@* <button type="button" id="Unregister" display="hide" onclick="myFunction()">Unregister</button>*@
+
+@*<script>
+        var change = document.getElementById("toggle");
+
+        change.addEventListener("load", textChange());
+    </script>
+
+    <script>
+    function textChange() {
+            var text = document.getElementById("toggle");
+            if (isObjectPresent == null) {
+                text.value = "REGISTER";
+            } else {
+                text.value = "UNREGISTER";
+            }
         }
     </script>*@

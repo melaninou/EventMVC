@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infra.Migrations
 {
-    public partial class EventProject : Migration
+    public partial class EventProjectMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,31 @@ namespace Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CommentsProfile",
+                columns: table => new
+                {
+                    Name = table.Column<string>(nullable: true),
+                    Location = table.Column<string>(nullable: true),
+                    ID = table.Column<string>(nullable: false),
+                    CommentAddTime = table.Column<DateTime>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
+                    UserPicture = table.Column<string>(nullable: true),
+                    CommentText = table.Column<string>(nullable: true),
+                    ProfileID = table.Column<string>(nullable: true),
+                    ProfilesID = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommentsProfile", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_CommentsProfile_Profiles_ProfilesID",
+                        column: x => x.ProfilesID,
+                        principalTable: "Profiles",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EventProfile",
                 columns: table => new
                 {
@@ -67,6 +92,40 @@ namespace Infra.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
+                    EventID = table.Column<string>(nullable: false),
+                    CommentID = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => new { x.EventID, x.CommentID });
+                    table.ForeignKey(
+                        name: "FK_Comment_CommentsProfile_CommentID",
+                        column: x => x.CommentID,
+                        principalTable: "CommentsProfile",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comment_Events_EventID",
+                        column: x => x.EventID,
+                        principalTable: "Events",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_CommentID",
+                table: "Comment",
+                column: "CommentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CommentsProfile_ProfilesID",
+                table: "CommentsProfile",
+                column: "ProfilesID");
+
             migrationBuilder.CreateIndex(
                 name: "IX_EventProfile_ProfileID",
                 table: "EventProfile",
@@ -76,7 +135,13 @@ namespace Infra.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Comment");
+
+            migrationBuilder.DropTable(
                 name: "EventProfile");
+
+            migrationBuilder.DropTable(
+                name: "CommentsProfile");
 
             migrationBuilder.DropTable(
                 name: "Events");

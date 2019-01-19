@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Data;
+using Data.Comment;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infra
@@ -17,6 +18,12 @@ namespace Infra
 
         public DbSet<AttendingDbRecord> EventsProfiles { get; set; }
 
+        public DbSet<CommentsProfileDbRecord> CommentsProfile { get; set; }
+
+        public DbSet<CommentDbRecord> Comment { get; set; }
+
+       
+
         protected override void OnModelCreating(ModelBuilder b)
         {
             base.OnModelCreating(b);
@@ -25,8 +32,24 @@ namespace Infra
             createProfilesTable(b);
             createEventsTable(b);
             createEventProfileTable(b);
+            createCommentsProfileTable(b);
+            createCommentToTable(b);
         }
 
+        internal static void createCommentToTable(ModelBuilder b)
+        {
+            const string table = "Comment";
+
+            createPrimaryKey<CommentDbRecord>(b, table, a => new { a.EventID, a.CommentID });
+            createForeignKey<CommentDbRecord, EventDbRecord>(b, table, x => x.EventID, x => x.Events);
+            createForeignKey<CommentDbRecord, CommentsProfileDbRecord>(b, table, x => x.CommentID, x => x.CommentsProfile);
+        }
+        internal static void createCommentsProfileTable(ModelBuilder b)
+        {
+            const string table = "CommentsProfile";
+            b.Entity<CommentsProfileDbRecord>().ToTable(table);
+
+        }
         internal static void createEventsTable(ModelBuilder b)
         {
             const string table = "Events";
@@ -43,7 +66,8 @@ namespace Infra
         internal static void createEventProfileTable(ModelBuilder b)
         {
             const string table = "EventProfile";
-            createPrimaryKey<AttendingDbRecord>(b, table, a => new {a.EventID, a.ProfileID});
+
+            createPrimaryKey<AttendingDbRecord>(b, table, a => new { a.EventID, a.ProfileID });
             createForeignKey<AttendingDbRecord, EventDbRecord>(b, table, x => x.EventID, x => x.Events);
             createForeignKey<AttendingDbRecord, ProfileDbRecord>(b, table, x => x.ProfileID, x => x.Profiles);
         }

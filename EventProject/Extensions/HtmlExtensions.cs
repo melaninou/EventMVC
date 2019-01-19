@@ -57,21 +57,22 @@ namespace EventProject.Extensions
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TResult>> expression)
         {
-            string edit = "Edit";
-            string details = "Details";
-            string delete = "Delete";
-            var index = htmlHelper.ValueFor(expression);
-            var htmlStrings = new List<object>
-            {
-                new HtmlString("<th>"),
-                htmlHelper.ActionLink("Edit", edit, new {id = index}),
-                new HtmlString(" | "),
-                htmlHelper.ActionLink("Details", details, new {id = index}),
-                new HtmlString(" | "),
-                htmlHelper.ActionLink("Delete", delete, new {id = index}),
-                new HtmlString("</th>")
-            };
-            return new HtmlContentBuilder(htmlStrings);
+            //string edit = "Edit";
+            //string details = "Details";
+            //string delete = "Delete";
+            //var index = htmlHelper.ValueFor(expression);
+            //var htmlStrings = new List<object>
+            //{
+            //    new HtmlString("<th>"),
+            //    htmlHelper.ActionLink("Edit", edit, new {id = index}),
+            //    new HtmlString(" | "),
+            //    htmlHelper.ActionLink("Details", details, new {id = index}),
+            //    new HtmlString(" | "),
+            //    htmlHelper.ActionLink("Delete", delete, new {id = index}),
+            //    new HtmlString("</th>")
+            //};
+            //return new HtmlContentBuilder(htmlStrings);
+            return null;
         }
 
     }

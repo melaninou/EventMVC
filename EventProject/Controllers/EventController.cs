@@ -5,9 +5,11 @@ using Aids;
 using Core;
 using Data;
 using Domain.Attending;
+using Domain.Comment;
 using Domain.Event;
 using Domain.Profile;
 using EventProject.Hubs;
+using Facade.Comment;
 using Facade.Event;
 using Infra;
 using Infra.Attending;
@@ -28,13 +30,17 @@ namespace EventProject.Controllers
         private readonly IProfileObjectsRepository _profileRepository;
         private readonly IAttendingObjectsRepository _attendingRepository;
 
+        private readonly ICommentProfilesObjectsRepository _commentProfileRepository;
+        private readonly ICommentObjectsRepository _commentRepository;
+
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IImageHandler _imageHandler;
         private readonly IHubContext<CalendarHub> _hubContext;
 
-
+       
         public EventController(IEventObjectsRepository repository, UserManager<IdentityUser> userManager,
-            IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository, IImageHandler imageHandler, IHubContext<CalendarHub> hubContext)
+            IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository, IImageHandler imageHandler, 
+            IHubContext<CalendarHub> hubContext, ICommentProfilesObjectsRepository commentProfilesRepository, ICommentObjectsRepository commentRepository)
         {
             _userManager = userManager;
             _profileRepository = profileRepository;
@@ -42,9 +48,12 @@ namespace EventProject.Controllers
             _attendingRepository = attendingRepository;
             _imageHandler = imageHandler;
             _hubContext = hubContext;
+            _commentProfileRepository = commentProfilesRepository;
+            _commentRepository = commentRepository;
         }
 
-
+        
+        
         public async Task<IActionResult> Index(string sortOrder = null,
             string searchString = null, int? page = null, string currentFilter = null)
         {
@@ -65,7 +74,7 @@ namespace EventProject.Controllers
             _eventRepository.PageIndex = page ?? 1;
 
             var testimine = await _attendingRepository.GetUserEventsList(GetCurrentUserID());
-            
+
             var l = await _eventRepository.GetObjectsList();
                 return View(new EventViewModelsList(l));
         }
@@ -111,8 +120,6 @@ namespace EventProject.Controllers
             var currentEventObject = await _eventRepository.GetObject(id);
             var organizatorObject = await _profileRepository.GetObject(currentEventObject.DbRecord.Organizer);
             var organizatorName = organizatorObject.DbRecord.Name;
-            //var currentUserName = GetCurrentUserName();
-            //var organizatorName =GetOrgName(id);
 
             if (currentUserName == organizatorName)
             {
@@ -134,7 +141,7 @@ namespace EventProject.Controllers
             var o = await _eventRepository.GetObject(c.ID);
 
             string fileName = o.DbRecord.EventImage;
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\" + /*GetCurrentUserID(),*/ fileName);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\" +  fileName);
             var isCorrectImage = await _imageHandler.UploadImage(avatarFile, path);
 
             if (!isCorrectImage) return View(c);
@@ -149,7 +156,6 @@ namespace EventProject.Controllers
             await _eventRepository.UpdateObject(o);
             return RedirectToAction(nameof(Index));
         }
-
         public async Task<IActionResult> Details(string id)
         {
             var currentEventObject = await _eventRepository.GetObject(id);
@@ -159,9 +165,20 @@ namespace EventProject.Controllers
 
             await _attendingRepository.LoadProfiles(currentEventObject);
 
-            return View(EventViewModelFactory.Create(currentEventObject));
+            AllCommentViewModel allComments = new AllCommentViewModel();
+            allComments.EventViewModel = EventViewModelFactory.Create(currentEventObject);
+            allComments.CommentViewModel = await _commentRepository.GetCommentsList(id);
+
+            return View(allComments);
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> Details(string id, [Bind(properties)] CommentViewModel c)
+        //{
+        //    if (!ModelState.IsValid) return c;
+        //    var commentObject = await _commentProfileRepository.GetObject(c.ID); //saan comment objekti
+
+        //}
         [Authorize]
         public async Task<IActionResult> Delete(string id)
         {
@@ -172,8 +189,6 @@ namespace EventProject.Controllers
             var currentEventObject = await _eventRepository.GetObject(id);
             var organizatorObject = await _profileRepository.GetObject(currentEventObject.DbRecord.Organizer);
             var organizatorName = organizatorObject.DbRecord.Name;
-            //var currentUserName = GetCurrentUserName();
-            //var organizatorName =GetOrgName(id);
             if (currentUserName == organizatorName)
             {
                 var c = await _eventRepository.GetObject(id);
@@ -275,26 +290,68 @@ namespace EventProject.Controllers
             return _userManager.GetUserId(HttpContext.User).ToString();
         }
 
-        private async Task<string> GetCurrentUserName()
-        {
-            string id = GetCurrentUserID();
-            var currentUserObject = await _profileRepository.GetObject(id);
-            var currentUserName = currentUserObject.DbRecord.Name;
-            return currentUserName;
-        }
 
-        private async Task<string> GetOrgName(string id)
-        {
-            var currentEventObject = await _eventRepository.GetObject(id);
-            var organizatorObject = await _profileRepository.GetObject(currentEventObject.DbRecord.Organizer);
-            var organizatorName = organizatorObject.DbRecord.Name;
-            return organizatorName;
-        }
 
         public async Task<IActionResult> Calendar()
         {
             var l = await _eventRepository.GetObjectsList();
             return View(new EventViewModelsList(l));
         }
+
+        public async Task<IActionResult> AddComment(string id)
+        {
+            await CreateComment(id);
+            return RedirectToAction(nameof(Details));
+        }
+
+        public async Task CreateComment(string eventID)
+        {
+            var userName = GetCurrentUserName();
+            var userImage = GetCurrentUserImage();
+       
+            var o = CommentsProfileObjectFactory.Create(GetUniqueID(), userName.ToString(), GetTime(),
+                userImage.ToString(), GetTextFromTextBox(eventID), GetCurrentUserID());
+            await _commentProfileRepository.AddObject(o);
+        }
+
+        private async Task<string> GetCurrentUserImage()
+        {
+            string currentUserID = GetCurrentUserID();
+            var obj = await _profileRepository.GetObject(currentUserID);
+            var currentUserImage = obj.DbRecord.ProfileImage;
+            return currentUserImage;
+        }
+
+        private DateTime GetTime()
+        {
+            DateTime time = DateTime.Now;
+            return time;
+        }
+
+        private string GetTextFromTextBox(string id)
+        {
+            string comment = Request.Form["commentTextArea"];
+            return comment;
+        }
+
+        private async Task<string> GetCurrentUserName()
+        {
+            string id = GetCurrentUserID();
+            var currentUserObject = await _profileRepository.GetObject(id);
+            var currentUserName = currentUserObject.DbRecord.Name;
+           
+            return currentUserName;
+        }
     }
-}
+}     
+
+
+
+
+        //private async Task<string> GetOrgName(string id)
+        //{
+        //    var currentEventObject = await _eventRepository.GetObject(id);
+        //    var organizatorObject = await _profileRepository.GetObject(currentEventObject.DbRecord.Organizer);
+        //    var organizatorName = organizatorObject.DbRecord.Name;
+        //    return organizatorName;
+        //}
