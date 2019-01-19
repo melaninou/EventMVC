@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace EventProject.Controllers
 {
-    public class EventController : Controller
+    public class EventController : Controller, IEventProjectController
     {
         public const string properties = "ID, Name, Date, Type, Description, Location, Organizer, EventImage";
 
@@ -291,7 +291,7 @@ namespace EventProject.Controllers
             return uniqueID;
         }
 
-        public string GetCurrentUserID()
+        private string GetCurrentUserID()
         {
             return _userManager.GetUserId(HttpContext.User).ToString();
         }
@@ -310,7 +310,7 @@ namespace EventProject.Controllers
             return RedirectToAction(nameof(Details));
         }
 
-        public async Task CreateComment(string eventID)
+        private async Task CreateComment(string eventID)
         {
             var userName = GetCurrentUserName();
             var userImage = GetCurrentUserImage();

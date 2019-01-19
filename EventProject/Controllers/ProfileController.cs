@@ -8,13 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Core;
 using Microsoft.AspNetCore.Http;
-
-
-
-
 namespace EventProject.Controllers
 {
-    public class ProfileController : Controller
+    public class ProfileController : Controller, IEventProjectController
     {
         private IProfileObjectsRepository repository;
         public const string properties = "ID, Name, Location, Gender, BirthDay, Location, Occupation, AboutText, ProfileImage";
@@ -51,6 +47,14 @@ namespace EventProject.Controllers
             //allProfiles = await repository.GetObjectsList();
 
             return View(new ProfileViewModelsList(l));
+        }
+
+        public Task<IActionResult> Index(string sortOrder = null, 
+            string searchString = null, 
+            int? page = null, 
+            string currentFilter = null)
+        {
+            throw new NotImplementedException();
         }
 
         [Authorize]
@@ -127,7 +131,7 @@ namespace EventProject.Controllers
         }
 
         [Authorize]
-        public ActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             return View();
         }
