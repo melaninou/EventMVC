@@ -94,6 +94,30 @@ namespace Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Followings",
+                columns: table => new
+                {
+                    UserID = table.Column<string>(nullable: false),
+                    FollowedUserID = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Followings", x => new { x.UserID, x.FollowedUserID });
+                    table.ForeignKey(
+                        name: "FK_Followings_Profiles_FollowedUserID",
+                        column: x => x.FollowedUserID,
+                        principalTable: "Profiles",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Followings_Profiles_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Profiles",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Comment",
                 columns: table => new
                 {
@@ -131,6 +155,11 @@ namespace Infra.Migrations
                 name: "IX_EventProfile_ProfileID",
                 table: "EventProfile",
                 column: "ProfileID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Followings_FollowedUserID",
+                table: "Followings",
+                column: "FollowedUserID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -140,6 +169,9 @@ namespace Infra.Migrations
 
             migrationBuilder.DropTable(
                 name: "EventProfile");
+
+            migrationBuilder.DropTable(
+                name: "Followings");
 
             migrationBuilder.DropTable(
                 name: "CommentsProfile");

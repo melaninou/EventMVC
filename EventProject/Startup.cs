@@ -2,6 +2,7 @@
 using Domain.Attending;
 using Domain.Comment;
 using Domain.Event;
+using Domain.Following;
 using Domain.Profile;
 using EventProject.Data;
 using EventProject.Hubs;
@@ -9,6 +10,7 @@ using Infra;
 using Infra.Attending;
 using Infra.Comment;
 using Infra.Event;
+using Infra.Following;
 using Infra.Profile;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -56,6 +58,7 @@ namespace EventProject
             services.AddScoped<IAttendingObjectsRepository, AttendingRepository>();
             services.AddScoped<ICommentProfilesObjectsRepository, CommentProfilesObjectsRepository>();
             services.AddScoped<ICommentObjectsRepository, CommentRepository>();
+            services.AddScoped<IFollowingObjectsRepository, FollowingRepository>();
 
             services.AddTransient<IImageHandler, ImageHandler>();
             services.AddTransient<IImageWriter, ImageWriter>();

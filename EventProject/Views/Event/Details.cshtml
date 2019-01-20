@@ -5,7 +5,7 @@
 @using Infra.Comment
 @model Facade.Comment.AllCommentViewModel
 @{
-    ViewData["Title"] = "Details on " + @Model.Name;
+    ViewData["Title"] = "Details of " + @Model.Name;
     var profiles = ViewBag.Profiles as ProfileViewModelsList ?? new ProfileViewModelsList(null);
     var eventID = Model.ID;
     var profileID = Url.Action("GetCurrentUserID", "Event");
@@ -125,7 +125,7 @@
                     <div class="widget-header widget-header-small">
                         <h4 class="widget-title smaller">
                             <i class="ace-icon fa fa-check-square-o bigger-110"></i>
-                            Who else is going:
+                            Who is going:
                         </h4>
                     </div>
 

@@ -296,8 +296,6 @@ namespace EventProject.Controllers
             return _userManager.GetUserId(HttpContext.User).ToString();
         }
 
-
-
         public async Task<IActionResult> Calendar()
         {
             var l = await _eventRepository.GetObjectsList();

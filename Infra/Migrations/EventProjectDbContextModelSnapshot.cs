@@ -99,6 +99,19 @@ namespace Infra.Migrations
                     b.ToTable("Events");
                 });
 
+            modelBuilder.Entity("Data.FollowingDbRecord", b =>
+                {
+                    b.Property<string>("UserID");
+
+                    b.Property<string>("FollowedUserID");
+
+                    b.HasKey("UserID", "FollowedUserID");
+
+                    b.HasIndex("FollowedUserID");
+
+                    b.ToTable("Followings");
+                });
+
             modelBuilder.Entity("Data.ProfileDbRecord", b =>
                 {
                     b.Property<string>("ID")
@@ -154,6 +167,19 @@ namespace Infra.Migrations
                     b.HasOne("Data.ProfileDbRecord", "Profiles")
                         .WithMany()
                         .HasForeignKey("ProfilesID");
+                });
+
+            modelBuilder.Entity("Data.FollowingDbRecord", b =>
+                {
+                    b.HasOne("Data.ProfileDbRecord", "FollowedUserProfile")
+                        .WithMany()
+                        .HasForeignKey("FollowedUserID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Data.ProfileDbRecord", "UserProfile")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

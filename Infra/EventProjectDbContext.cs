@@ -22,7 +22,7 @@ namespace Infra
 
         public DbSet<CommentDbRecord> Comment { get; set; }
 
-       
+        public DbSet<FollowingDbRecord> Followings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder b)
         {
@@ -34,6 +34,7 @@ namespace Infra
             createEventProfileTable(b);
             createCommentsProfileTable(b);
             createCommentToTable(b);
+            createFollowingsTable(b);
         }
 
         internal static void createCommentToTable(ModelBuilder b)
@@ -71,6 +72,16 @@ namespace Infra
             createForeignKey<AttendingDbRecord, EventDbRecord>(b, table, x => x.EventID, x => x.Events);
             createForeignKey<AttendingDbRecord, ProfileDbRecord>(b, table, x => x.ProfileID, x => x.Profiles);
         }
+
+        internal static void createFollowingsTable(ModelBuilder b)
+        {
+            const string table = "Followings";
+
+            createPrimaryKey<FollowingDbRecord>(b, table, a => new { a.UserID, a.FollowedUserID });
+            createForeignKey<FollowingDbRecord, ProfileDbRecord>(b, table, x => x.UserID, x => x.UserProfile);
+            createForeignKey<FollowingDbRecord, ProfileDbRecord>(b, table, x => x.FollowedUserID, x => x.FollowedUserProfile);
+        }
+
         internal static void createPrimaryKey<TEntity>(ModelBuilder b, string tableName,
             Expression<Func<TEntity, object>> primaryKey) where TEntity : class
         {

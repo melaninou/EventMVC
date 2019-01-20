@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Core;
+using Domain.Following;
 using Microsoft.AspNetCore.Http;
 
 
@@ -16,23 +17,26 @@ namespace EventProject.Controllers
 {
     public class ProfileController : Controller
     {
-        private IProfileObjectsRepository repository;
+        private readonly IProfileObjectsRepository _profileRepository;
+        private readonly IFollowingObjectsRepository _followingRepository;
+
         public const string properties = "ID, Name, Location, Gender, BirthDay, Location, Occupation, AboutText, ProfileImage";
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IImageHandler _imageHandler;
 
 
-        public ProfileController(IProfileObjectsRepository r, UserManager<IdentityUser> userManager, IImageHandler imageHandler)
+        public ProfileController(IProfileObjectsRepository r, IFollowingObjectsRepository followingRepository, UserManager<IdentityUser> userManager, IImageHandler imageHandler)
         {
+            _profileRepository = r;
+            _followingRepository = followingRepository;
             _userManager = userManager;
-            repository = r;
             _imageHandler = imageHandler;
         }
 
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var currentUser = await repository.GetObject(GetCurrentUserId());
+            var currentUser = await _profileRepository.GetObject(GetCurrentUserId());
             if (currentUser.DbRecord.ID == "Unspecified")
             {
                 return RedirectToAction(nameof(Create));
@@ -46,9 +50,9 @@ namespace EventProject.Controllers
         [Authorize]
         public async Task<IActionResult> FindFriends()
         {
-            var l = await repository.GetObjectsList();
+            var l = await _profileRepository.GetObjectsList();
             //ProfileViewModel allProfiles = new ProfileViewModel();
-            //allProfiles = await repository.GetObjectsList();
+            //allProfiles = await _profileRepository.GetObjectsList();
 
             return View(new ProfileViewModelsList(l));
         }
@@ -75,7 +79,7 @@ namespace EventProject.Controllers
             if (!isCorrectImage) return View(c);
 
             var o = ProfileObjectFactory.Create(GetCurrentUserId(), c.Name, c.Location, c.Gender, c.BirthDay, c.Occupation, c.AboutText, fileName);                                                       
-            await repository.AddObject(o);
+            await _profileRepository.AddObject(o);
 
             return RedirectToAction(nameof(Details)); 
         }
@@ -84,7 +88,7 @@ namespace EventProject.Controllers
         [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
-            var currentUser = await repository.GetObject(id);
+            var currentUser = await _profileRepository.GetObject(id);
             return View(ProfileViewModelFactory.Create(currentUser));
         }
 
@@ -94,7 +98,7 @@ namespace EventProject.Controllers
         public async Task<IActionResult> Edit(IFormFile avatarFile, [Bind(properties)] ProfileViewModel c)
         {
             if (!ModelState.IsValid) return View(c);
-            var o = await repository.GetObject(c.ID);
+            var o = await _profileRepository.GetObject(c.ID);
 
             string fileName = o.DbRecord.ProfileImage; 
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\" + GetCurrentUserId(), fileName);
@@ -110,7 +114,7 @@ namespace EventProject.Controllers
             o.DbRecord.AboutText = c.AboutText;
             o.DbRecord.ProfileImage = fileName;
 
-            await repository.UpdateObject(o);
+            await _profileRepository.UpdateObject(o);
 
             return RedirectToAction(nameof(Index));
         }
@@ -122,8 +126,8 @@ namespace EventProject.Controllers
             {
                 id = GetCurrentUserId();
             }
-            var otherUser = await repository.GetObject(id);
-            return View(ProfileViewModelFactory.Create(otherUser));
+            var otherUserID = await _profileRepository.GetObject(id);
+            return View(ProfileViewModelFactory.Create(otherUserID));
         }
 
         [Authorize]
@@ -132,13 +136,55 @@ namespace EventProject.Controllers
             return View();
         }
 
+        [Authorize]
+        public async Task<IActionResult> Follow(string id)
+        {
+            if (_followingRepository.FindObject(id, GetCurrentUserID()).Result == null)
+            {
+                return RedirectToAction(nameof(Following), new { id });
+            }
+            else
+            {
+                return RedirectToAction(nameof(NotFollowing), new { id });
+            }
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Following(string id)
+        {
+            await FollowOtherUser(id);
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+        [Authorize]
+        private async Task FollowOtherUser(string id)
+        {
+            string userID = GetCurrentUserID();
+            var userObject = await _profileRepository.GetObject(userID);
+            var followedUserObject = await _profileRepository.GetObject(id);
+            string followedUserID = followedUserObject.DbRecord.ID;
+            var o = FollowingObjectFactory.Create(userObject, followedUserObject, userID, followedUserID);
+            await _followingRepository.AddObject(o);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> NotFollowing(string id)
+        {
+            var o = await _followingRepository.GetObject(id, GetCurrentUserID());
+            await _followingRepository.DeleteObject(o);
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+        public string GetCurrentUserID()
+        {
+            return _userManager.GetUserId(HttpContext.User).ToString();
+        }
 
         private static string GetUniqueID()
         {
             Guid guid = Guid.NewGuid();
             return guid.ToString();          
         }
-
 
         private string GetCurrentUserId()
         {
