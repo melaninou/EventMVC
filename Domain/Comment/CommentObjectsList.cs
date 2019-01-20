@@ -1,7 +1,9 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Core;
+using Data;
 using Data.Comment;
 
 namespace Domain.Comment

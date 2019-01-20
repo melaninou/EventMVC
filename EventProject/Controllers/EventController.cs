@@ -1,12 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Aids;
+﻿using Aids;
 using Core;
 using Data;
 using Domain.Attending;
 using Domain.Comment;
-using Domain.CommentsProfiles;
+using Domain.CommentProfile;
 using Domain.Event;
 using Domain.Profile;
 using EventProject.Hubs;
@@ -18,19 +15,27 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.SignalR;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace EventProject.Controllers
 {
     public class EventController : Controller, IEventProjectController
     {
         public const string properties = "ID, Name, Date, Type, Description, Location, Organizer, EventImage";
+        public const string propertie = "CommentText";
+
 
         private readonly IEventObjectsRepository _eventRepository;
         private readonly IProfileObjectsRepository _profileRepository;
         private readonly IAttendingObjectsRepository _attendingRepository;
 
-        private readonly ICommentsProfileObjectsRepository _commentProfileRepository;
         private readonly ICommentObjectsRepository _commentRepository;
+        private readonly ICommentEventObjectsRepository _commentEventRepository;
+        private readonly ICommentProfileObjectsRepository _commentProfileRepository;
+
 
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IImageHandler _imageHandler;
@@ -39,7 +44,7 @@ namespace EventProject.Controllers
        
         public EventController(IEventObjectsRepository repository, UserManager<IdentityUser> userManager,
             IProfileObjectsRepository profileRepository, IAttendingObjectsRepository attendingRepository, IImageHandler imageHandler, 
-            IHubContext<CalendarHub> hubContext, ICommentsProfileObjectsRepository commentProfilesRepository, ICommentObjectsRepository commentRepository)
+            IHubContext<CalendarHub> hubContext, ICommentObjectsRepository commentRepository, ICommentEventObjectsRepository commentEventRepository, ICommentProfileObjectsRepository commentProfileRepository)
         {
             _userManager = userManager;
             _profileRepository = profileRepository;
@@ -47,8 +52,9 @@ namespace EventProject.Controllers
             _attendingRepository = attendingRepository;
             _imageHandler = imageHandler;
             _hubContext = hubContext;
-            _commentProfileRepository = commentProfilesRepository;
             _commentRepository = commentRepository;
+            _commentEventRepository = commentEventRepository;
+            _commentProfileRepository = commentProfileRepository;
         }
 
         [Authorize]
@@ -168,20 +174,76 @@ namespace EventProject.Controllers
 
             await _attendingRepository.LoadProfiles(currentEventObject);
 
+            List<CommentObject> newlist = new List<CommentObject>();
+            newlist = await _commentEventRepository.GetCommentsList(id);
+
+            List<CommentProfileViewModel> fullComments = new List<CommentProfileViewModel>();
+
+            foreach (var value in newlist)
+            {
+                var personId = await _commentProfileRepository.GetObjectString(value.DbRecord.ID);
+                var personObject = await _profileRepository.GetObject(personId);
+                var name = personObject.DbRecord.Name;
+                var img = personObject.DbRecord.ProfileImage;
+                
+
+                var v = new CommentProfileViewModel()
+                {
+                    ID = personId,
+                    Name = name,
+                    CommentAddTime = value.DbRecord.CommentAddTime,
+                    Subject = value.DbRecord.Name,
+                    Email = value.DbRecord.Location,
+                    CommentText = value.DbRecord.CommentText,
+                    Image = img
+                };
+                fullComments.Add(v);
+            }
+
             AllCommentViewModel allComments = new AllCommentViewModel();
             allComments.EventViewModel = EventViewModelFactory.Create(currentEventObject);
-            allComments.CommentViewModel = await _commentRepository.GetCommentsList(id);
+            allComments.CommentProfileViewModel = fullComments;
 
             return View(allComments);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Details(string id, [Bind(properties)] CommentViewModel c)
-        //{
-        //    if (!ModelState.IsValid) return c;
-        //    var commentObject = await _commentProfileRepository.GetObject(c.ID); //saan comment objekti
+        public async Task<string> GetUserName(string commentId)
+        {
+           var n =await _commentProfileRepository.GetObject(commentId);
+           var name = n.ProfileObject.DbRecord.Name;
+           return name;
 
-        //}
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CreateNewComment(string commentText, string id, string subject, string email)
+        {
+            // COMMENT
+            var commentId = GetUniqueID();
+            string currentUserId = GetCurrentUserID();
+            var o = CommentObjectFactory.Create(commentId, DateTime.Now, commentText, subject, email);
+            await _commentRepository.AddObject(o);
+
+
+            // COMMENT-EVENT
+            var eventObject = await _eventRepository.GetObject(id);
+            var commentObject = await _commentRepository.GetObject(commentId);
+
+            var ceo = CommentEventObjectFactory.Create(eventObject, commentObject, id, commentId);
+            await _commentEventRepository.AddObject(ceo);
+
+            //COMMENT-PROFILE
+            var profileObject = await _profileRepository.GetObject(currentUserId);
+
+            var cpo = CommentProfileObjectFactory.Create(commentObject, profileObject, commentId, currentUserId);
+            await _commentProfileRepository.AddObject(cpo);
+
+            return RedirectToAction(nameof(Details),new { id });
+        }
+
+
         [Authorize]
         public async Task<IActionResult> Delete(string id)
         {
@@ -297,27 +359,14 @@ namespace EventProject.Controllers
             return _userManager.GetUserId(HttpContext.User).ToString();
         }
 
+
+
         public async Task<IActionResult> Calendar()
         {
             var l = await _eventRepository.GetObjectsList();
             return View(new EventViewModelsList(l));
         }
 
-        public async Task<IActionResult> AddComment(string id)
-        {
-            await CreateComment(id);
-            return RedirectToAction(nameof(Details));
-        }
-
-        private async Task CreateComment(string eventID)
-        {
-            var userName = GetCurrentUserName();
-            var userImage = GetCurrentUserImage();
-       
-            var o = CommentsProfileObjectFactory.Create(GetUniqueID(), userName.ToString(), GetTime(),
-                userImage.ToString(), GetTextFromTextBox(eventID), GetCurrentUserID());
-            await _commentProfileRepository.AddObject(o);
-        }
 
         private async Task<string> GetCurrentUserImage()
         {
@@ -327,23 +376,14 @@ namespace EventProject.Controllers
             return currentUserImage;
         }
 
-        private DateTime GetTime()
-        {
-            DateTime time = DateTime.Now;
-            return time;
-        }
-
-        private string GetTextFromTextBox(string id)
-        {
-            string comment = Request.Form["commentTextArea"];
-            return comment;
-        }
+       
 
         private async Task<string> GetCurrentUserName()
         {
             string id = GetCurrentUserID();
             var currentUserObject = await _profileRepository.GetObject(id);
             var currentUserName = currentUserObject.DbRecord.Name;
+
            
             return currentUserName;
         }

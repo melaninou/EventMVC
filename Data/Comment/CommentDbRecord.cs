@@ -1,25 +1,34 @@
-﻿using Data.Common;
+﻿using System;
+using Data.Common;
 
 namespace Data.Comment
 {
-   public class CommentDbRecord : EmptyDbRecord
-   {
-       private string eventID;
-       private string commentID;
+    public class CommentDbRecord : BasicDbRecord
+    {
+        private DateTime commentAddTime;
+        protected string id;
+        private string commentText;
 
-       public string EventID
-       {
-           get => getString(ref eventID);
-           set => eventID = value;
-       }
 
-       public string CommentID
-       {
-           get => getString(ref commentID);
-           set => commentID = value;
-       }
+        public string ID
+        {
+            get => getString(ref id);
+            set => id = value;
+        }
 
-       public virtual EventDbRecord Events { get; set; }
-       public virtual CommentsProfileDbRecord CommentsProfile {get; set; }
+        public DateTime CommentAddTime
+        {
+            get => getValue(ref commentAddTime, ref commentAddTime);
+            set => setValue(ref commentAddTime, value);
+        }
+      
+        public string CommentText
+        {
+            get => getString(ref commentText);
+            set => commentText = value;
+        }
+
+       
+
     }
 }
