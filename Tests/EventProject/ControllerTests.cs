@@ -31,14 +31,13 @@ namespace Tests.EventProject
         {
             base.TestInitialize();
             type = typeof(TController);
-            generateRandomDbRecords();
         }
 
-        private void generateRandomDbRecords()
-        {
-            for (var i = 0; i < GetRandom.UInt8(15, 20); i++)
-                createDbRecord();
-        }
+        //private void generateRandomDbRecords()
+        //{
+        //    for (var i = 0; i < GetRandom.UInt8(15, 20); i++)
+        //        createDbRecord();
+        //}
 
         protected virtual string createDbRecord() => string.Empty;
 

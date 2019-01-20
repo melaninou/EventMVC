@@ -16,18 +16,21 @@ namespace Facade.Profile
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [Required]
         public DateTime BirthDay
         {
             get => getValue(ref birthDay, ref birthDay);
             set => setValue(ref birthDay, value);
         }
 
+        [Required]
         public string Occupation
         {
             get => getString(ref occupation);
             set => occupation = value;
         }
 
+        [Required]
         [DisplayName("Little bit about Me:")]
         public string AboutText
         {
@@ -37,10 +40,11 @@ namespace Facade.Profile
 
         public ProfileGender Gender { get; set; }
 
+        [Required]
         public string ProfileImage
         { 
             get => getString(ref profileImage);
             set => profileImage = value;
         }
-}
+    }
 }

@@ -22,24 +22,24 @@ namespace Tests.EventProject.Controllers
             controller = "profile";
             detailsViewCaption = "Profile";
         }
-        protected override string createDbRecord()
-        {
-            var r = GetRandom.Object<ProfileDbRecord>();
-            if (db.Profiles.Contains(r) == false) db.Profiles.Add(r);
-            db.SaveChanges();
-            specificStringsToTestInView = new List<string> {
-                $"{r.ID}",
-                $"{r.Name}",
-                $"{r.Location}",
-                $"{r.Gender}",
-                $"{r.BirthDay}",
-                $"{r.Occupation}",
-                $"{r.AboutText}",
-                $"{r.ProfileImage}"
-            };
-            editViewCaption = $"Profile ({r.ID})";
-            return r.ID;
-        }
+        //protected override string createDbRecord()
+        //{
+        //    var r = GetRandom.Object<ProfileDbRecord>();
+        //    if (db.Profiles.Contains(r) == false) db.Profiles.Add(r);
+        //    db.SaveChanges();
+        //    specificStringsToTestInView = new List<string> {
+        //        $"{r.ID}",
+        //        $"{r.Name}",
+        //        $"{r.Location}",
+        //        $"{r.Gender}",
+        //        $"{r.BirthDay}",
+        //        $"{r.Occupation}",
+        //        $"{r.AboutText}",
+        //        $"{r.ProfileImage}"
+        //    };
+        //    editViewCaption = $"Profile ({r.ID})";
+        //    return r.ID;
+        //}
 
         [TestMethod]
         public void IndexTest()
