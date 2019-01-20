@@ -7,7 +7,7 @@ using Tests.Domain.Common;
 namespace Tests.Domain.CommentEvent
 {
     [TestClass]
-    public class CommentEventObjectTests :DomainEmptyObjectTests<CommentEventObject,CommentEventDbRecord>
+    public class CommentEventObjectTests :DomainEmptyTests<CommentEventObject,CommentEventDbRecord>
     {
 
         protected override CommentEventObject getRandomTestObject()

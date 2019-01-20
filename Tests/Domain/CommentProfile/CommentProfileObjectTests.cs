@@ -7,7 +7,7 @@ using Tests.Domain.Common;
 namespace Tests.Domain.CommentProfile
 {
     [TestClass]
-    public class CommentProfileObjectTests : DomainEmptyObjectTests<CommentProfileObject,CommentProfileDbRecord>
+    public class CommentProfileObjectTests : DomainEmptyTests<CommentProfileObject,CommentProfileDbRecord>
     {
         protected override CommentProfileObject getRandomTestObject()
         {

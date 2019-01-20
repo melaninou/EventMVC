@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core;
-using Facade.Common;
-using Facade.Event;
+﻿using Facade.Common;
 using Facade.Profile;
+using System;
 
 namespace Facade.Comment
 {
-   public class CommentViewModel : EmptyViewModel
+    public class CommentViewModel : EmptyViewModel
    {
        private string id;
        private DateTime commentAddTime;

@@ -7,11 +7,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Tests.Facade.Comment
 {
     [TestClass]
-    public class CommentViewModelTests :ViewModelTests<CommentViewModel, EmptyViewModel>
+    public class CommentProfileViewModelTests : ViewModelTests<CommentProfileViewModel, EmptyViewModel>
     {
-        protected override CommentViewModel getRandomTestObject()
+        protected override CommentProfileViewModel getRandomTestObject()
         {
-            return GetRandom.Object<CommentViewModel>();
+            return GetRandom.Object<CommentProfileViewModel>();
         }
 
         [TestMethod]
@@ -34,6 +34,18 @@ namespace Tests.Facade.Comment
         }
 
         [TestMethod]
+        public void ImageTest()
+        {
+            testReadWriteProperty(() => obj.Image, x => obj.Image = x);
+        }
+
+        [TestMethod]
+        public void NameTest()
+        {
+            testReadWriteProperty(() => obj.Name, x => obj.Name = x);
+        }
+
+        [TestMethod]
         public void EmailTest()
         {
             testReadWriteProperty(() => obj.Email, x => obj.Email = x);
@@ -45,12 +57,6 @@ namespace Tests.Facade.Comment
             testReadWriteProperty(() => obj.CommentText, x => obj.CommentText = x);
         }
 
-        [TestMethod]
-        public void ProfileViewModelTest()
-        {
-            testReadWriteProperty(() => obj.ProfileViewModel, x => obj.ProfileViewModel = x);
-        }
+
     }
 }
-
-
