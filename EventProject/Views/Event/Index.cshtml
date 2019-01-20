@@ -49,7 +49,6 @@
                                     @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy.DbRecord.Location)
                                     @Html.SortColumnHeaderFor(ViewData["SortType"], model => dummy.DbRecord.Type)
 
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -92,9 +91,9 @@
                                     @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy2.DbRecord.Date)
                                     @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy2.DbRecord.Location)
                                     @Html.SortColumnHeaderFor(ViewData["SortType"], model => dummy2.DbRecord.Type)
-                                 
-                                    <th></th>
-                                </tr>
+
+
+</tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model.MyEventsViewModel)
@@ -137,7 +136,7 @@
                                     @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy3.DbRecord.Location)
                                     @Html.SortColumnHeaderFor(ViewData["SortType"], model => dummy3.DbRecord.Type)
 
-                                    <th></th>
+  
                                 </tr>
                             </thead>
                             <tbody>

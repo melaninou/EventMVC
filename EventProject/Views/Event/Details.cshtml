@@ -210,29 +210,49 @@
 
                 <div id="home" class="tab-pane in active">
 
-                        <table cellspacing="0">
-                            <body>                
-                            <tbody>    
-                            @foreach (var item in Model.CommentProfileViewModel)
-                            {
-                                <tr class="clickable-row">
-                                    <td>                                            <span class="event-picture">
-                                        <img class="editable img-responsive" alt="Avatar" id="avatar-2"
-                                             src="~/images/@item.ID/@item.Image" />
-                                    </span>
+                    <table cellspacing="0">
+                        <body>
+                            <tbody>
+                                @foreach (var item in Model.CommentProfileViewModel)
+                                {
+                                    <table align="left">
+                                        <p></p>
+                                        <p></p>
+                                        <hr />
+                                        <td>
+                                            <span class="comment-picture">
+                                                <img class="commenttable img-rounded" alt="Avatar" id="avatar-2" height="100" src="~/images/@item.ID/@item.Image" />
+                                            </span>
                                         </td>
-                                    <td> @Html.DisplayFor(modelItem => item.Name) </td>
-                                    <td> @Html.DisplayFor(modelItem => item.Subject) </td>
-                                    <td> @Html.DisplayFor(modelItem => item.CommentAddTime) </td>
-                                    <td> @Html.DisplayFor(modelItem => item.CommentText) </td>
-                                    <td> @Html.DisplayFor(modelItem => item.Email) </td>
-                                </tr>
-                                
-                            }
-                                
+                                    </table>
+                                    <p>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                                        <td>
+                                            <small>
+                                                @Html.DisplayFor(modelItem => item.CommentAddTime)
+                                            </small>
+                                        </td>
+                                        <br />
+                            <td><small> @Html.DisplayFor(modelItem => item.Email)</small> </td>
+                            </p>
+                            <p>
+                            <td><normal><b>@Html.DisplayFor(modelItem => item.Subject)</b></normal> </td>
+                            </p>
+
+                            <p>
+                            <td> @Html.DisplayFor(modelItem => item.CommentText) </td></p>
+                            <p></p>
+                            <hr />
+
+
+
+                        }
+
                                 </tbody>
-                            </body>
-                        </table>
+                                </body>
+                            </table>
                 </div>
 
             </div>
