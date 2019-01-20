@@ -22,22 +22,6 @@ namespace Tests.EventProject.Controllers
             controller = "events";
             detailsViewCaption = "Events";
         }
-        protected override string createDbRecord()
-        {
-            var r = GetRandom.Object<EventDbRecord>();
-            if (db.Events.Contains(r) == false) db.Events.Add(r);
-            db.SaveChanges();
-            specificStringsToTestInView = new List<string> {
-                $"{r.ID}",
-                $"{r.Name}",
-                $"{r.Date}",
-                $"{r.Location}",
-                $"{r.Type}",
-                $"{r.Organizer}"
-            };
-            editViewCaption = $"Event ({r.ID})";
-            return r.ID;
-        }
         protected override void initializeDatabase(EventProjectDbContext context)
         {
             EventDbTableInitializer.Initialize(context);

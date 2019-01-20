@@ -13,27 +13,32 @@
     <h1>@ViewBag.Title Event</h1>
     <div class="row">
         <section>
+            
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <form asp-controller="Event" asp-action="Create" method="POST" class="form-horizontal" enctype="multipart/form-data">
                 <div asp-validation-summary="All" class="text-danger"></div>
-
+                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
                 <div class="form-group">
                     <label asp-for="Name" class="col-md-2 control-label"></label>
                     <div class="col-md-5">
-                        <input asp-for="Name" class="form-control" />
-
+                        <input asp-for="Name" class="form-control" required/>
+                        @Html.ValidationMessageFor(model => model.Name)
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="Location" class="col-md-2 control-label"></label>
                     <div class="col-md-5">
-                        <input asp-for="Location" class="form-control" />
+
+                        <input asp-for="Location" class="form-control" required/>
+                        @Html.ValidationMessageFor(model => model.Location)
                     </div>
                 </div>
                 <div class="form-group">
                     <label asp-for="Date" class="col-md-2 control-label"></label>
                     <div class="col-md-5">
-                        <input asp-for="Date" class="form-control" />
+                        <input asp-for="Date" class="form-control" required/>
+                        @Html.ValidationMessageFor(model => model.Date)
 
                     </div>
                 </div>
@@ -51,7 +56,7 @@
                 <div class="form-group">
                     <label asp-for="Description" class="col-md-2 control-label"></label>
                     <div class="col-md-5">
-                        <input asp-for="Description" class="form-control" />
+                        <input asp-for="Description" class="form-control" required/>
                     </div>
                 </div>
 
@@ -60,7 +65,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">Image</label>
                     <div class="col-md-5">
-                        <input type="file" name="AvatarFile" class="form-control" />
+                        <input type="file" name="AvatarFile" class="form-control" required/>
 
                     </div>
                 </div>

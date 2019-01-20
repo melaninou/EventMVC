@@ -65,6 +65,7 @@ namespace EventProject.Controllers
 
         [Authorize]
         [HttpPost("Create")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IFormFile avatarFile, [Bind(properties)] ProfileViewModel c)
         {       
             if (!ModelState.IsValid) return View(c);
