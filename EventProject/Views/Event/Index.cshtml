@@ -6,7 +6,7 @@
 
 @{
     Layout = "_IndexPartial";
-    var userName = ViewData["userRealName"] as PaginatedList<ProfileObject>;
+   // var userName = ViewData["userRealName"] as PaginatedList<ProfileObject>;
 }
 <style type="text/css">
     .clickable-row {
@@ -48,7 +48,7 @@
                                     @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy.DbRecord.Date)
                                     @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy.DbRecord.Location)
                                     @Html.SortColumnHeaderFor(ViewData["SortType"], model => dummy.DbRecord.Type)
-                                    @Html.SortColumnHeaderFor(ViewData["SortOrganizer"], model => dummy.DbRecord.Organizer)
+
                                     <th></th>
                                 </tr>
                             </thead>
@@ -66,7 +66,7 @@
                                         <td>@item.DbRecord.Date.ToString("MMMM dd, yyyy hh:mm")</td>
                                         <td>@Html.DisplayFor(modelItem => item.DbRecord.Location)</td>
                                         <td>@Html.DisplayFor(modelItem => item.DbRecord.Type)</td>
-                                        <td>@userName.Where(x => x.DbRecord.ID == item.DbRecord.Organizer).FirstOrDefault().DbRecord.Name</td>
+                                       
                                         @Html.EditDetailDeleteFor(modelItem => item.DbRecord.ID)
                                     </tr>
                                 }
@@ -92,7 +92,7 @@
                                     @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy2.DbRecord.Date)
                                     @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy2.DbRecord.Location)
                                     @Html.SortColumnHeaderFor(ViewData["SortType"], model => dummy2.DbRecord.Type)
-                                    @Html.SortColumnHeaderFor(ViewData["SortOrganizer"], model => dummy2.DbRecord.Organizer)
+                                 
                                     <th></th>
                                 </tr>
                             </thead>
@@ -110,7 +110,7 @@
                                         <td>@item.DbRecord.Date.ToString("MMMM dd, yyyy hh:mm")</td>
                                         <td>@Html.DisplayFor(modelItem => item.DbRecord.Location)</td>
                                         <td>@Html.DisplayFor(modelItem => item.DbRecord.Type)</td>
-                                        <td>@userName.Where(x => x.DbRecord.ID == item.DbRecord.Organizer).FirstOrDefault().DbRecord.Name</td>
+                                       
                                         @Html.EditDetailDeleteFor(modelItem => item.DbRecord.ID)
                                     </tr>
                                 }
@@ -136,7 +136,7 @@
                                     @Html.SortColumnHeaderFor(ViewData["SortDate"], model => dummy3.DbRecord.Date)
                                     @Html.SortColumnHeaderFor(ViewData["SortLocation"], model => dummy3.DbRecord.Location)
                                     @Html.SortColumnHeaderFor(ViewData["SortType"], model => dummy3.DbRecord.Type)
-                                    @Html.SortColumnHeaderFor(ViewData["SortOrganizer"], model => dummy3.DbRecord.Organizer)
+
                                     <th></th>
                                 </tr>
                             </thead>
@@ -154,7 +154,7 @@
                                         <td>@item.DbRecord.Date.ToString("MMMM dd, yyyy hh:mm")</td>
                                         <td>@Html.DisplayFor(modelItem => item.DbRecord.Location)</td>
                                         <td>@Html.DisplayFor(modelItem => item.DbRecord.Type)</td>
-                                        <td>@userName.Where(x => x.DbRecord.ID == item.DbRecord.Organizer).FirstOrDefault().DbRecord.Name</td>
+                                      
                                         @Html.EditDetailDeleteFor(modelItem => item.DbRecord.ID)
                                     </tr>
                                 }

@@ -78,6 +78,8 @@ namespace EventProject.Controllers
             _eventRepository.SearchString = searchString;
             _eventRepository.PageIndex = page ?? 1;
 
+           
+
 
             AllEventsViewModel allevents = new AllEventsViewModel();
             allevents.AllEventViewModel = await _eventRepository.GetObjectsList();
@@ -205,6 +207,15 @@ namespace EventProject.Controllers
             allComments.EventViewModel = EventViewModelFactory.Create(currentEventObject);
             allComments.CommentProfileViewModel = fullComments;
 
+            if (_attendingRepository.FindObject(id, GetCurrentUserID()).Result == null)
+            {
+                ViewData["RegisterButtonText"] = "Register to Event";
+            }
+            else
+            {
+                ViewData["RegisterButtonText"] = "Unregister";
+            }
+            
             return View(allComments);
         }
 

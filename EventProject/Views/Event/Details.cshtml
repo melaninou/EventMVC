@@ -10,10 +10,11 @@
     ViewData["Title"] = "Details on " + @Model.Name;
     var profiles = ViewBag.Profiles as ProfileViewModelsList ?? new ProfileViewModelsList(null);
     var eventID = Model.ID;
-    var profileID = Url.Action("GetCurrentUserID", "Event");
+    // var profileID = Url.Action("GetCurrentUserID", "Event");
     EventProjectDbContext c = null;
-    var isObjectPresent = new AttendingRepository(c).FindObject(eventID, profileID);
-   // var list = new CommentRepository(c).GetCommentsList(eventID);
+    //var isObjectPresent = new AttendingRepository(c).FindObject(eventID, profileID);
+    // var list = new CommentRepository(c).GetCommentsList(eventID);
+    var registerButtonText = ViewData["RegisterButtonText"];
 }
 
 @{ var dummy = Model.EventViewModel;}
@@ -30,7 +31,7 @@
                 </span>
 
                 <a onclick="myFunction()" class="btn btn-sm btn-block btn-primary">
-                    <span class="bigger-110">Register</span>
+                    <span class="bigger-110">@registerButtonText</span>
                 </a>
 
                 <div class="space space-4"></div>
