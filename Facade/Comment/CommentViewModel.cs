@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core;
-using Facade.Common;
-using Facade.Event;
+﻿using Facade.Common;
+using Facade.Profile;
+using System;
 
 namespace Facade.Comment
 {
-   public class CommentViewModel : EmptyViewModel
+    public class CommentViewModel : EmptyViewModel
    {
        private string id;
        private DateTime commentAddTime;
-       private string userPicture;
-       private string userName;
+       private string subject;
+       private string email;
        private string commentText;
+       private ProfileViewModel profileViewModel;
 
        public string ID
        {
@@ -25,15 +23,15 @@ namespace Facade.Comment
            get => getValue(ref commentAddTime, ref commentAddTime);
            set => setValue(ref commentAddTime, value);
        }
-       public string UserPicture
+       public string Subject
        {
-           get => getString(ref userPicture);
-           set => userPicture = value;
+           get => getString(ref subject);
+           set => subject = value;
        }
-       public string UserName
+       public string Email
        {
-           get => getString(ref userName);
-           set => userName = value;
+           get => getString(ref email);
+           set => email = value;
        }
        public string CommentText
        {
@@ -41,6 +39,6 @@ namespace Facade.Comment
            set => commentText = value;
        }
 
-       
+       public ProfileViewModel ProfileViewModel { get; set; }
     }
 }

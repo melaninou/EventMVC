@@ -11,7 +11,6 @@ namespace Infra.Event
         {
             c.Database.EnsureCreated(); //kas andmebaas on olemas
             if (c.Events.Any()) return; //kui aadresside tabelis midagi, lõpetab tegevuse
-            initEvents(c);
             c.SaveChanges();
         }
         private static void initEvents(EventProjectDbContext c)

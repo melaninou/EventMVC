@@ -63,6 +63,24 @@ namespace Tests.Infra
         {
             Assert.Inconclusive();
         }
+
+        [TestMethod]
+        public void CommentProfileTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
+        public void CommentsTest()
+        {
+            Assert.Inconclusive();
+        }
+        [TestMethod]
+        public void CommentEventTest()
+        {
+            Assert.Inconclusive();
+        }
+
         private void testHasEventProfileEntities(ModelBuilder mb)
         {
             testEntity<EventDbRecord>(mb);

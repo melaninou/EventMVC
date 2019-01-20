@@ -16,5 +16,11 @@ namespace Tests.Data
         {
             isAllClassesTested(assembly, Namespace("Common"));
         }
+
+        [TestMethod]
+        public void IsCommentTested()
+        {
+            isAllClassesTested(assembly, Namespace("Comment"));
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public interface IPaginatedRepository<TObject, TRecord>
+    public interface IPaginatedRepository<TObject, TRecord> :ICrudRepository<TObject>
     {
         string SearchString { get; set; }
         int? PageIndex { get; set; }

@@ -1,29 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Data;
-using Data.Comment;
-using Domain.Event;
+﻿using Data.Comment;
+using System;
 
 namespace Domain.Comment
 {
     public static class CommentObjectFactory
     {
-        public static CommentObject Create(EventObject eventObject, CommentsProfileObject commentsProfileObject,
-            string eventID, string commentID)
+        public static CommentObject Create(string id,  DateTime commentAddTime,
+             string commentText, string subject, string email)
         {
             var o = new CommentDbRecord
             {
-                EventID = eventID,
-                CommentID =commentID,
-                Events = eventObject?.DbRecord ?? new EventDbRecord(),
-                CommentsProfile = commentsProfileObject?.DbRecord ?? new CommentsProfileDbRecord()
+               ID = id,
+               CommentAddTime = commentAddTime,
+               CommentText = commentText,
+                Name = subject,
+                Location = email
+             
             };
-            o.EventID = o.Events.ID;
-            o.CommentID = o.CommentsProfile.ID;
             return new CommentObject(o);
         }
-
-        
     }
 }

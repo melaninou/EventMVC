@@ -4,12 +4,9 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/calendarHub").buil
 
 connection.on("ReceiveMessage", function (id, name, location, date, image) {
 
-
-
     var eventName = document.createTextNode(name);
     var eventLocation = document.createTextNode(location);
     var eventTime = document.createTextNode(date);
-
 
     var newLink = document.createElement("a");
     var linkText = document.createTextNode("More");
@@ -19,7 +16,6 @@ connection.on("ReceiveMessage", function (id, name, location, date, image) {
 
     var img = document.createElement('img');
     img.src = 'images/' + image;
-    
 
     var eventTable = document.getElementById('eventList').getElementsByTagName('tbody')[0];
     var newRow = eventTable.insertRow(0);
@@ -38,8 +34,6 @@ connection.on("ReceiveMessage", function (id, name, location, date, image) {
     fifthCell.appendChild(newLink);
 
     document.getElementById('eventList').deleteRow(rowCount);
-
-
 });
 
 connection.start().catch(function (err) {

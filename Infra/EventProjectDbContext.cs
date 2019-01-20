@@ -18,9 +18,11 @@ namespace Infra
 
         public DbSet<AttendingDbRecord> EventsProfiles { get; set; }
 
-        public DbSet<CommentsProfileDbRecord> CommentsProfile { get; set; }
+        public DbSet<CommentDbRecord> Comments { get; set; }
 
-        public DbSet<CommentDbRecord> Comment { get; set; }
+        public DbSet<CommentEventDbRecord> CommentEvent { get; set; }
+
+       public DbSet<CommentProfileDbRecord> CommentProfile { get; set; }
 
         public DbSet<FollowingDbRecord> Followings { get; set; }
 
@@ -32,23 +34,32 @@ namespace Infra
             createProfilesTable(b);
             createEventsTable(b);
             createEventProfileTable(b);
-            createCommentsProfileTable(b);
+            createCommentProfileTable(b);
             createCommentToTable(b);
             createFollowingsTable(b);
         }
 
         internal static void createCommentToTable(ModelBuilder b)
         {
-            const string table = "Comment";
+            const string table = "Comments";
 
-            createPrimaryKey<CommentDbRecord>(b, table, a => new { a.EventID, a.CommentID });
-            createForeignKey<CommentDbRecord, EventDbRecord>(b, table, x => x.EventID, x => x.Events);
-            createForeignKey<CommentDbRecord, CommentsProfileDbRecord>(b, table, x => x.CommentID, x => x.CommentsProfile);
+            b.Entity<CommentDbRecord>().ToTable(table);
         }
-        internal static void createCommentsProfileTable(ModelBuilder b)
+        internal static void createCommentProfileTable(ModelBuilder b)
         {
-            const string table = "CommentsProfile";
-            b.Entity<CommentsProfileDbRecord>().ToTable(table);
+            const string table = "CommentProfile";
+            createPrimaryKey<CommentProfileDbRecord>(b, table, a => new { a.ProfileID, a.CommentID });
+            createForeignKey<CommentProfileDbRecord, ProfileDbRecord>(b, table, x => x.ProfileID, x => x.Profiles);
+            createForeignKey<CommentProfileDbRecord, CommentDbRecord>(b, table, x => x.CommentID, x => x.Comments);
+
+        }
+        internal static void createCommentEventTable(ModelBuilder b)
+        {
+            const string table = "CommentEvent";
+
+            createPrimaryKey<CommentEventDbRecord>(b, table, a => new { a.EventID, a.CommentID });
+            createForeignKey<CommentEventDbRecord, EventDbRecord>(b, table, x => x.EventID, x => x.Events);
+            createForeignKey<CommentEventDbRecord, CommentDbRecord>(b, table, x => x.CommentID, x => x.Comments);
 
         }
         internal static void createEventsTable(ModelBuilder b)

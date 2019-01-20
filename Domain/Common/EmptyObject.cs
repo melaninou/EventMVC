@@ -7,9 +7,9 @@ namespace Domain.Common
     {
         public readonly T DbRecord;
 
-        protected EmptyObject(T dbRecord)
+        protected EmptyObject(T eventDbRecord)
         {
-            DbRecord = dbRecord ?? new T();
+            DbRecord = eventDbRecord ?? new T();
         }
     }
 }

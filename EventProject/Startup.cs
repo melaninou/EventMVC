@@ -1,6 +1,8 @@
 ﻿using Core;
 using Domain.Attending;
 using Domain.Comment;
+using Domain.CommentEvent;
+using Domain.CommentProfile;
 using Domain.Event;
 using Domain.Following;
 using Domain.Profile;
@@ -56,9 +58,10 @@ namespace EventProject
             services.AddScoped<IProfileObjectsRepository, ProfileObjectsRepository>();
             services.AddScoped<IEventObjectsRepository, EventObjectsRepository>();
             services.AddScoped<IAttendingObjectsRepository, AttendingRepository>();
-            services.AddScoped<ICommentProfilesObjectsRepository, CommentProfilesObjectsRepository>();
             services.AddScoped<ICommentObjectsRepository, CommentRepository>();
             services.AddScoped<IFollowingObjectsRepository, FollowingRepository>();
+            services.AddScoped<ICommentEventObjectsRepository, CommentEventRepository>();
+            services.AddScoped<ICommentProfileObjectsRepository, CommentProfileRepository>();
 
             services.AddTransient<IImageHandler, ImageHandler>();
             services.AddTransient<IImageWriter, ImageWriter>();

@@ -9,13 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using Core;
 using Domain.Following;
 using Microsoft.AspNetCore.Http;
-
-
-
-
 namespace EventProject.Controllers
 {
-    public class ProfileController : Controller
+    public class ProfileController : Controller, IEventProjectController
     {
         private readonly IProfileObjectsRepository _profileRepository;
         private readonly IFollowingObjectsRepository _followingRepository;
@@ -57,6 +53,14 @@ namespace EventProject.Controllers
             return View(new ProfileViewModelsList(l));
         }
 
+        public Task<IActionResult> Index(string sortOrder = null, 
+            string searchString = null, 
+            int? page = null, 
+            string currentFilter = null)
+        {
+            throw new NotImplementedException();
+        }
+
         [Authorize]
         public ActionResult Create()
         {
@@ -65,6 +69,7 @@ namespace EventProject.Controllers
 
         [Authorize]
         [HttpPost("Create")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IFormFile avatarFile, [Bind(properties)] ProfileViewModel c)
         {       
             if (!ModelState.IsValid) return View(c);
@@ -120,9 +125,9 @@ namespace EventProject.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string id, bool currentUser)
         {
-            if (id == null)
+            if (currentUser)
             {
                 id = GetCurrentUserId();
             }
@@ -131,7 +136,7 @@ namespace EventProject.Controllers
         }
 
         [Authorize]
-        public ActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             return View();
         }
