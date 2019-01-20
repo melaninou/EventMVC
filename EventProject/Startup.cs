@@ -1,6 +1,7 @@
 ﻿using Core;
 using Domain.Attending;
 using Domain.Comment;
+using Domain.CommentEvent;
 using Domain.CommentProfile;
 using Domain.Event;
 using Domain.Profile;

@@ -26,18 +26,18 @@ namespace Tests.Facade.Comment
             DateTime rnd() => GetRandom.DateTime();
             testReadWriteProperty(() => obj.CommentAddTime, x => obj.CommentAddTime = x);
         }
+        //TODO
+        //[TestMethod]
+        //public void UserPictureTest()
+        //{
+        //    testReadWriteProperty(() => obj.UserPicture, x => obj.UserPicture = x);
+        //}
 
-        [TestMethod]
-        public void UserPictureTest()
-        {
-            testReadWriteProperty(() => obj.UserPicture, x => obj.UserPicture = x);
-        }
-
-        [TestMethod]
-        public void UserNameTest()
-        {
-            testReadWriteProperty(() => obj.UserName, x => obj.UserName = x);
-        }
+        //[TestMethod]
+        //public void UserNameTest()
+        //{
+        //    testReadWriteProperty(() => obj.UserName, x => obj.UserName = x);
+        //}
 
         [TestMethod]
         public void CommentTextTest()

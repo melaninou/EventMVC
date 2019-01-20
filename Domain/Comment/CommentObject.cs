@@ -1,9 +1,5 @@
-﻿using Data;
-using Data.Comment;
-using Domain.CommentsProfiles;
+﻿using Data.Comment;
 using Domain.Common;
-using Domain.Event;
-using Domain.Profile;
 
 namespace Domain.Comment
 {

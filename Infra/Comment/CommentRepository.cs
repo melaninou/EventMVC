@@ -7,6 +7,7 @@ using Domain.Profile;
 using System.Threading.Tasks;
 using Core;
 using Data.Comment;
+using Domain.CommentEvent;
 using Microsoft.EntityFrameworkCore;
 using Open.Infra;
 

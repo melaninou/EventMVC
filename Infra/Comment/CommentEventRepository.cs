@@ -7,6 +7,7 @@ using Core;
 using Data;
 using Data.Comment;
 using Domain.Comment;
+using Domain.CommentEvent;
 using Domain.Event;
 using Microsoft.EntityFrameworkCore;
 using Open.Infra;

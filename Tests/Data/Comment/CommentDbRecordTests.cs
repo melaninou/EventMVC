@@ -1,4 +1,5 @@
-﻿using Aids;
+﻿using System;
+using Aids;
 using Core;
 using Data.Comment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,35 +15,27 @@ namespace Tests.Data.Comment
         }
 
         [TestMethod]
-        public void EventIDTest()
+        public void IDTest()
         {
-            testReadWriteProperty(() => obj.EventID, x => obj.EventID = x);
-            testNullEmptyAndWhitespaceCases(() => obj.EventID, x => obj.EventID = x,
+            testReadWriteProperty(() => obj.ID, x => obj.ID = x);
+            testNullEmptyAndWhitespaceCases(() => obj.ID, x => obj.ID = x,
                 () => Constants.Unspecified);
         }
 
         [TestMethod]
-        public void CommentIDTest()
+        public void CommentAddTimeTest()
         {
-            testReadWriteProperty(() => obj.CommentID, x => obj.CommentID = x);
-            testNullEmptyAndWhitespaceCases(() => obj.CommentID, x => obj.CommentID = x,
+            DateTime rnd() => GetRandom.DateTime(null, obj.CommentAddTime);
+            testReadWriteProperty(() => obj.CommentAddTime, 
+                x => obj.CommentAddTime = x, rnd);
+        }
+
+        [TestMethod]
+        public void CommentTextTest()
+        {
+            testReadWriteProperty(() => obj.CommentText, x => obj.CommentText = x);
+            testNullEmptyAndWhitespaceCases(() => obj.CommentText, x => obj.CommentText = x,
                 () => Constants.Unspecified);
-        }
-
-        [TestMethod]
-        public void EventsTest()
-        {
-            testReadWriteProperty(() => obj.Events, x => obj.Events = x);
-            obj.Events = null;
-            Assert.IsNull(obj.Events);
-        }
-
-        [TestMethod]
-        public void CommentsProfileTest()
-        {
-            testReadWriteProperty(() => obj.CommentsProfile, x => obj.CommentsProfile = x);
-            obj.CommentsProfile = null;
-            Assert.IsNull(obj.CommentsProfile);
         }
     }
 }

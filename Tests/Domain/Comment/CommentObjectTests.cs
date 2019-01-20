@@ -11,25 +11,5 @@ namespace Tests.Domain.Comment
         {
             return GetRandom.Object<CommentObject>();
         }
-
-        [TestMethod]
-        public void EventObjectTest()
-        {
-            Assert.AreEqual(obj.EventObject.DbRecord, obj.DbRecord.Events);
-        }
-
-        [TestMethod]
-        public void CommentsProfileObjectTest()
-        {
-            Assert.AreEqual(obj.CommentsProfileObject.DbRecord, obj.DbRecord.CommentsProfile);
-        }
-
-        [TestMethod]
-        public void WhenCreatedWithNullArgumentsTest()
-        {
-            obj = new CommentObject(null);
-            Assert.AreEqual(obj.EventObject.DbRecord, obj.DbRecord.Events);
-            Assert.AreEqual(obj.CommentsProfileObject.DbRecord, obj.DbRecord.CommentsProfile);
-        }
     }
 }

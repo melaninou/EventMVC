@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Data;
+﻿using Data;
 using Data.Comment;
+using Domain.Comment;
 using Domain.Common;
 using Domain.Event;
 
-namespace Domain.Comment
+namespace Domain.CommentEvent
 {
-   public class CommentEventObject : EmptyObject<CommentEventDbRecord>
+    public class CommentEventObject : EmptyObject<CommentEventDbRecord>
    {
        public readonly EventObject EventObject;
        public readonly CommentObject CommentObject;

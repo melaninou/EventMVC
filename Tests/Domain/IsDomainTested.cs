@@ -44,9 +44,15 @@ namespace Tests.Domain
 
 
         [TestMethod]
-        public void IsCommentsProfilesTested()
+        public void IsCommentProfileTested()
         {
-            isAllClassesTested(assembly, Namespace("CommentsProfiles"));
+            isAllClassesTested(assembly, Namespace("CommentProfile"));
+        }
+
+        [TestMethod]
+        public void IsCommentEventTested()
+        {
+            isAllClassesTested(assembly, Namespace("CommentEvent"));
         }
     }
 }

@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Core;
+using Domain.Comment;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Core;
-using Domain.Profile;
 
-namespace Domain.Comment
+namespace Domain.CommentEvent
 {
     public interface ICommentEventObjectsRepository : ICrudRepository<CommentEventObject>
     {

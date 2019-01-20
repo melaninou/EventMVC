@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core;
+﻿using Core;
 using Data.Comment;
+using System.Collections.Generic;
 
-namespace Domain.Comment
+namespace Domain.CommentEvent
 {
     public class CommentEventObjectsList : PaginatedList<CommentEventObject>
     {

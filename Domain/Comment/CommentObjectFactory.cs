@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Data;
-using Data.Comment;
-using Domain.Profile;
+﻿using Data.Comment;
+using System;
 
 namespace Domain.Comment
 {

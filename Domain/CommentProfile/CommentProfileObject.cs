@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Data;
+﻿using Data;
 using Data.Comment;
-using Data.Common;
 using Domain.Comment;
 using Domain.Common;
 using Domain.Profile;

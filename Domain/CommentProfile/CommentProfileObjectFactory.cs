@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Data;
+﻿using Data;
 using Data.Comment;
-using Domain.Attending;
 using Domain.Comment;
 using Domain.Profile;
 
 namespace Domain.CommentProfile
 {
-   public static class CommentProfileObjectFactory
+    public static class CommentProfileObjectFactory
     {
         public static CommentProfileObject Create(CommentObject commentObject, ProfileObject profileObject,
             string commentID, string userID)
