@@ -8,7 +8,6 @@ namespace Facade.Comment
     {
         public EventViewModel EventViewModel { get; set; }
 
-
         public List<CommentProfileViewModel> CommentProfileViewModel { get; set; }
     }
 }

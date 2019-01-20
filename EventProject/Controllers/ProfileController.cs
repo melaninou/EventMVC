@@ -120,9 +120,9 @@ namespace EventProject.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string id, bool currentUser)
         {
-            if (id == null)
+            if (currentUser)
             {
                 id = GetCurrentUserId();
             }

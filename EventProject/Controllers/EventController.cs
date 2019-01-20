@@ -204,6 +204,20 @@ namespace EventProject.Controllers
             allComments.EventViewModel = EventViewModelFactory.Create(currentEventObject);
             allComments.CommentProfileViewModel = fullComments;
 
+
+            var currentUserObject = await _profileRepository.GetObject(GetCurrentUserID());
+            var currentUserName = currentUserObject.DbRecord.Name;
+
+            if (allComments.EventViewModel.Organizer == currentUserName)
+            {
+                ViewData["IsOrganizer"] = "true";
+            }
+            else
+            {
+                ViewData["IsOrganizer"] = "false";
+            }
+
+
             if (_attendingRepository.FindObject(id, GetCurrentUserID()).Result == null)
             {
                 ViewData["RegisterButtonText"] = "Register to Event";
@@ -263,15 +277,10 @@ namespace EventProject.Controllers
             var currentEventObject = await _eventRepository.GetObject(id);
             var organizatorObject = await _profileRepository.GetObject(currentEventObject.DbRecord.Organizer);
             var organizatorName = organizatorObject.DbRecord.Name;
-            if (currentUserName == organizatorName)
-            {
+
                 var c = await _eventRepository.GetObject(id);
                 return View(EventViewModelFactory.Create(c));
-            }
-            else
-            {
-                return Content("You can't delete it, if you don't create it!"); //selle asemel peaks üldse see, kes ei koostanud, et  ei näe neid nuppe
-            }
+        
         }
 
         [Authorize]

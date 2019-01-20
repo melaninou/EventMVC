@@ -15,6 +15,7 @@
     //var isObjectPresent = new AttendingRepository(c).FindObject(eventID, profileID);
     // var list = new CommentRepository(c).GetCommentsList(eventID);
     var registerButtonText = ViewData["RegisterButtonText"];
+    var isOrganizer =  ViewData["IsOrganizer"];
 }
 
 @{ var dummy = Model.EventViewModel;}
@@ -45,13 +46,19 @@
                 </script>
                 <h2></h2>
 
+                @if (isOrganizer == "true")
+                {
+                    <a href="@Url.Action("Edit", "Event", new {id = dummy.ID})" class="btn btn-sm btn-block btn-primary">
+                        <span class="bigger-110">Edit Event</span>
+                    </a>
+                    <a href="@Url.Action("Delete", "Event", new {id = Model.ID})" class="btn btn-sm btn-block btn-primary">
+                        <span class="bigger-110">Delete Event </span>
+                    </a>
+                 
+                }
+                
+              
 
-                <a href="@Url.Action("Edit", "Event", new {id = dummy.ID})" class="btn btn-sm btn-block btn-primary">
-                    <span class="bigger-110">Edit Event</span>
-                </a>
-                <a href="@Url.Action("Delete", "Event", new {id = Model.ID})" class="btn btn-sm btn-block btn-primary">
-                    <span class="bigger-110">Delete Event</span>
-                </a>
 
             </div><!-- /.col -->
 

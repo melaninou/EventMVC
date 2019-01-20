@@ -11,7 +11,7 @@ namespace EventProject.Controllers
             string currentFilter = null);
         ActionResult Create();
         Task<IActionResult> Edit(string id);
-        Task<IActionResult> Details(string id);
+       // Task<IActionResult> Details(string id);
         Task<IActionResult> Delete(string id);
 
     }
