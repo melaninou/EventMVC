@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Core;
-using Data;
+﻿using Core;
 using Data.Comment;
-using Domain.Attending;
 using Domain.Comment;
 using Domain.CommentProfile;
-using Domain.Profile;
 using Microsoft.EntityFrameworkCore;
 using Open.Infra;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Infra.Comment
 {
-   public class CommentProfileRepository : ObjectsRepository<CommentObject, CommentDbRecord>, ICommentProfileObjectsRepository
+    public class CommentProfileRepository : ObjectsRepository<CommentObject, CommentDbRecord>, ICommentProfileObjectsRepository
    {
         internal readonly DbSet<CommentProfileDbRecord> dbSet;
        private readonly DbContext db;

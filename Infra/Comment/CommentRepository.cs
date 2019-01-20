@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Domain.Comment;
-using Domain.Event;
-using Domain.Profile;
-using System.Threading.Tasks;
-using Core;
+﻿using Core;
 using Data.Comment;
+using Domain.Comment;
 using Domain.CommentEvent;
+using Domain.Profile;
 using Microsoft.EntityFrameworkCore;
 using Open.Infra;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Infra.Comment
 {

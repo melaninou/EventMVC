@@ -50,6 +50,17 @@ namespace Tests.EventProject.Controllers
         }
 
         [TestMethod]
+        public void GetUserNameTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
+        public void CreateNewCommentTest()
+        {
+            Assert.Inconclusive();
+        }
+        [TestMethod]
         public void AttendingTest()
         {
             Assert.Inconclusive();
@@ -81,6 +92,12 @@ namespace Tests.EventProject.Controllers
 
         [TestMethod]
         public void propertiesTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
+        public void propertieTest()
         {
             Assert.Inconclusive();
         }
