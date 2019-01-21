@@ -7,13 +7,10 @@
 
 
 @{
-    ViewData["Title"] = "Details of " + @Model.Name;
+    ViewData["Title"] = "Details of " + @Model.EventViewModel.Name;
     var profiles = ViewBag.Profiles as ProfileViewModelsList ?? new ProfileViewModelsList(null);
     var eventID = Model.ID;
-    // var profileID = Url.Action("GetCurrentUserID", "Event");
     EventProjectDbContext c = null;
-    //var isObjectPresent = new AttendingRepository(c).FindObject(eventID, profileID);
-    // var list = new CommentRepository(c).GetCommentsList(eventID);
     var registerButtonText = ViewData["RegisterButtonText"];
     var isOrganizer =  ViewData["IsOrganizer"];
 }
@@ -51,7 +48,7 @@
                     <a href="@Url.Action("Edit", "Event", new {id = dummy.ID})" class="btn btn-sm btn-block btn-primary">
                         <span class="bigger-110">Edit Event</span>
                     </a>
-                    <a href="@Url.Action("Delete", "Event", new {id = Model.ID})" class="btn btn-sm btn-block btn-primary">
+                    <a href="@Url.Action("Delete", "Event", new {id = dummy.ID})" class="btn btn-sm btn-block btn-primary">
                         <span class="bigger-110">Delete Event </span>
                     </a>
                  
@@ -152,53 +149,6 @@
                         </div>
                     </div>
                 }
-
-                @*<div class="widget-box transparent">
-
-                        <div class="widget-header widget-header-small">
-
-                            <h4 class="widget-title smaller">
-
-                                <i class="ace-icon fa fa-check-square-o bigger-110"></i>
-
-                                Comments:
-
-                            </h4>
-
-                        </div>
-
-
-
-                        <div class="widget-body">
-
-                            <div class="widget-main">
-
-                                <p>
-                                    <form id="commentTextArea">
-                                        <textarea rows="6" cols="50" name="comment" form ="commentTextArea"></textarea>
-                                    </form>
-
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                        <h2></h2>
-
-                        <a href="@Url.Action("AddComment", "Event", new {id = Model.ID})" class="btn btn-sm btn-block btn-primary">
-                            <span class="bigger-110">Add Comments</span>
-                        </a>
-
-
-
-                        <h2></h2>
-
-                    </div>*@
-
-                @*@if (dummy3 > 0)*@
-
-
 
                     <form asp-controller="Event" asp-action="CreateNewComment" asp-route-id="@dummy.ID" method="POST" class="form-horizontal">
                         <label>Comments</label>
