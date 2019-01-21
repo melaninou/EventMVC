@@ -18,6 +18,12 @@ namespace Facade.Profile
                 ProfileImage = o?.DbRecord.ProfileImage
 
             };
+            if (o is null) return v;
+            foreach (var p in o.ProfilesInUse)
+            {
+                var profile = ProfileViewModelFactory.Create(p);
+                v.InProfiles.Add(profile);
+            }
             return v;
         }
     }

@@ -4,6 +4,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Core;
 using Domain.Attending;
+using Domain.Event;
+using Domain.Profile;
 
 namespace Domain.Following
 {
@@ -11,6 +13,7 @@ namespace Domain.Following
     {
         Task<FollowingObject> GetObject(string userID, string followedUserID);
         Task<object> FindObject(string userID, string followedUserID);
+        Task LoadFollowers(ProfileObject userObject);
 
     }
 }

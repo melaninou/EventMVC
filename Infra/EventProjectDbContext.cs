@@ -36,6 +36,7 @@ namespace Infra
             createEventProfileTable(b);
             createCommentProfileTable(b);
             createCommentToTable(b);
+            createCommentEventTable(b);
             createFollowingsTable(b);
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Data;
 using Domain.Event;
@@ -34,7 +35,7 @@ namespace Infra.Following
 
         public async Task<object> FindObject(string id, string userID)
         {
-            var item = dbSet.Find(id, userID);
+            var item = dbSet.Find(userID, id);
             if (item != null) return item;
             else return null;
         }
@@ -76,6 +77,19 @@ namespace Infra.Following
         protected internal override PaginatedList<ProfileObject> createList(List<ProfileDbRecord> l, RepositoryPage p)
         {
             return new ProfileObjectsList(l, p);
+        }
+
+        public async Task LoadFollowers(ProfileObject userObject)
+        {
+            if (userObject is null) return;
+            var userID = userObject.DbRecord.ID ?? string.Empty;
+            var profiles = await dbSet.Include(x => x.FollowedUserProfile).
+                Where(x => x.UserID == userID).AsNoTracking()
+                .ToListAsync();
+            foreach (var p in profiles)
+            {
+                userObject.ProfileInUse(new ProfileObject(p.FollowedUserProfile));
+            }
         }
     }
 }

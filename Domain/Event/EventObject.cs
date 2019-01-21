@@ -25,5 +25,7 @@ namespace Domain.Event
                return;
            profilesInUse.Add(profileObject);
        }
+
+
    }
 }

@@ -73,14 +73,14 @@ namespace Tests.EventProject
             a = a + $"/{id}";
             await testWhenLoggedOut(a, HttpStatusCode.Redirect);
         }
-        [TestMethod]
-        public async Task DetailsTest()
-        {
-            var id = createDbRecord();
-            var a = GetUrl.ForControllerAction<TController>(x => x.Details(""));
-            a = a + $"/{id}";
-            await testWhenLoggedOut(a, HttpStatusCode.Redirect);
-        }
+        //[TestMethod]
+        //public async Task DetailsTest()
+        //{
+        //    var id = createDbRecord();
+        //    var a = GetUrl.ForControllerAction<TController>(x => x.Details(""));
+        //    a = a + $"/{id}";
+        //    await testWhenLoggedOut(a, HttpStatusCode.Redirect);
+        //}
 
         [TestMethod]
         public async Task EditTest()

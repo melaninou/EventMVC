@@ -5,6 +5,9 @@
     ViewData["Title"] = "Details of " + @Model.Name;
     var userID = Url.Action("GetCurrentUserID", "Profile");
     var followedUserID = Model.ID;
+    var followButtonText = ViewData["FollowButtonText"];
+    var isCurrentPerson = ViewData["IsCurrentPerson"];
+
 }
 
 <div style="margin-top: 50px" id="Profile" class="tabcontent">
@@ -18,7 +21,7 @@
                     </span>
 
                     <a onclick="followUser()" class="btn btn-sm btn-block btn-primary">
-                        <span class="bigger-110">Follow</span>
+                        <span class="bigger-110">@followButtonText</span>
                     </a>
 
                     <div class="space space-4"></div>
@@ -29,9 +32,14 @@
                         }
                     </script>
 
-                    <a href="@Url.Action("Edit", "Profile", new {id = Model.ID})" class="btn btn-sm btn-block btn-primary">
-                        <span class="bigger-110">Edit</span>
-                    </a>
+                    @if (isCurrentPerson == "true")
+                    {
+
+                        <a href="@Url.Action("Edit", "Profile", new {id = Model.ID})" class="btn btn-sm btn-block btn-primary">
+                            <span class="bigger-110">Edit</span>
+                        </a>
+                    }
+
 
 
                 </div><!-- /.col -->
@@ -108,19 +116,37 @@
         <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="widget-box transparent">
-                    <div class="widget-header widget-header-small">
-                        <h4 class="widget-title smaller">
-                            <i class="ace-icon fa fa-check-square-o bigger-110"></i>
-                            Interests
-                        </h4>
-                    </div>
 
+                   
                     <div class="widget-body">
                         <div class="widget-main">
                             <p>
-                                My interests are displayed here.
-                            </p>
+                                @if (Model.InProfiles.Count > 0)
+                                {
+                                    <div class="widget-header widget-header-small">
+                                        <h4 class="widget-title smaller">
+                                            <i class="ace-icon fa fa-check-square-o bigger-110"></i>
+                                            I'm following:
+                                        </h4>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main">
+                                <p>
+                                    @foreach (var item in Model.InProfiles)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                            <br />
+                                        </tr>
+                                    }
+                                </p>
+                            </div>
                         </div>
+                    }
+
+                                </p>
+                            </div>
                     </div>
                 </div>
             </div>

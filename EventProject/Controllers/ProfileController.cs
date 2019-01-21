@@ -132,6 +132,31 @@ namespace EventProject.Controllers
                 id = GetCurrentUserId();
             }
             var otherUserID = await _profileRepository.GetObject(id);
+
+            
+            await _followingRepository.LoadFollowers(otherUserID);
+
+            if (_followingRepository.FindObject(id, GetCurrentUserID()).Result == null)
+            {
+                ViewData["FollowButtonText"] = "Follow";
+            }
+            else
+            {
+                ViewData["FollowButtonText"] = "Unfollow";
+            }
+
+            var currentUserObject = await _profileRepository.GetObject(GetCurrentUserID());
+            var currentUserName = currentUserObject.DbRecord.Name;
+
+            if (otherUserID.DbRecord.Name == currentUserName)
+            {
+                ViewData["IsCurrentPerson"] = "true";
+            }
+            else
+            {
+                ViewData["IsCurrentPerson"] = "false";
+            }
+
             return View(ProfileViewModelFactory.Create(otherUserID));
         }
 
@@ -175,7 +200,7 @@ namespace EventProject.Controllers
         [Authorize]
         public async Task<IActionResult> NotFollowing(string id)
         {
-            var o = await _followingRepository.GetObject(id, GetCurrentUserID());
+            var o = await _followingRepository.GetObject(GetCurrentUserID(), id);
             await _followingRepository.DeleteObject(o);
             return RedirectToAction(nameof(Details), new { id });
         }
