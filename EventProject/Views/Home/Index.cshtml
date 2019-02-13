@@ -13,8 +13,8 @@
         .row.content {height: 1500px}
     
         .sidenav {
-            background-color: #f1f1f1;
             height: 100%;
+            margin-top: 80px;
         }
     
         footer {
@@ -35,55 +35,69 @@
         <div class="col-sm-3 sidenav">
             <p></p>
             <br />
-            <input type="button" value="Create Event" onclick="window.location.href = '@Url.Action("Create", "Event")'" />
+            <input type="image" src="images/feature_buttons/button_create.png" width="250px" onclick="window.location.href = '@Url.Action("Create", "Event")'" />
             <br />
             <p></p>
-            <input type="button" value="View Events" onclick="window.location.href = '@Url.Action("Index", "Event")'" />
-
+            <input type="image" src="images/feature_buttons/button_view.png" width="250px" onclick="window.location.href = '@Url.Action("Index", "Event")'" />
         </div>
 
 
 
     <div class="col-sm-9">
-        Recent events
-
-
-                <table id="eventList" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Time</th>
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                <span class="event-picture">
-                                    <img class="editable img-responsive" alt="Avatar" id="avatar-2"
-                                         src="~/images/@item.EventImage" />
-                                </span>
-                            </td>
-                            <td>@item.Name</td>
-                            <td>@item.Location</td>
-                            <td>@item.Date.ToString("MMMM dd, yyyy hh:mm")</td>
-                            <td>
-                                <a href="@Url.Action("Details", "Event", new {id = item.ID})">
-                                    More
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            </div>
+        <div style="margin-top: 30px; margin-bottom: 10px; font-weight: bold; font-size: 30px; color: brown">
+            Recent events
         </div>
+        <table id="eventList" class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th style="font-weight: bold" scope="col">Name</th>
+                <th style="font-weight: bold" scope="col">Location</th>
+                <th style="font-weight: bold" scope="col">Time</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <span class="event-picture">
+                            <img class="editable img-responsive" alt="Avatar" id="avatar-2"
+                                 src="~/images/@item.EventImage" />
+                        </span>
+                    </td>
+                    <td>
+                        <div style="float: left">
+                            @item.Name
+                        </div>
+                    </td>
+                    <td>
+                        <div style="float: left">
+                            @item.Location
+                        </div>                       
+                    </td>
+                    <td>
+                        <div style="float: left">
+                            @item.Date.ToString("MMMM dd, yyyy hh:mm")
+                        </div>                          
+                    </td>
+                    <td>
+                        <div style="float: left">
+                            <a href="@Url.Action("Details", "Event", new {id = item.ID})">
+                                More
+                            </a>                        
+                        </div>  
+                    </td>
+                </tr>
+            }
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 
 
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/calendar.js"></script>
+</div>

@@ -72,7 +72,6 @@ namespace Infra.Comment
       public async Task<List<CommentObject>> GetCommentsList(string eventID)
       {
           var commentIdList = GetCommentsIDList(eventID);
-
           var commentDbRecordList = new List<CommentDbRecord>();
 
           foreach (var value in commentIdList)
@@ -80,6 +79,8 @@ namespace Infra.Comment
               var oneCommentObject = await commentDbSet.AsNoTracking().SingleOrDefaultAsync(x => x.ID == value); //saame õige commentID järgi objekti ; tegelikult on oneCommentObject mitte objekt vaid on tegelikult DBREcord
               commentDbRecordList.Add(oneCommentObject);
           }
+
+          commentDbRecordList = commentDbRecordList.OrderBy(n => n.CommentAddTime).ToList();
 
           var count = commentDbRecordList.Count; //listi pikkuse
           var pp = new RepositoryPage(count, PageIndex, PageSize);

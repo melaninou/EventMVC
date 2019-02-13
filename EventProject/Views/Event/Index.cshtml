@@ -8,6 +8,13 @@
     Layout = "_IndexPartial";
    // var userName = ViewData["userRealName"] as PaginatedList<ProfileObject>;
 }
+
+<head>
+    <link rel="stylesheet" href="css/table-events.css" type="text/css" MEDIA=screen />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="\js\clickable-row.js"></script>
+</head>
+
 <style type="text/css">
     .clickable-row {
         /*display: block;*/
@@ -20,12 +27,6 @@
         background: transparent;
     }
 </style>
-
-<head>
-    <link rel="stylesheet" href="css/table-events.css" type="text/css" MEDIA=screen />
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script type="text/javascript" src="\js\clickable-row.js"></script>
-</head>
 
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#events">Exploring</a></li>
@@ -57,14 +58,31 @@
                                     <tr class="clickable-row" data-href="@Url.Action("Details","Event", new {id = item.DbRecord.ID})">
                                         <td>
                                             <span class="event-picture">
-                                                <img class="editable img-responsive" alt="Avatar" id="avatar-2"
-                                                     src="~/images/@item.DbRecord.EventImage" />
+                                                <img class="editable img-rounded" alt="Avatar" id="avatar-2" height="200" width=200 style="float: left"
+                                                     src="~/images/@item.DbRecord.EventImage"/>
                                             </span>
                                         </td>
-                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Name)</td>
-                                        <td>@item.DbRecord.Date.ToString("MMMM dd, yyyy hh:mm")</td>
-                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Location)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Type)</td>
+                                        <td>
+                                            <div style="float: left">
+                                                @Html.DisplayFor(modelItem => item.DbRecord.Name)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="float: left">
+                                                @item.DbRecord.Date.ToString("MMMM dd, yyyy hh:mm")
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div style="float: left">
+                                                @Html.DisplayFor(modelItem => item.DbRecord.Location)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="float: left">
+                                                @Html.DisplayFor(modelItem => item.DbRecord.Type)
+                                            </div>
+                                        </td>
                                        
                                         @Html.EditDetailDeleteFor(modelItem => item.DbRecord.ID)
                                     </tr>
@@ -101,15 +119,32 @@
                                     <tr class="clickable-row" data-href="@Url.Action("Details","Event", new {id = item.DbRecord.ID})">
                                         <td>
                                             <span class="event-picture">
-                                                <img class="editable img-responsive" alt="Avatar" id="avatar-2"
+                                                <img class="editable img-rounded" alt="Avatar" id="avatar-2" height="200" width=200 style="float: left"
                                                      src="~/images/@item.DbRecord.EventImage" />
                                             </span>
                                         </td>
-                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Name)</td>
-                                        <td>@item.DbRecord.Date.ToString("MMMM dd, yyyy hh:mm")</td>
-                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Location)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Type)</td>
-                                       
+                                        <td>
+                                            <div style="float: left">
+                                                @Html.DisplayFor(modelItem => item.DbRecord.Name)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="float: left">
+                                                @item.DbRecord.Date.ToString("MMMM dd, yyyy hh:mm")
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div style="float: left">
+                                                @Html.DisplayFor(modelItem => item.DbRecord.Location)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="float: left">
+                                                @Html.DisplayFor(modelItem => item.DbRecord.Type)
+                                            </div>
+                                        </td>
+
                                         @Html.EditDetailDeleteFor(modelItem => item.DbRecord.ID)
                                     </tr>
                                 }
@@ -145,15 +180,32 @@
                                     <tr class="clickable-row" data-href="@Url.Action("Details","Event", new {id = item.DbRecord.ID})">
                                         <td>
                                             <span class="event-picture">
-                                                <img class="editable img-responsive" alt="Avatar" id="avatar-2"
+                                                <img class="editable img-rounded" alt="Avatar" id="avatar-2" height="200" width=200 style="float: left"
                                                      src="~/images/@item.DbRecord.EventImage" />
                                             </span>
                                         </td>
-                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Name)</td>
-                                        <td>@item.DbRecord.Date.ToString("MMMM dd, yyyy hh:mm")</td>
-                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Location)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.DbRecord.Type)</td>
-                                      
+                                        <td>
+                                            <div style="float: left">
+                                                @Html.DisplayFor(modelItem => item.DbRecord.Name)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="float: left">
+                                                @item.DbRecord.Date.ToString("MMMM dd, yyyy hh:mm")
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div style="float: left">
+                                                @Html.DisplayFor(modelItem => item.DbRecord.Location)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="float: left">
+                                                @Html.DisplayFor(modelItem => item.DbRecord.Type)
+                                            </div>
+                                        </td>
+
                                         @Html.EditDetailDeleteFor(modelItem => item.DbRecord.ID)
                                     </tr>
                                 }

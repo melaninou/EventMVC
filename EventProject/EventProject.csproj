@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
+    <Folder Include="wwwroot\images\feature_buttons\" />
   </ItemGroup>
 
   <ItemGroup>

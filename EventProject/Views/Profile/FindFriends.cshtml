@@ -7,24 +7,23 @@
     Layout = "_IndexPartial";
 }
 
-<style type="text/css">
-    .clickable-row {
-        /*display: block;*/
-        cursor: pointer;
-    }
-</style>
-<style type="text/css">
-    .clickable-row:hover {
-        background: #ffcea1 !important;
-        background: transparent;
-    }
-</style>
-
 <head>
     <link rel="stylesheet" href="css/table-events.css" type="text/css" MEDIA=screen />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="\js\clickable-row.js"></script>
 </head>
+
+<style type="text/css">
+     .clickable-row {
+         /*display: block;*/
+         cursor: pointer;
+     }
+
+    .clickable-row:hover {
+        background: #ffcea1 !important;
+        background: transparent;
+    }
+</style>
 
 <table id="eventList" class="table table-striped">
     <body>
@@ -43,12 +42,20 @@
                 <tr class="clickable-row" data-href="@Url.Action("Details", "Profile", new {@id = item.ID})">
                     <td>
                         <span class="comment-picture">
-                            <img class="commenttable img-rounded" alt="Avatar" id="avatar-2" height="100"
+                            <img class="editable img-rounded" alt="Avatar" id="avatar-2" height="70" width=70 style="float: left" 
                                  src="~/images/@item.ID/@item.ProfileImage" />
                         </span>
                     </td>
-                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Occupation)</td>
+                    <td>
+                        <div style="float: left">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </div>
+                    </td>
+                    <td>
+                        <div style="float: left">
+                            @Html.DisplayFor(modelItem => item.Occupation)
+                        </div>
+                    </td>
                 </tr>
             }
         </tbody>

@@ -9,7 +9,6 @@ namespace Facade.Profile
 {
     public class ProfileViewModel : BasicViewModel
     {
-    
         private DateTime birthDay;
         private string aboutText;
         private string occupation;
@@ -42,6 +41,7 @@ namespace Facade.Profile
         public ProfileGender Gender { get; set; }
 
         [Required]
+        [DisplayName("")]
         public string ProfileImage
         { 
             get => getString(ref profileImage);
